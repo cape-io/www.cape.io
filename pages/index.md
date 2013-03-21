@@ -1,7 +1,18 @@
 ---
 title: CAPE
 description: Create Anywhere Publish Everywhere
-
+sku:    2.1
+product:
+    - sku    : 2.1.1
+      tag    : Monthly
+      time   : 1 month
+      price  : 6.00
+      trail  : 1 month
+    - sku    : 2.1.2
+      tag    : Basic
+      time   : 1 year
+      price  : 60.00
+      specs  : 1Gb of Storage and 10Gb of monthly transfer
 ---
 
 ## Create Anywhere Publish Everywhere
