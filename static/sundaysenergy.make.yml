@@ -3,8 +3,7 @@ production_url: http://www.sundaysenergy.com
 base_path: /
 
 collection:
-  -
-    name: github_content_repo
+  gh:
     source_location: http://github.com/sundaysenergy/www.sundaysenergy.com
 
 theme:
@@ -16,24 +15,20 @@ global_property:
     parse: yaml
 
 view:
-  -
-    name: navigation
+  navigation:
     layout: navigation
-  -
-    name: index
+  index:
     collection: github_content_repo/
     where:
       filename: index
     render:
-      -
+      default:
         entities_per: 1
         render_uri: {{path}}{{filename}}.html
         paginator: false
-  -
-    name: drupal_hosting
+  drupal_hosting:
     collection: github_content_repo/catalog/hosting/drupal/
     render:
-      - # This is not a page. It is used within the index page above.
-        name: default
+      default: # This is not a page. It is used within the index page above.
         list: stream
         layout: drupal_hosting
