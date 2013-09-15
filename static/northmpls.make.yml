@@ -1,0 +1,65 @@
+---
+production_url: http://cdn.northmpls.org
+base_path: /
+user: northmpls
+
+collection:
+  photo:
+    url: http://search.cape.io/instagram/photo/_search
+    type: elasticsearchx
+  post:
+    url: http://search.cape.io/posts/_search
+    type: elasticsearch
+  content:
+    url: https://github.com/westbroadway/northmpls_content
+    type: github
+
+theme:
+  collection: template
+
+global_property:
+  data:
+    collection: content/data.yml
+    type: yaml
+
+view:
+  news:
+    collection: post
+    must:
+      id: 436620656417436*
+    render:
+      front:
+        entities_per: 10
+        render_uri: /news/index.html
+        list: added
+        layout: news
+      archive:
+        entities_per: 50
+        render_uri: /news/{{page_id}}.html
+        layout: news
+  photostream:
+    collection: photo
+    group:
+      by: tags
+      exlude: [northmpls, northminneapolis, minneapolis, minnesota]
+    must_not:
+      location:
+        id: [2007, 1098, 876677, 1098, 30740, 119041783]
+    should:
+      tags: ["northmpls","northminneapolis", "northminnepolis", "northminneaplois", "northminneapolisrocks", "northminneaplis", "northminneapolisisthebestpart", "flownorthside", "jxta", "wbfm"]
+      geography: ["4011061","4022582"]
+      location:
+        id: [1958441, 5932419, 80983928, 26881568, 93151099]
+      user:
+        name: [northmpls, wbfm]
+      likes:
+        data:
+          username: [northmpls, wbfm]
+    render:
+      index:
+        entities_per: 100
+        render_uri: /photos/stream/index.html
+        list: stream
+      archive:
+        entities_per: 100
+        render_uri: /photos/stream/{{page_id}}.html

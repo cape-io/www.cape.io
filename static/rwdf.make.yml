@@ -17,11 +17,6 @@ view:
     id_prop: name
     data_prop: false
     load_item: true
-    child:
-      admin:
-        group_by: list_ype
-      live:
-        list: added
     render:
       admin:
         render_uri: /admin/projects.html
