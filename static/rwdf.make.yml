@@ -1,0 +1,58 @@
+---
+theme: _rwdftheme
+production_url: http://rwdfruhoh.ookb.co
+base_path: /
+
+collection:
+  github_content_repo:
+    source_location: http://github.com/ookb/rwdfruhoh.ookb.co
+
+global_property:
+  data:
+    collection: github_content_repo/data.yml
+    type: yaml
+
+view:
+  projects:
+    id_prop: name
+    data_prop: false
+    load_item: true
+    child:
+      admin:
+        group_by: list_ype
+      live:
+        list: added
+    render:
+      admin:
+        render_uri: /admin/projects.html
+        template:
+          collection: github_content_repo/_cape/projects.mustache
+          type: mustache
+  navigation:
+    layout: navigation
+  index: # Creates directory indexes.
+    collection: github_content_repo
+    filter: 'filename == index'
+    render:
+      stream:
+        entities_per: 1
+        render_uri: {{path}}{{filename}}.html
+        paginator: false
+  whatwedo:
+    collection: github_content_repo
+    filter: "filename == 'whatwedo/*' && filename != 'index'"
+    group_by: page.categories
+    sort_by: title ascending
+    render:
+      default:
+        list: stream
+        groups_per: 1
+        entities_per: 20
+        layout: whatwedo
+        render_uri: /whatwedo/{{categories}}/index.html
+  directors_staff:
+  robert_florence:
+  ourvalues:
+  whoweare:
+    sort: ["sortorder","title"]
+    render_uri: /whoweare/{{filename}}.html

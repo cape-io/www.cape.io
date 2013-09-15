@@ -1,0 +1,30 @@
+github:
+  hosts:
+    api: https://api.github.com
+  auth:
+    command: user
+    header: Authorization
+    header_pre: 'token '
+    fields:
+      email: email
+      name: name
+      id: id
+  resources:
+    user:
+      uri: /user
+      response_fields:
+        email: email
+        name: name
+        id: id
+google:
+  hosts:
+    api: https://www.googleapis.com
+  auth:
+    command: auth
+    header: Authorization
+    header_pre: 'Bearer '
+  resources:
+    auth:
+      uri: /oauth2/v3/userinfo
+    user:
+      uri: /plus/v1/people/me
