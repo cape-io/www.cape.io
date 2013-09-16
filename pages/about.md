@@ -3,60 +3,74 @@ title : Glossary, List Types, Collections
 description:
 
 ---
+# Make File
 
-collection (content repo)
-: Content Repository. A way of defining a collection of entities. It can be content, documents, media. This defines a database index.
+* sort_by
+* theme
+* base_path
+* data_url
 
-view (query)
-: A specific set of filters used to filter down the collection. The list returns ID's the represent entity documents. This defines a query against a database.
+## Entities
+A unit of content. Entities can be documents, media, feed items. Just about anything can be an entity.
 
-list (flags on query)
-: A specific set of add/remove flags saved against ids in the view.
+## Collection
+A Collection is a collection of entities sometimes called a content repository or database. Collections provide a way to define a collection of entities.
 
-render (process mustache)
-: Instructions on what list to use and what to do with it. Optionally makes pages.
+Examples:
 
-theme
-: Defines mustache theme files that lists are passed through.
-
-
-## List Types
-
-### Added Only
-This returns items that have been specifically added to a list.
-
-    http://list.cape.io/{{username}}/{{list}}/added-{{size}}.json
-
-### Removed Only
-This returns items that have been specifically removed from a list.
-
-    http://list.cape.io/{{username}}/{{list}}/removed-{{size}}.json
-
-### Pending
-This returns items that have not been added or removed from a list.
-
-    http://list.cape.io/{{username}}/{{list}}/pending-{{size}}.json
-
-### Stream
-This returns items that have not been removed from a list.
-
-    http://list.cape.io/{{username}}/{{list}}/stream-{{size}}.json
+* Instagram Photos
+* Facebook Posts
+* Twitter Posts
+* Github Content Repo
+* Dropbox Folder
 
 ## View
+A view is a list of entities filtered and sometimes modified based on a collection. The collection is filtered based on `must`, `must_not`, and `should` statements. Essentially a query against a collection.
+: A specific set of filters used to filter down the collection. The list returns ID's the represent entity documents. This defines a query against a database.
+
+Fields:
 
 * collection
-* query
+* must
+* must_not
+* should
 * layout_default
 * theme_default
 * group_by
 
+## Status
+A filtered view based on the flags that have been applied to an entity.
+
+### Added
+This returns view entities that HAVE been specifically `added`.
+
+    http://list.cape.io/{{username}}/{{list}}/added-{{size}}.json
+
+### Removed
+This returns view entities that HAVE been specifically `removed`.
+
+    http://list.cape.io/{{username}}/{{list}}/removed-{{size}}.json
+
+### Pending
+This returns view entities that have NOT been `added` or `removed` from a list.
+
+    http://list.cape.io/{{username}}/{{list}}/pending-{{size}}.json
+
+### Stream
+This returns items that have NOT been `removed` from a list.
+
+    http://list.cape.io/{{username}}/{{list}}/stream-{{size}}.json
+
 ## Render
+Instructions on what list to use and what to do with it. Optionally makes pages.
+
+Fields:
 
 * name
 * list (The list of content to pass to the compiler.)
 * theme_default
 * layout_default
-* permalink - (is page if has permalink. Create as many pages as necessary based on the mustache)
+* uri - (is page if has permalink. Create as many pages as necessary based on the mustache)
 * summary_lines
 * latest
 * items_per (Qty of items per page.)
@@ -64,15 +78,5 @@ This returns items that have not been removed from a list.
 * paginator (This info should be available all the time.)
 * priority
 
-## Compile
-Load up the config file. For each `render` create permalinks.
-
-sort_by: priority
-theme: cape
-base_path: 
-production_url: 
-data_url:
-
-## Theme
-
-Theme layout files can depend on other theme files and other rendered list.
+## Layout
+Defines mustache theme file that the entities are passed through. Theme layout files can depend on other theme files and other rendered lists.
