@@ -18,13 +18,14 @@ view:
     type: yaml
   pages:
     collection: gh/pages
-    type: md
+    type: json
     entity:
       load: 'gh/pages/{{{name}}}'
       cache: 600
       id: name
+      type: md
     render:
       pages:
-        layout: page.html
+        layout: theme/page.html
         entities_per: 1
         uri: '/{{{filename}}}.html'
