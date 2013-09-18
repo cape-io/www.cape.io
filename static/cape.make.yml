@@ -1,6 +1,7 @@
 ---
 production_url: http://www.cape.io
 base_path: /
+uid: 1
 
 collection:
   gh:
@@ -8,18 +9,22 @@ collection:
     user: sundaysenergy
     repo: www.cape.io
 
-theme:
-  collection: gh/themes/twitter
-
-global_property:
+view:
+  theme:
+    collection: gh/themes/twitter
+    type: theme
   data:
     collection: gh/data.yml
     type: yaml
-
-view:
   pages:
     collection: gh/pages
+    type: md
+    entity:
+      load: 'gh/pages/{{{name}}}'
+      cache: 600
+      id: name
     render:
       pages:
+        layout: page.html
         entities_per: 1
-        uri: /{{filename}}.html
+        uri: '/{{{filename}}}.html'
