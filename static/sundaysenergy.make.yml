@@ -5,32 +5,44 @@ uid: 1
 
 collection:
   gh:
-    provider: github
-    user: sundaysenergy
-    repo: www.sundaysenergy.com
+    provider:
+      name: github
+      args:
+        user: sundaysenergy
+        repo: www.sundaysenergy.com
+        file: /
     view:
       data:
-        index: /
-        id: data.yml
         type: yaml
+        args:
+          file: /data.yml
+
       theme:
-        index: /theme
         type: theme
+        args:
+          file: /theme
+
       drupal_hosting:
-        index: /catalog/hosting/drupal
         type: json
+        args:
+          file: /catalog/hosting/drupal
         entity:
-          load: '/{{{name}}}'
           id: name
+          vars:
+            file: '/catalog/hosting/drupal/{{{id}}}'
           type: md
-        render:
-          default:
-            layout: hosting
-            uri: catalog/hosting/drupal.html
-            type: html
+
       services:
-        index: /services
         type: json
+        args:
+          file: /services
         entity:
           id: name
           type: md
+
+    render:
+      default:
+        view: [data, drupal_hosting]
+        layout: hosting
+        uri: catalog/hosting/drupal.html
+        type: html
