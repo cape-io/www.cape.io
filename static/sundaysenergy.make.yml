@@ -3,10 +3,12 @@ production_url: http://www.sundaysenergy.com
 base_path: /
 uid: 1
 
+# Data
 collection:
   gh:
     provider:
       name: github
+      resource: raw
       args:
         user: sundaysenergy
         repo: www.sundaysenergy.com
@@ -40,9 +42,11 @@ collection:
           id: name
           type: md
 
-    render:
-      default:
-        view: [data, drupal_hosting]
-        layout: hosting
-        uri: catalog/hosting/drupal.html
-        type: html
+# Displays
+render:
+  default: # Machine Name
+    view: # View dependencies
+      gh: [data, drupal_hosting] #collection and views in that collection.
+    layout: hosting # view layout to use
+    uri: catalog/hosting/drupal.html # uri for rendered output. filename.
+    type: html # The file type of the render we are creating.
