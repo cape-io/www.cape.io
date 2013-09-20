@@ -30,9 +30,9 @@ collection:
           file: /catalog/hosting/drupal
         entity:
           id: name
-          vars:
-            file: '/catalog/hosting/drupal/{{{id}}}'
           type: md
+          args:
+            file: '/{{{path}}}'
 
       services:
         type: json
@@ -41,6 +41,8 @@ collection:
         entity:
           id: name
           type: md
+          args:
+            file: '/{{{path}}}'
 
 # Displays
 render:
