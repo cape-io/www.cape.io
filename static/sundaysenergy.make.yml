@@ -5,7 +5,7 @@ uid: 1
 
 collection:
   gh:
-    type: github
+    provider: github
     user: sundaysenergy
     repo: www.sundaysenergy.com
     view:
@@ -26,7 +26,8 @@ collection:
         render:
           default:
             layout: hosting
-            uri: catalog/hosting/drupal
+            uri: catalog/hosting/drupal.html
+            type: html
       services:
         index: /services
         type: json
