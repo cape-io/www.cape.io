@@ -1,34 +1,35 @@
 ---
 production_url: http://www.sundaysenergy.com
 base_path: /
+uid: 1
 
 collection:
   gh:
-    source_location: http://github.com/sundaysenergy/www.sundaysenergy.com
-
-theme:
-  collection: github_content_repo/theme/
-
-global_property:
-  data:
-    collection: github_content_repo/data.yml
-    parse: yaml
-
-view:
-  navigation:
-    layout: navigation
-  index:
-    collection: github_content_repo/
-    where:
-      filename: index
-    render:
-      default:
-        entities_per: 1
-        render_uri: {{path}}{{filename}}.html
-        paginator: false
-  drupal_hosting:
-    collection: github_content_repo/catalog/hosting/drupal/
-    render:
-      default: # This is not a page. It is used within the index page above.
-        list: stream
-        layout: drupal_hosting
+    type: github
+    user: sundaysenergy
+    repo: www.sundaysenergy.com
+    view:
+      data:
+        index: /
+        id: data.yml
+        type: yaml
+      theme:
+        index: /theme
+        type: theme
+      drupal_hosting:
+        index: /catalog/hosting/drupal
+        type: json
+        entity:
+          load: '/{{{name}}}'
+          id: name
+          type: md
+        render:
+          default:
+            layout: hosting
+            uri: catalog/hosting/drupal
+      services:
+        index: /services
+        type: json
+        entity:
+          id: name
+          type: md
