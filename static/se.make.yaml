@@ -12,7 +12,7 @@ provider:
         md: md
         markdown: md
 
-      views:
+      view:
         data:
           must:
             path: data.yml
