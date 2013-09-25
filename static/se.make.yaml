@@ -1,0 +1,33 @@
+---
+domain: http://www.sundaysenergy.com
+base_path: /
+uid: 1
+
+provider:
+  github:
+    sundaysenergy/www.sundaysenergy.com:
+      convert:
+        yml: yaml
+        yaml: yaml
+        md: md
+        markdown: md
+
+      views:
+        data:
+          must:
+            path: data.yml
+
+        hosting_drupal:
+          must:
+            path:
+              dirname: services/hosting/drupal
+              ext: md
+          must_not:
+            path:
+              basename: index.md
+
+        services:
+          must:
+            path:
+              dirname: services
+

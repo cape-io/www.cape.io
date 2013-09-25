@@ -5,19 +5,44 @@ uid: 1
 
 # Data
 collection:
+
+  gh_init:
+    provider: github
+    resource: repo/branch
+    args:
+      user: sundaysenergy
+      repo: www.sundaysenergy.com
+      branch: master
+    view:
+      branch_info:
+        data_field: commit
+        response_field:
+          sha:
+            fkey: sha
+            type: string
+
+  gh_raw:
+    provider: github
+    resource: repo/raw
+    args:
+      user: sundaysenergy
+      repo: www.sundaysenergy.com
+      file: '{{{/id}}}'
+
   gh:
     provider:
       name: github
-      resource: raw
+      id: path
+      resource: repo/tree
+      preload: gh_init/branch_info
       args:
         user: sundaysenergy
         repo: www.sundaysenergy.com
-        file: /
+        sha: '{{gh_init.branch_info.sha}}'
     view:
       data:
+        id: /data.yml
         type: yaml
-        args:
-          file: /data.yml
 
       theme:
         type: theme
@@ -29,8 +54,8 @@ collection:
         args:
           file: /catalog/hosting/drupal
         entity:
-          id: name
           type: md
+          field: _source # Field to save the loaded and parsed entity to.
           args:
             file: '/{{{path}}}'
 
@@ -39,16 +64,18 @@ collection:
         args:
           file: /services
         entity:
-          id: name
           type: md
           args:
-            file: '/{{{path}}}'
+            file: '{{{id}}}'
 
 # Displays
 render:
   default: # Machine Name
-    view: # View dependencies
-      gh: [data, drupal_hosting] #collection and views in that collection.
+    preload: # View dependencies
+      -
+        collection: gh
+        view: drupal_hosting
+
     layout: hosting # view layout to use
     uri: catalog/hosting/drupal.html # uri for rendered output. filename.
     type: html # The file type of the render we are creating.
