@@ -6,8 +6,8 @@ uid: 1
 
 collection:
   gh:
+    provider: github
     arg_default:
-      provider: github
       repo: www.sundaysenergy.com
       owner: sundaysenergy
       branch: master

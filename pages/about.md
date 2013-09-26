@@ -13,6 +13,12 @@ description:
 ## Entities
 A unit of content. Entities can be documents, media, feed items. Just about anything can be an entity. Each entity has a list of views that the entity shows up in.
 
+The required arguments for each entity:
+
+* provider
+* index
+* id
+
 ## View
 A view is a list of filtered (and sometimes modified) entities based on a collection. The collection is filtered based on `must`, `must_not`, and `should` statements. Essentially a query against a collection. Normally it is a field and value are specified and it must match exactly. In other cases special methods are enabled for more advanced comparisons. The field value is passed through the method and the result is then compared to the value in the view.
 
