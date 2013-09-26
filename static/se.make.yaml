@@ -26,7 +26,7 @@ collection:
         resource: tree
         arg:
           recursive: true
-          sha: 82e82efa07599fa1bc6f30e3abab6edcd8defa5e
+          sha: d8f9aa2d1803ab802d645f1d330577d861edfe33
 
       entity:
         provider: github
