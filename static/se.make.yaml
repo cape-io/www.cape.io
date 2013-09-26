@@ -3,31 +3,58 @@ domain: http://www.sundaysenergy.com
 base_path: /
 uid: 1
 
-provider:
-  github:
-    sundaysenergy/www.sundaysenergy.com:
-      convert:
-        yml: yaml
-        yaml: yaml
-        md: md
-        markdown: md
 
-      view:
-        data:
-          must:
-            path: data.yml
+collection:
+  gh:
+    arg_default:
+      provider: github
+      repo: www.sundaysenergy.com
+      owner: sundaysenergy
+      branch: master
 
-        hosting_drupal:
-          must:
-            path:
-              dirname: services/hosting/drupal
-              ext: md
-          must_not:
-            path:
-              basename: index.md
+    arg_required:
+      path: string
 
-        services:
-          must:
-            path:
-              dirname: services
+    convert:
+      yml: yaml
+      yaml: yaml
+      md: md
+      markdown: md
+
+    load:
+      all:
+        resource: tree
+        arg:
+          recursive: true
+          sha: 82e82efa07599fa1bc6f30e3abab6edcd8defa5e
+
+      entity:
+        provider: github
+        resource: raw
+        args:
+          owner: sundaysenergy
+          repo: www.sundaysenergy.com
+          branch: master
+
+view:
+  data:
+    gh:
+      must:
+        path: data.yml
+
+  hosting_drupal:
+    gh:
+      must:
+        path:
+          dirname: services/hosting/drupal
+          ext: md
+      must_not:
+        path:
+          basename: index.md
+
+  services:
+    gh:
+      must:
+        path:
+          dirname: services
 
