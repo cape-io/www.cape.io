@@ -62,3 +62,10 @@ view:
         path:
           dirname: services
 
+  docs:
+    gh:
+      must:
+        type: blob
+        path:
+          dirsplit:
+            1: docs
