@@ -8,7 +8,7 @@ collection:
   gh:
     provider: github
     index: sundaysenergy/www.sundaysenergy.com
-    id: '{{path}}'
+    id_prop: path
 
     arg_default:
       repo: www.sundaysenergy.com
