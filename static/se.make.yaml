@@ -50,7 +50,7 @@ view:
       must:
         path:
           dirname: services/hosting/drupal
-          ext: md
+          ext: .md
       must_not:
         path:
           basename: index.md
@@ -58,6 +58,7 @@ view:
   services:
     gh:
       must:
+        type: blob
         path:
           dirname: services
 
