@@ -1,5 +1,5 @@
 ---
-domain: http://www.sundaysenergy.com
+domain: cape.sundaysenergy.com
 base_path: /
 uid: 1
 
@@ -42,30 +42,65 @@ collection:
 view:
   data:
     gh:
-      must:
-        path: data.yml
+      filter:
+        load:
+          self: entity
+        must:
+          path: data.yml
 
   hosting_drupal:
     gh:
-      must:
-        path:
-          dirname: services/hosting/drupal
-          ext: .md
-      must_not:
-        path:
-          basename: index.md
+      render:
+        load:
+          self: entity
+      filter:
+        must:
+          path:
+            dirname: services/hosting/drupal
+            ext: .md
+        must_not:
+          path:
+            basename: index.md
 
   services:
     gh:
-      must:
-        type: blob
-        path:
-          dirname: services
+      filter:
+        must:
+          type: blob
+          path:
+            dirname: services
 
   docs:
     gh:
-      must:
-        type: blob
-        path:
-          dirsplit:
-            1: docs
+      filter:
+        must:
+          type: blob
+          path:
+            dirsplit:
+              1: docs
+
+  layout:
+    entities_per: 1
+    gh:
+      filter:
+        must:
+          type: blob
+          path:
+            dirsplit:
+              1: theme
+
+# Displays
+convert:
+  # We want to load up the data and the templates and compile them.
+  hosting: # anytime views below are updated, this convert is triggered.
+    convert: mustache
+    source: [data, hosting_drupal]
+    # The source will be passed to each template in the order below.
+    template: [layout/hosting.html, layout/default.html]
+    # The result of each is added as a source property before passing to the next.
+    result: content
+    # The final result is going to have a uri. #uri supports mustache variables.
+    uri: catalog/hosting/drupal.html # uri for rendered output. filename.
+    type: html # The file type of the render we are creating.
+    destintion: cloudfiles
+
