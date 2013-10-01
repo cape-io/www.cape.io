@@ -2,7 +2,7 @@
 domain: www.integral-therapy.com # This is not used for anything yet.
 uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting resources.
 
-collection: # A collection is just a set of default information.
+api: # A collection is just a set of default information.
   cloudfiles: # Machine name of the collection
     provider: cloudfiles # CAPE provider that is defined in providers.yml
     arg: # Default arguments to send to the provider.
@@ -25,12 +25,12 @@ view: # This is the most important part.
   # CAPE checks to see if content belongs to a view based on the filter criteria.
   data: # Machine name of the view.
     filter:
-      collection: content # A collection is a bunch of default values about where the content comes from.
+      api: content # A collection is a bunch of default values about where the content comes from.
       must: # If you filter against a field that isn't set it will try to find it (and load) that field.
         _id: data.yaml # The most basic. Match the path field with the value 'data.yaml'.
     field: # We need to load the raw file and parse it.
       _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
-        collection: content # Default values for provider and arguments to load the stuff.
+        api: content # Default values for provider and arguments to load the stuff.
         resource: raw # What provider resource should we use.
         type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
     display: # Define various displays. A display is a way to render the view.
@@ -38,14 +38,14 @@ view: # This is the most important part.
         style: page # What we should do with this display. A page is expected to be saved somewhere.
         type: json # What format to save the data in.
         destination: # Where to save the page.
-          collection: cloudfiles # Send it to cloudfiles. Collection contains the default container.
+          api: cloudfiles # Send it to cloudfiles. Collection contains the default container.
           resource: upload # How to send it? By using the upload method.
           arg: # The upload method wants to know where to save it.
             file: /data.json # Save it so it is accessible be visiting {container_name}/data.json
 
   staff: # A listing of staff profiles.
     filter:
-      collection: content # github content repo for the site.
+      api: content # github content repo for the site.
       must:
         _id: # The ID is the only required field.
           # ID is a string, not an object. Because of that the fields are actually methods.
@@ -53,7 +53,7 @@ view: # This is the most important part.
           ext: .md # Files must have .md extension. Parses ID for file extension.
     field: # These fields should be what is required for filtering or what is needed in more than one display.
       _self: # Things like git commit hook and load resource tree do not contain the file contents.
-        collection: content # Collection is just an alias of provider and provider arguments.
+        api: content # Collection is just an alias of provider and provider arguments.
         resource: raw # The provider resource to use.
         type: md_yaml # What to do with the result. Markdown with YAML frontmatter processor.
     sort: # Define how to sort the view entities.
@@ -75,7 +75,7 @@ view: # This is the most important part.
             arg: # Only need to pass it the url argument. This uses our img.labori.us service.
               url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
         destination: # Save the page.
-          collection: cloudfiles # Where to send the display.
+          api: cloudfiles # Where to send the display.
           resource: upload # Resources are like methods. Upload it.
           arg: # We are going to save this partial page with an underscore.
             file: /credentials/_index.html # This makes it available to client js or as part of the content "API".
@@ -91,7 +91,7 @@ view: # This is the most important part.
         pager: # Just for example.
           entities_per: 1 # This is the default for style: file
         destination: # Save each file.
-          collection: cloudfiles # Remember, collection just defines a provider and default argumnets.
+          api: cloudfiles # Remember, collection just defines a provider and default argumnets.
           resource: upload
           arg:
             file: '/credentials/{{image}}'
@@ -110,7 +110,7 @@ view: # This is the most important part.
             view: navigation # Instead of using this view use a different one.
             display: default # The display to use.
         destination: # What to do with the page.
-          collection: cloudfiles
+          api: cloudfiles
           resource: upload # Upload it to cloud files.
           arg:
             file: /credentials/index.html # At this file address.
@@ -121,12 +121,12 @@ view: # This is the most important part.
 
   navigation:
     filter:
-      collection: content
+      api: content
       must:
         _id: navigation.yaml
     field: # We need to load the raw file and parse it.
       _self: # _self is used to overwrite the object passed to CAPE (since it need only be an ID).
-        collection: content # Default values for provider and arguments to load the stuff.
+        api: content # Default values for provider and arguments to load the stuff.
         resource: raw # What provider resource should we use.
         type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
     display: # Define various displays. A display is a way to render the view.
@@ -138,7 +138,7 @@ view: # This is the most important part.
           id: navigation.html # What ID does the layout file have?
           convert: mustache # What type of conversion should we do?
         destination: # Where to save the page.
-          collection: cloudfiles # Send it to cloudfiles. Collection contains the default container.
+          api: cloudfiles # Send it to cloudfiles. Collection contains the default container.
           resource: upload # How to send it? By using the upload method.
           arg: # The upload method wants to know where to save it.
             file: /_navigation.html # Save it so it is accessible be visiting {container_name}/data.json
@@ -146,7 +146,7 @@ view: # This is the most important part.
   layout:
     id: '{{_id.basename}}' # Define an ID for easy access to specific entities in this view from other views.
     filter:
-      collection: content
+      api: content
       must:
         _id:
           dirname: theme/layouts

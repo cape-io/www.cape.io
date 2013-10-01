@@ -3,7 +3,7 @@ domain: www.integral-therapy.com
 base__id: /
 uid: 1
 
-collection:
+api:
   image:
     provider: img
     load:
@@ -49,10 +49,10 @@ view:
         relationship:
         field:
           _self:
-            collection: content
+            api: content
             load: entity
     filter:
-      collection: content
+      api: content
       load:
         self: entity
       must:
@@ -67,16 +67,16 @@ view:
         require: false
         field:
           _self:
-            collection: content
+            api: content
             load: entity
           img_info:
-            collection: image
+            api: image
             load: info
             arg:
               _id:
     sort: false
     filter:
-      collection: content
+      api: content
       must:
         _id:
           dirname: staff
@@ -84,7 +84,7 @@ view:
 
   layout:
     filter:
-      collection: content
+      api: content
       must:
         type: blob
         _id:
