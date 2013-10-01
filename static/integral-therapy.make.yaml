@@ -1,0 +1,117 @@
+---
+domain: www.integral-therapy.com
+base_path: /
+uid: 1
+
+collection: # A collection is just a set of default information.
+  cloudfiles: # Machine name of the collection
+    provider: cloudfiles # CAPE provider that is defined in providers.yml
+    arg: # Default arguments to send to the provider.
+      container: www.integral-therapy.com # Cloudfiles container to use.
+  content: # Machine name. This is where most of our content should live.
+    provider: github
+    arg:
+      repo: integral-therapy
+      owner: sundaysenergy
+      branch: master
+    load: # Define a way to load the data initially or if data needs to be processed again.
+      resource: tree # Resource to use for the provider listed in this collection.
+      arg:
+        recursive: true # We want the entire repo.
+        sha: 9b56a38d7e93a11d40199c7e5951116c959e7726 # Not yet sure how to get this dynamically.
+
+view: # This is the most important part.
+  data: # Machine name of the view.
+    display: # Define various displays.
+      default: # Machine name of the display.
+        style: page # What we should do with this display.
+        type: json # What format to save the data in.
+        destination:
+          collection: cloudfiles
+          resource: upload
+          arg:
+            file: /data.json
+    field: # We need to load the raw file and parse it.
+      _self: # _self is used to overwrite the object passed to cape (sometimes only an ID).
+        collection: content # Default values
+        resource: raw # What provider resource should we use.
+        type: yaml # What to do with the result.
+    filter:
+      collection: content
+      load:
+        self: entity
+      must:
+        path: data.yml
+
+  staff:
+    title: Minneapolis Psychologist - Dr. David Thompson
+    filter:
+      collection: content # github content repo for the site.
+      must:
+        path:
+          dirname: staff # Files must be in the /staff directory.
+          ext: .md # Files must have .md extension.
+    sort:
+      field: order
+      default: "0"
+    field:
+      _self: # Things like git commit hook and load resource tree do not contain the file contents.
+        collection: content # Collection is just an alias of provider and provider arguments.
+        resource: raw # The provider resource to use.
+        type: md_yaml # What to do with the result.
+      img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
+        provider: wget # Generic provider that just calls a specific url.
+        resource: json # The json resource expects json and converts it.
+        arg: # Only need to pass it the url argument. This uses our img.labori.us service.
+          url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
+    display:
+      default: # the machine name of the display.
+        style: page # General style of the display. Tells CAPE what to do with it. (page, file, block)
+        type: html # Type of page. html allows a template variable. See below.
+        destination:
+          collection: cloudfiles # Where to send the display, if anywhere.
+          resource: upload # Resources are like methods.
+          arg: # We are going to save the partial with an underscore.
+            file: /credentials/_index.html
+        template:
+          view: layout # Where do we get the layout file from?
+          id: staff.html # What ID does the layout file have?
+          convert: mustache # What type of conversion should we do?
+      img:
+        style: file # It outputs a file for each entity.
+        type: image # The type of file. Not sure the importance of that if any? Maybe the content-type header?
+        source: # Use source to load an external resource using values from the entity fields.
+          provider: wget # Grab the contents of a url.
+          resource: raw # Do not process the result.
+          arg: # The url to grab.
+            url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
+        pager: # Just for example.
+          entities_per: 1 # This is the default for style: file
+        destination:
+          collection: cloudfiles # Remember, collection just defines a provider and default argumnets.
+          resource: upload
+          arg:
+            file: '/credentials/{{image}}'
+      index:
+        style: page
+        type: html
+        field: # You can add fields to a specific display.
+          content: # The content field will be populated with...
+            display: default # The result of the default display in this view.
+          data:
+            view: data
+            display: false # Do not render the output. Accessible as data.
+          navigation:
+            view: navigation # Instead of using this view use a different one.
+            display: default # The display to use.
+        destination:
+          collection: cloudfiles
+          resource: upload
+          arg:
+            file: /credentials/index.html
+        template:
+          view: layout
+          id: default
+          convert: mustache
+
+

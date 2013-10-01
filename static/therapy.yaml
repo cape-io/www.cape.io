@@ -1,0 +1,111 @@
+---
+domain: www.integral-therapy.com
+base_path: /
+uid: 1
+
+collection:
+  image:
+    provider: img
+    load:
+      info:
+        resource: info
+        arg:
+          domain: github.integral-therapy.com
+          adjust: 115x155
+          path: false
+
+  content:
+    provider: github
+    index: sundaysenergy/content.integral-therapy.com
+    id_prop: path
+
+    arg_default:
+      repo: content.integral-therapy.com
+      owner: sundaysenergy
+      branch: master
+
+    arg_required:
+      path: string
+
+    load:
+      all:
+        resource: tree
+        arg:
+          recursive: true
+          sha: 9b56a38d7e93a11d40199c7e5951116c959e7726
+
+      entity:
+        resource: raw
+        arg:
+          owner: sundaysenergy
+          repo: content.integral-therapy.com
+          branch: master
+
+view:
+  data:
+    display:
+      default:
+        convert: json
+        relationship:
+        field:
+          _self:
+            collection: content
+            load: entity
+    filter:
+      collection: content
+      load:
+        self: entity
+      must:
+        path: data.yml
+
+  staff:
+    title: Minneapolis Psychologist - Dr. David Thompson
+    display:
+      default:
+        template: layout/staff.html
+        convert: mustache
+        require: false
+        field:
+          _self:
+            collection: content
+            load: entity
+          img_info:
+            collection: image
+            load: info
+            arg:
+              path:
+    sort: false
+    filter:
+      collection: content
+      must:
+        path:
+          dirname: staff
+          ext: .md
+
+  layout:
+    filter:
+      collection: content
+      must:
+        type: blob
+        path:
+          dirname: theme/layouts
+          ext: .html
+
+
+# Displays
+convert:
+  # We want to load up the data and the templates and compile them.
+  staff: # anytime source views are updated, this is triggered.
+    convert: mustache
+    view: staff
+    # The source will be passed to each template in the order below.
+    template: layout/staff.html
+    # The result of each is added as a source property before passing to the next.
+    result: content
+    # The final result is going to have a uri. #uri supports mustache variables.
+    uri: /credentials/index.html # uri for rendered output. filename.
+    type: html # The file type of the render we are creating.
+    destintion: cloudfiles
+  -
+    source: [data]
+    uri: data.json

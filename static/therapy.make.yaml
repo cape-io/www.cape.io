@@ -1,17 +1,16 @@
 ---
-domain: cape.sundaysenergy.com
+domain: www.integral-therapy.com
 base_path: /
 uid: 1
 
-
 collection:
-  gh:
+  content:
     provider: github
-    index: sundaysenergy/www.sundaysenergy.com
+    index: sundaysenergy/content.integral-therapy.com
     id_prop: path
 
     arg_default:
-      repo: www.sundaysenergy.com
+      repo: content.integral-therapy.com
       owner: sundaysenergy
       branch: master
 
@@ -36,51 +35,31 @@ collection:
         resource: raw
         args:
           owner: sundaysenergy
-          repo: www.sundaysenergy.com
+          repo: content.integral-therapy.com
           branch: master
 
 view:
   data:
-    gh:
+    content:
       filter:
         load:
           self: entity
         must:
           path: data.yml
 
-  hosting_drupal:
-    gh:
+  staff:
+    content:
       render:
         load:
           self: entity
       filter:
         must:
           path:
-            dirname: services/hosting/drupal
+            dirname: staff
             ext: .md
-        must_not:
-          path:
-            basename: index.md
-
-  services:
-    gh:
-      filter:
-        must:
-          type: blob
-          path:
-            dirname: services
-
-  docs:
-    gh:
-      filter:
-        must:
-          type: blob
-          path:
-            dirsplit:
-              1: docs
 
   layout:
-    gh:
+    content:
       filter:
         must:
           type: blob
@@ -93,18 +72,15 @@ convert:
   # We want to load up the data and the templates and compile them.
   - # anytime views below are updated, this is triggered.
     convert: mustache
-    source: [data, hosting_drupal]
+    source: [data, staff]
     # The source will be passed to each template in the order below.
-    template: [layout/hosting.html, layout/default.html]
+    template: [layout/staff.html, layout/default.html]
     # The result of each is added as a source property before passing to the next.
     result: content
     # The final result is going to have a uri. #uri supports mustache variables.
-    uri: /services/hosting/drupal/index.html # uri for rendered output. filename.
+    uri: /credentials/index.html # uri for rendered output. filename.
     type: html # The file type of the render we are creating.
     destintion: cloudfiles
-  -
-    source: [hosting_drupal]
-    uri: /services/hosting/drupal/{{id}}.json
   -
     source: [data]
     uri: data.json
