@@ -18,7 +18,7 @@ api: # An API is just a set of default information.
       _id: path # Define the _id field. Required. If set as true it expects an array of id values.
       arg:
         recursive: true # We want the entire repo.
-        sha: 9b56a38d7e93a11d40199c7e5951116c959e7726 # Not yet sure how to get this dynamically.
+        sha: c656945068ed528e641739fdbc14930de8b6d27a # Not yet sure how to get this dynamically.
 
 # As content is added or updated it is sent through the make file.
 view: # This is the most important part.
@@ -65,8 +65,8 @@ view: # This is the most important part.
         style: page # General style of the display. Tells CAPE what to do with it. (page, file, block)
         type: html # Type of page. html allows a template variable. See below.
         template: # The page style requires the template attribute.
-          view: layout # Where do we get the layout file from?
-          id: staff.html # What ID does the layout file have?
+          api: content # Where do we get the layout file from?
+          id: theme/staff.html # What ID does the layout file have?
           convert: mustache # What type of conversion should we do?
         field: # Fields for this display. img_info is used for defining height and width attributes on the img tag.
           img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
@@ -115,8 +115,8 @@ view: # This is the most important part.
           arg:
             file: /credentials/index.html # At this file address.
         template: # Send the field variables through the mustache converter.
-          view: layout
-          id: default
+          api: content
+          id: theme/default.html
           convert: mustache
 
   navigation:
@@ -134,17 +134,16 @@ view: # This is the most important part.
         style: page # What we should do with this display. A page is expected to be saved somewhere.
         type: html # What format to save the data in.
         template: # The page style requires the template attribute.
-          view: layout # Where do we get the layout file from?
-          id: navigation.html # What ID does the layout file have?
+          api: content # Where do we get the layout file from?
+          id: theme/navigation.html # What ID does the layout file have?
           convert: mustache # What type of conversion should we do?
         destination: # Where to save the page.
           api: cloudfiles # Send it to cloudfiles. API contains the default container.
           resource: upload # How to send it? By using the upload method.
           arg: # The upload method wants to know where to save it.
-            file: /_navigation.html # Save it so it is accessible be visiting {container_name}/data.json
+            file: /_navigation.html # Save it so it is accessible be visiting {container_name}/_navigation.html
 
   layout:
-    id: '{{_id.basename}}' # Define an ID for easy access to specific entities in this view from other views.
     filter:
       api: content
       must:
