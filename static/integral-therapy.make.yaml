@@ -1,7 +1,6 @@
 ---
-domain: www.integral-therapy.com
-base_path: /
-uid: 1
+domain: www.integral-therapy.com # This is not used for anything yet.
+uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting resources.
 
 collection: # A collection is just a set of default information.
   cloudfiles: # Machine name of the collection
@@ -16,70 +15,74 @@ collection: # A collection is just a set of default information.
       branch: master
     load: # Define a way to load the data initially or if data needs to be processed again.
       resource: tree # Resource to use for the provider listed in this collection.
+      _id: path # Define the _id field. Required. If set as true it expects an array of id values.
       arg:
         recursive: true # We want the entire repo.
         sha: 9b56a38d7e93a11d40199c7e5951116c959e7726 # Not yet sure how to get this dynamically.
 
+# As content is added or updated it is sent through the make file.
 view: # This is the most important part.
+  # CAPE checks to see if content belongs to a view based on the filter criteria.
   data: # Machine name of the view.
-    display: # Define various displays.
-      default: # Machine name of the display.
-        style: page # What we should do with this display.
-        type: json # What format to save the data in.
-        destination:
-          collection: cloudfiles
-          resource: upload
-          arg:
-            file: /data.json
-    field: # We need to load the raw file and parse it.
-      _self: # _self is used to overwrite the object passed to cape (sometimes only an ID).
-        collection: content # Default values
-        resource: raw # What provider resource should we use.
-        type: yaml # What to do with the result.
     filter:
-      collection: content
-      load:
-        self: entity
-      must:
-        path: data.yml
+      collection: content # A collection is a bunch of default values about where the content comes from.
+      must: # If you filter against a field that isn't set it will try to find it (and load) that field.
+        _id: data.yaml # The most basic. Match the path field with the value 'data.yaml'.
+    field: # We need to load the raw file and parse it.
+      _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
+        collection: content # Default values for provider and arguments to load the stuff.
+        resource: raw # What provider resource should we use.
+        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+    display: # Define various displays. A display is a way to render the view.
+      default: # Machine name of the display.
+        style: page # What we should do with this display. A page is expected to be saved somewhere.
+        type: json # What format to save the data in.
+        destination: # Where to save the page.
+          collection: cloudfiles # Send it to cloudfiles. Collection contains the default container.
+          resource: upload # How to send it? By using the upload method.
+          arg: # The upload method wants to know where to save it.
+            file: /data.json # Save it so it is accessible be visiting {container_name}/data.json
 
-  staff:
-    title: Minneapolis Psychologist - Dr. David Thompson
+  staff: # A listing of staff profiles.
     filter:
       collection: content # github content repo for the site.
       must:
-        path:
-          dirname: staff # Files must be in the /staff directory.
-          ext: .md # Files must have .md extension.
-    sort:
-      field: order
-      default: "0"
-    field:
+        _id: # The ID is the only required field.
+          # ID is a string, not an object. Because of that the fields are actually methods.
+          dirname: staff # Files must be in the /staff directory. Parses the ID and extracts the directory structure.
+          ext: .md # Files must have .md extension. Parses ID for file extension.
+    field: # These fields should be what is required for filtering or what is needed in more than one display.
       _self: # Things like git commit hook and load resource tree do not contain the file contents.
         collection: content # Collection is just an alias of provider and provider arguments.
         resource: raw # The provider resource to use.
-        type: md_yaml # What to do with the result.
-      img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
-        provider: wget # Generic provider that just calls a specific url.
-        resource: json # The json resource expects json and converts it.
-        arg: # Only need to pass it the url argument. This uses our img.labori.us service.
-          url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
+        type: md_yaml # What to do with the result. Markdown with YAML frontmatter processor.
+    sort: # Define how to sort the view entities.
+      field: order # Look for the order field.
+      default: "0" # Default sort value.
+      order: ascending
     display:
       default: # the machine name of the display.
         style: page # General style of the display. Tells CAPE what to do with it. (page, file, block)
         type: html # Type of page. html allows a template variable. See below.
-        destination:
-          collection: cloudfiles # Where to send the display, if anywhere.
-          resource: upload # Resources are like methods.
-          arg: # We are going to save the partial with an underscore.
-            file: /credentials/_index.html
-        template:
+        template: # The page style requires the template attribute.
           view: layout # Where do we get the layout file from?
           id: staff.html # What ID does the layout file have?
           convert: mustache # What type of conversion should we do?
-      img:
-        style: file # It outputs a file for each entity.
-        type: image # The type of file. Not sure the importance of that if any? Maybe the content-type header?
+        field: # Fields for this display. img_info is used for defining height and width attributes on the img tag.
+          img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
+            provider: wget # Generic provider that just calls a specific url.
+            resource: json # The json resource expects json and converts it programming language native table/hash/object.
+            arg: # Only need to pass it the url argument. This uses our img.labori.us service.
+              url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
+        destination: # Save the page.
+          collection: cloudfiles # Where to send the display.
+          resource: upload # Resources are like methods. Upload it.
+          arg: # We are going to save this partial page with an underscore.
+            file: /credentials/_index.html # This makes it available to client js or as part of the content "API".
+      img: # view machine name
+        style: file # File outputs a file for *each* entity in the view.
+        type: image # The type of file. Not sure the importance of this yet. Maybe the content-type header.
+        # Using the file style requires a source field. I think.
         source: # Use source to load an external resource using values from the entity fields.
           provider: wget # Grab the contents of a url.
           resource: raw # Do not process the result.
@@ -87,31 +90,65 @@ view: # This is the most important part.
             url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
         pager: # Just for example.
           entities_per: 1 # This is the default for style: file
-        destination:
+        destination: # Save each file.
           collection: cloudfiles # Remember, collection just defines a provider and default argumnets.
           resource: upload
           arg:
             file: '/credentials/{{image}}'
-      index:
-        style: page
-        type: html
-        field: # You can add fields to a specific display.
+      index: # The default display is just a partial. This helps us create the full page.
+        style: page # Single page.
+        type: html # Will be html.
+        field: # You can add fields to a specific display. These fields are not available during filtering.
+          # The most basic field definition is just a text string.
+          title: Minneapolis Psychologist - Dr. David Thompson
           content: # The content field will be populated with...
             display: default # The result of the default display in this view.
-          data:
-            view: data
-            display: false # Do not render the output. Accessible as data.
-          navigation:
+          data: # Define the field data as...
+            view: data # The content from the data view.
+            display: false # Do not render the output. Just access it as variables available to mustache.
+          navigation: # The navigation variable will be the output from the default display on the navigation view.
             view: navigation # Instead of using this view use a different one.
             display: default # The display to use.
-        destination:
+        destination: # What to do with the page.
           collection: cloudfiles
-          resource: upload
+          resource: upload # Upload it to cloud files.
           arg:
-            file: /credentials/index.html
-        template:
+            file: /credentials/index.html # At this file address.
+        template: # Send the field variables through the mustache converter.
           view: layout
           id: default
           convert: mustache
 
+  navigation:
+    filter:
+      collection: content
+      must:
+        _id: navigation.yaml
+    field: # We need to load the raw file and parse it.
+      _self: # _self is used to overwrite the object passed to CAPE (since it need only be an ID).
+        collection: content # Default values for provider and arguments to load the stuff.
+        resource: raw # What provider resource should we use.
+        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+    display: # Define various displays. A display is a way to render the view.
+      default: # Machine name of the display.
+        style: page # What we should do with this display. A page is expected to be saved somewhere.
+        type: html # What format to save the data in.
+        template: # The page style requires the template attribute.
+          view: layout # Where do we get the layout file from?
+          id: navigation.html # What ID does the layout file have?
+          convert: mustache # What type of conversion should we do?
+        destination: # Where to save the page.
+          collection: cloudfiles # Send it to cloudfiles. Collection contains the default container.
+          resource: upload # How to send it? By using the upload method.
+          arg: # The upload method wants to know where to save it.
+            file: /_navigation.html # Save it so it is accessible be visiting {container_name}/data.json
+
+  layout:
+    id: '{{_id.basename}}' # Define an ID for easy access to specific entities in this view from other views.
+    filter:
+      collection: content
+      must:
+        _id:
+          dirname: theme/layouts
+          ext: .html
 

@@ -1,6 +1,6 @@
 ---
 domain: www.integral-therapy.com
-base_path: /
+base__id: /
 uid: 1
 
 collection:
@@ -12,7 +12,7 @@ collection:
         arg:
           domain: github.integral-therapy.com
           adjust: 115x155
-          path: false
+          _id: false
 
   content:
     provider: github
@@ -25,7 +25,7 @@ collection:
       branch: master
 
     arg_required:
-      path: string
+      _id: string
 
     load:
       all:
@@ -56,7 +56,7 @@ view:
       load:
         self: entity
       must:
-        path: data.yml
+        _id: data.yml
 
   staff:
     title: Minneapolis Psychologist - Dr. David Thompson
@@ -73,12 +73,12 @@ view:
             collection: image
             load: info
             arg:
-              path:
+              _id:
     sort: false
     filter:
       collection: content
       must:
-        path:
+        _id:
           dirname: staff
           ext: .md
 
@@ -87,7 +87,7 @@ view:
       collection: content
       must:
         type: blob
-        path:
+        _id:
           dirname: theme/layouts
           ext: .html
 
