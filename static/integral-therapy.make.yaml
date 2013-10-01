@@ -2,8 +2,8 @@
 domain: www.integral-therapy.com # This is not used for anything yet.
 uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting resources.
 
-api: # A collection is just a set of default information.
-  cloudfiles: # Machine name of the collection
+api: # An API is just a set of default information.
+  cloudfiles: # Machine name of the API
     provider: cloudfiles # CAPE provider that is defined in providers.yml
     arg: # Default arguments to send to the provider.
       container: www.integral-therapy.com # Cloudfiles container to use.
@@ -14,7 +14,7 @@ api: # A collection is just a set of default information.
       owner: sundaysenergy
       branch: master
     load: # Define a way to load the data initially or if data needs to be processed again.
-      resource: tree # Resource to use for the provider listed in this collection.
+      resource: tree # Resource to use for the provider listed in this API.
       _id: path # Define the _id field. Required. If set as true it expects an array of id values.
       arg:
         recursive: true # We want the entire repo.
@@ -25,7 +25,7 @@ view: # This is the most important part.
   # CAPE checks to see if content belongs to a view based on the filter criteria.
   data: # Machine name of the view.
     filter:
-      api: content # A collection is a bunch of default values about where the content comes from.
+      api: content # An API is a bunch of default values about where the content comes from.
       must: # If you filter against a field that isn't set it will try to find it (and load) that field.
         _id: data.yaml # The most basic. Match the path field with the value 'data.yaml'.
     field: # We need to load the raw file and parse it.
@@ -38,7 +38,7 @@ view: # This is the most important part.
         style: page # What we should do with this display. A page is expected to be saved somewhere.
         type: json # What format to save the data in.
         destination: # Where to save the page.
-          api: cloudfiles # Send it to cloudfiles. Collection contains the default container.
+          api: cloudfiles # Send it to cloudfiles. API contains the default container.
           resource: upload # How to send it? By using the upload method.
           arg: # The upload method wants to know where to save it.
             file: /data.json # Save it so it is accessible be visiting {container_name}/data.json
@@ -53,7 +53,7 @@ view: # This is the most important part.
           ext: .md # Files must have .md extension. Parses ID for file extension.
     field: # These fields should be what is required for filtering or what is needed in more than one display.
       _self: # Things like git commit hook and load resource tree do not contain the file contents.
-        api: content # Collection is just an alias of provider and provider arguments.
+        api: content # API is just an alias of provider and provider arguments.
         resource: raw # The provider resource to use.
         type: md_yaml # What to do with the result. Markdown with YAML frontmatter processor.
     sort: # Define how to sort the view entities.
@@ -91,7 +91,7 @@ view: # This is the most important part.
         pager: # Just for example.
           entities_per: 1 # This is the default for style: file
         destination: # Save each file.
-          api: cloudfiles # Remember, collection just defines a provider and default argumnets.
+          api: cloudfiles # Remember, API just defines a provider and default argumnets.
           resource: upload
           arg:
             file: '/credentials/{{image}}'
@@ -138,7 +138,7 @@ view: # This is the most important part.
           id: navigation.html # What ID does the layout file have?
           convert: mustache # What type of conversion should we do?
         destination: # Where to save the page.
-          api: cloudfiles # Send it to cloudfiles. Collection contains the default container.
+          api: cloudfiles # Send it to cloudfiles. API contains the default container.
           resource: upload # How to send it? By using the upload method.
           arg: # The upload method wants to know where to save it.
             file: /_navigation.html # Save it so it is accessible be visiting {container_name}/data.json
