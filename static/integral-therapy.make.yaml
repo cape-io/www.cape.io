@@ -33,6 +33,7 @@ view: # This is the most important part.
         api: content # Default values for provider and arguments to load the stuff.
         resource: raw # What provider resource should we use.
         type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+
     display: # Define various displays. A display is a way to render the view.
       default: # Machine name of the display.
         style: page # What we should do with this display. A page is expected to be saved somewhere.
@@ -55,7 +56,9 @@ view: # This is the most important part.
       _self: # Things like git commit hook and load resource tree do not contain the file contents.
         api: content # API is just an alias of provider and provider arguments.
         resource: raw # The provider resource to use.
-        type: md_yaml # What to do with the result. Markdown with YAML frontmatter processor.
+        type: md # What to do with the result. Markdown with YAML frontmatter processor.
+        arg:
+          path: '{{&_id}}'
     sort: # Define how to sort the view entities.
       field: order # Look for the order field.
       default: "0" # Default sort value.
@@ -73,7 +76,7 @@ view: # This is the most important part.
             provider: wget # Generic provider that just calls a specific url.
             resource: json # The json resource expects json and converts it programming language native table/hash/object.
             arg: # Only need to pass it the url argument. This uses our img.labori.us service.
-              url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
+              url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/master/staff/{{photo}}?https=true'
         destination: # Save the page.
           api: cloudfiles # Where to send the display.
           resource: upload # Resources are like methods. Upload it.
@@ -87,7 +90,7 @@ view: # This is the most important part.
           provider: wget # Grab the contents of a url.
           resource: raw # Do not process the result.
           arg: # The url to grab.
-            url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/staff/{{photo}}'
+            url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/master/staff/{{photo}}?https=true'
         pager: # Just for example.
           entities_per: 1 # This is the default for style: file
         destination: # Save each file.
@@ -129,6 +132,8 @@ view: # This is the most important part.
         api: content # Default values for provider and arguments to load the stuff.
         resource: raw # What provider resource should we use.
         type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+        arg:
+          path: '{{&_id}}'
     display: # Define various displays. A display is a way to render the view.
       default: # Machine name of the display.
         style: page # What we should do with this display. A page is expected to be saved somewhere.
