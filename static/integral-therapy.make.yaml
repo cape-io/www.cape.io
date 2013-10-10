@@ -81,6 +81,7 @@ view: # This is the most important part.
           # ID is a string, not an object. Because of that the fields are actually methods.
           dirname: staff # Files must be in the /staff directory. Parses the ID and extracts the directory structure.
           ext: .md # Files must have .md extension. Parses ID for file extension.
+    style: list
     field: # These fields should be what is required for filtering or what is needed in more than one display.
       _self: # Things like git commit hook and load resource tree do not contain the file contents.
         api: content # API is just an alias of provider and provider arguments.
