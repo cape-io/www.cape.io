@@ -28,6 +28,7 @@ view: # This is the most important part.
       api: content # An API is a bunch of default values about where the content comes from.
       must: # If you filter against a field that isn't set it will try to find it (and load) that field.
         _id: data.yaml # The most basic. Match the path field with the value 'data.yaml'.
+    style: object # First entity is used as the data value. Default when filter must _id is single value.
     field: # We need to load the raw file and parse it.
       _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
         api: content # Default values for provider and arguments to load the stuff.
@@ -44,6 +45,33 @@ view: # This is the most important part.
           resource: upload # How to send it? By using the upload method.
           arg: # The upload method wants to know where to save it.
             file: /data.json # Save it so it is accessible be visiting {container_name}/data.json
+
+  navigation:
+    filter:
+      api: content
+      must:
+        _id: navigation.yaml
+    style: object # First entity is used as the data value. Default when filter must _id is single value.
+    field: # We need to load the raw file and parse it.
+      _self: # _self is used to overwrite the object passed to CAPE (since it need only be an ID).
+        api: content # Default values for provider and arguments to load the stuff.
+        resource: raw # What provider resource should we use.
+        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+        arg:
+          path: '{{&_id}}'
+    display: # Define various displays. A display is a way to render the view.
+      default: # Machine name of the display.
+        style: page # What we should do with this display. A page is expected to be saved somewhere.
+        type: html # What format to save the data in.
+        template: # The page style requires the template attribute.
+          api: content # Where do we get the layout file from?
+          id: theme/navigation.html # What ID does the layout file have?
+          convert: mustache # What type of conversion should we do?
+        destination: # Where to save the page.
+          api: cloudfiles # Send it to cloudfiles. API contains the default container.
+          resource: upload # How to send it? By using the upload method.
+          arg: # The upload method wants to know where to save it.
+            file: /_navigation.html # Save it so it is accessible be visiting {container_name}/_navigation.html
 
   staff: # A listing of staff profiles.
     filter:
@@ -122,32 +150,6 @@ view: # This is the most important part.
           api: content
           id: theme/default.html
           convert: mustache
-
-  navigation:
-    filter:
-      api: content
-      must:
-        _id: navigation.yaml
-    field: # We need to load the raw file and parse it.
-      _self: # _self is used to overwrite the object passed to CAPE (since it need only be an ID).
-        api: content # Default values for provider and arguments to load the stuff.
-        resource: raw # What provider resource should we use.
-        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
-        arg:
-          path: '{{&_id}}'
-    display: # Define various displays. A display is a way to render the view.
-      default: # Machine name of the display.
-        style: page # What we should do with this display. A page is expected to be saved somewhere.
-        type: html # What format to save the data in.
-        template: # The page style requires the template attribute.
-          api: content # Where do we get the layout file from?
-          id: theme/navigation.html # What ID does the layout file have?
-          convert: mustache # What type of conversion should we do?
-        destination: # Where to save the page.
-          api: cloudfiles # Send it to cloudfiles. API contains the default container.
-          resource: upload # How to send it? By using the upload method.
-          arg: # The upload method wants to know where to save it.
-            file: /_navigation.html # Save it so it is accessible be visiting {container_name}/_navigation.html
 
   layout:
     filter:
