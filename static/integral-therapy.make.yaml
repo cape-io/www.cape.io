@@ -89,9 +89,16 @@ view: # This is the most important part.
         type: md # What to do with the result. Markdown with YAML frontmatter processor.
         arg:
           path: '{{&_id}}'
+      # img_info is used for defining height and width attributes on the img tag.
+      img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
+        provider: wget # Generic provider that just calls a specific url.
+        resource: json # The json resource expects json and converts it programming language native table/hash/object.
+        arg: # Only need to pass it the url argument. This uses our img.labori.us service.
+          url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/master/staff/{{photo}}?https=true'
+
     sort: # Define how to sort the view entities.
       field: sort # Look for the order field.
-      default: 0 # Default sort value.
+      default: 1 # Default sort value.
       order: ascending
     display:
       default: # the machine name of the display.
@@ -101,12 +108,6 @@ view: # This is the most important part.
           api: content # Where do we get the layout file from?
           id: theme/staff.html # What ID does the layout file have?
           convert: mustache # What type of conversion should we do?
-        field: # Fields for this display. img_info is used for defining height and width attributes on the img tag.
-          img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
-            provider: wget # Generic provider that just calls a specific url.
-            resource: json # The json resource expects json and converts it programming language native table/hash/object.
-            arg: # Only need to pass it the url argument. This uses our img.labori.us service.
-              url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/master/staff/{{photo}}?https=true'
         destination: # Save the page.
           api: cloudfiles # Where to send the display.
           resource: upload # Resources are like methods. Upload it.
