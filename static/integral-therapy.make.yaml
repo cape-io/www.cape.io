@@ -95,6 +95,7 @@ view: # This is the most important part.
         resource: json # The json resource expects json and converts it programming language native table/hash/object.
         arg: # Only need to pass it the url argument. This uses our img.labori.us service.
           url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/master/staff/{{photo}}?https=true'
+      img_url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/master/staff/{{photo}}?https=true'
 
     sort: # Define how to sort the view entities.
       field: sort # Look for the order field.
