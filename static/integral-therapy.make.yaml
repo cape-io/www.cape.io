@@ -109,7 +109,7 @@ view: # This is the most important part.
           api: content # Where do we get the layout file from?
           resource: raw
           arg:
-            path: theme/templates/staff.html # Works the same way that fields do. Loads the external resource.
+            path: theme/layouts/staff.html # Works the same way that fields do. Loads the external resource.
           convert: mustache # What type of conversion should we do?
         destination: # Save the page.
           api: cloudfiles # Where to send the display.
