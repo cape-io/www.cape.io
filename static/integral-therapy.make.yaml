@@ -107,7 +107,9 @@ view: # This is the most important part.
         type: html # Type of page. html allows a template variable. See below.
         template: # The page style requires the template attribute.
           api: content # Where do we get the layout file from?
-          id: theme/staff.html # What ID does the layout file have?
+          resource: raw
+          arg:
+            path: theme/templates/staff.html # Works the same way that fields do. Loads the external resource.
           convert: mustache # What type of conversion should we do?
         destination: # Save the page.
           api: cloudfiles # Where to send the display.
@@ -129,7 +131,7 @@ view: # This is the most important part.
           api: cloudfiles # Remember, API just defines a provider and default argumnets.
           resource: upload
           arg:
-            file: '/credentials/{{image}}'
+            file: '/credentials/{{photo}}'
       index: # The default display is just a partial. This helps us create the full page.
         style: page # Single page.
         type: html # Will be html.
