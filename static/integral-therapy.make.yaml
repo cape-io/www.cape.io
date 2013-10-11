@@ -90,8 +90,8 @@ view: # This is the most important part.
         arg:
           path: '{{&_id}}'
     sort: # Define how to sort the view entities.
-      field: order # Look for the order field.
-      default: "0" # Default sort value.
+      field: sort # Look for the order field.
+      default: 0 # Default sort value.
       order: ascending
     display:
       default: # the machine name of the display.
