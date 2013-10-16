@@ -97,6 +97,12 @@ view: # This is the most important part.
           ext: .md # Files must have .md extension. Parses ID for file extension.
     style: list
     field: # These fields should be what is required for filtering or what is needed in more than one display.
+      _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
+        api: content # Default values for provider and arguments to load the stuff.
+        resource: raw # What provider resource should we use.
+        type: md # What to do with the result. Markdown with YAML frontmatter processor.
+        arg:
+          path: '{{&_id}}'
       # img_info is used for defining height and width attributes on the img tag.
       img_info: # Yaml contains an imagefield. Expand it into more info. I want the dimensions.
         provider: wget # Generic provider that just calls a specific url.
