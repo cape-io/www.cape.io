@@ -22,33 +22,6 @@ api: # An API is just a set of default information.
 
 # As content is added or updated it is sent through the make file.
 view: # This is the most important part.
-  markdown: # Process all markdown files this way. Globally add _self field.
-    filter:
-      api: content
-      must:
-        _id:
-          ext: .md
-    field: # We need to load the raw file and parse it.
-      _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
-        api: content # Default values for provider and arguments to load the stuff.
-        resource: raw # What provider resource should we use.
-        type: md # What to do with the result. Markdown with YAML frontmatter processor.
-        arg:
-          path: '{{&_id}}'
-
-  yaml: # Process all markdown files this way. Globally add _self field.
-    filter:
-      api: content
-      must:
-        _id:
-          ext: .yaml
-    field: # We need to load the raw file and parse it.
-      _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
-        api: content # Default values for provider and arguments to load the stuff.
-        resource: raw # What provider resource should we use.
-        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
-        arg:
-          path: '{{&_id}}'
 
   # CAPE checks to see if content belongs to a view based on the filter criteria.
   data: # Machine name of the view.
@@ -56,6 +29,13 @@ view: # This is the most important part.
       api: content # An API is a bunch of default values about where the content comes from.
       must: # If you filter against a field that isn't set it will try to find it (and load) that field.
         _id: data.yaml # The most basic. Match the path field with the value 'data.yaml'.
+    field: # We need to load the raw file and parse it.
+      _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
+        api: content # Default values for provider and arguments to load the stuff.
+        resource: raw # What provider resource should we use.
+        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+        arg:
+          path: '{{&_id}}'
     style: object # Possibly random entity is used as the data value. Default when filter must _id is single value.
     display: # Define various displays. A display is a way to render the view.
       default: # Machine name of the display.
@@ -72,6 +52,13 @@ view: # This is the most important part.
       api: content
       must:
         _id: navigation.yaml
+    field: # We need to load the raw file and parse it.
+      _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
+        api: content # Default values for provider and arguments to load the stuff.
+        resource: raw # What provider resource should we use.
+        type: yaml # What to do with the result. Parse the yaml into a native hash/object/dict.
+        arg:
+          path: '{{&_id}}'
     style: object # Possibly random entity is used as the data value. Default when filter must _id is single value.
     display: # Define various displays. A display is a way to render the view.
       default: # Machine name of the display.
@@ -95,7 +82,6 @@ view: # This is the most important part.
           # ID is a string, not an object. Because of that the fields are actually methods.
           dirname: staff # Files must be in the /staff directory. Parses the ID and extracts the directory structure.
           ext: .md # Files must have .md extension. Parses ID for file extension.
-        _list: true
     style: list
     field: # These fields should be what is required for filtering or what is needed in more than one display.
       _self: # _self is used to overwrite the object passed to cape (since it need only be an ID).
