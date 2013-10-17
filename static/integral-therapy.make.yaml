@@ -97,7 +97,7 @@ view: # This is the most important part.
         arg: # Only need to pass it the url argument. This uses our img.labori.us service.
           url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/master/staff/{{_self.photo}}?https=true'
       img_url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/master/staff/{{_self.photo}}?https=true'
-      _list: true
+      _list: true # Default value can be overwritten. This value is only used when one isn't found already in the cache.
 
     sort: # Define how to sort the view entities.
       field: sort # Look for the order field.
@@ -107,6 +107,9 @@ view: # This is the most important part.
       default: # the machine name of the display.
         style: page # General style of the display. Tells CAPE what to do with it. (page, file, block)
         type: html # Type of page. html allows a template variable. See below.
+        filter: # You can refine the model to output just the entities you want.
+          must: # Only publish nodes that are in the 'added' list.
+            _list: true
         template: # The page style requires the template attribute.
           api: content # Where do we get the layout file from?
           resource: raw
