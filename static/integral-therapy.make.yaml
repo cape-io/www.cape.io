@@ -18,7 +18,7 @@ api: # An API is just a set of default information.
       _id: path # Define the _id field. Required. If set as true it expects an array of id values.
       arg:
         recursive: true # We want the entire repo.
-        sha: b6e0313d3bd3586a52fc23c202aa6160c64c6987 # Not yet sure how to get this dynamically.
+        sha: db21a0d31eef2c0f8f7d5cf4d3c87a512cbf7648 # Not yet sure how to get this dynamically.
 
 # As content is added or updated it is sent through the make file.
 view: # This is the most important part.
@@ -110,6 +110,7 @@ view: # This is the most important part.
         arg: # Only need to pass it the url argument. This uses our img.labori.us service.
           url: 'http://raw.github.com.img.labori.us/info/115x155/sundaysenergy/integral-therapy/master/staff/{{_self.photo}}?https=true'
       img_url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/master/staff/{{_self.photo}}?https=true'
+      _list: null
 
     sort: # Define how to sort the view entities.
       field: sort # Look for the order field.
