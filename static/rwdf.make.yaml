@@ -1,0 +1,92 @@
+---
+domain: rwdfruhoh.ookb.co # This is not used for anything yet.
+uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting resources.
+
+api: # An API is just a set of default information.
+  cloudfiles:
+    provider: cloudfiles
+    arg:
+      container: rwdf
+    content:
+      provider: github
+      arg:
+        repo: rwdfruhoh.ookb.co
+        owner: bjornmeansbear
+        branch: master
+      load:
+        resource: tree
+        _id: path
+        arg:
+          recursive: true
+          sha: 23bae7aa9c447bc0b9445d0d7c5f23b4baa70a26
+
+view:
+
+  frontpage: # Used to generate the middle area of the homepage.
+    filter: # What entities belong in this view?
+      api: content # Entities in this view must come from the github repo.
+      should: # Should can contain many requirements. Min match is 1.
+        _id: # The value for the _id field is set in the API above.
+          dirname: [whatwedo, spruceups] # An array is like an OR within should.
+          ext: .md # Just to be safe. Don't want to process images or anything else random.
+      field: # The base "entity" in CAPE is the _id field. That's it.
+        # To get the contents of the file we need to add a "meta-field"
+        _self: # _self is a _special_ field that will place its fields within the base context.
+          api: content # The _self field is processed first.
+          resource: raw # This just defines what API at github to use.
+          type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
+          arg:
+            path: '{{&_id}}' # The raw github API call requires a path param.
+        _list: false # Adding a default value to the _list field. '_list' should be a special field somehow. Maybe it should be _published
+      sort:
+        field: sort # Sort field
+        order: ascending
+        default: 1 # Set default value.
+      display: # The fun part. A Display defines what to do with the data.
+        published: # Create a display that contains only published entities.
+          i: 1
+          filter:
+            must:
+              _list: true
+        unpublished:
+          i: 2
+          filter:
+            must:
+              _list: false
+        _index:
+          i: 3
+          field:
+            published:
+              view: frontpage
+              display: published
+          style: page
+          type: html
+          template:
+            api: content
+            resource: raw
+            arg:
+              path: _cape/projects.mustache
+          destination:
+            api: cloudfiles
+            resource: upload
+            arg:
+              file: /_index.html
+        admin:
+          i: 4
+          field:
+            published:
+              view: frontpage
+              display: published
+            unpublished:
+              view: frontpage
+              display: unpublished
+          template:
+            api: content
+            resource: raw
+            arg:
+              path: _cape/projects.mustache
+          destination:
+            api: cloudfiles
+            resource: upload
+            arg:
+              file: /frontpage/admin.html
