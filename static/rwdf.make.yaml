@@ -7,18 +7,18 @@ api: # An API is just a set of default information.
     provider: cloudfiles
     arg:
       container: rwdf
-    content:
-      provider: github
+  content:
+    provider: github
+    arg:
+      repo: rwdfruhoh.ookb.co
+      owner: bjornmeansbear
+      branch: master
+    load:
+      resource: tree
+      _id: path
       arg:
-        repo: rwdfruhoh.ookb.co
-        owner: bjornmeansbear
-        branch: master
-      load:
-        resource: tree
-        _id: path
-        arg:
-          recursive: true
-          sha: 23bae7aa9c447bc0b9445d0d7c5f23b4baa70a26
+        recursive: true
+        sha: 23bae7aa9c447bc0b9445d0d7c5f23b4baa70a26
 
 view:
 
