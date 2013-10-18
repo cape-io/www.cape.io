@@ -23,6 +23,7 @@ api: # An API is just a set of default information.
 view:
 
   frontpage: # Used to generate the middle area of the homepage.
+    style: list
     filter: # What entities belong in this view?
       api: content # Entities in this view must come from the github repo.
       must: # Should can contain many requirements. Min match is 1.
