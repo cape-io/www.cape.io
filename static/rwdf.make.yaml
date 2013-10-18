@@ -25,7 +25,7 @@ view:
   frontpage: # Used to generate the middle area of the homepage.
     filter: # What entities belong in this view?
       api: content # Entities in this view must come from the github repo.
-      should: # Should can contain many requirements. Min match is 1.
+      must: # Should can contain many requirements. Min match is 1.
         _id: # The value for the _id field is set in the API above.
           dirname: [whatwedo, spruceups] # An array is like an OR within should.
           ext: .md # Just to be safe. Don't want to process images or anything else random.
