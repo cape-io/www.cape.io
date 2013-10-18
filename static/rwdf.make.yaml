@@ -71,6 +71,7 @@ view:
           resource: raw
           arg:
             path: _cape/projects.mustache
+          convert: mustache
         destination:
           api: cloudfiles
           resource: upload
@@ -91,6 +92,7 @@ view:
           resource: raw
           arg:
             path: _cape/projects.mustache
+          convert: mustache
         destination:
           api: cloudfiles
           resource: upload
