@@ -81,6 +81,8 @@ view:
             file: /_index.html
 
       admin:
+        style: page
+        type: html
         template:
           api: content
           resource: raw
