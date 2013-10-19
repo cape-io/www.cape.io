@@ -66,40 +66,40 @@ view:
     display: # The fun part. A Display defines what to do with the data.
 
       feature: # Create a display that contains only published entities.
-        style: object
-        limit: 1
-        offset: 0
+        style: object # Single result.
+        limit: 1 # Only want one result.
+        offset: 0 # No offset. Get the first one.
 
       other:
-        style: object
-        limit: 1
-        offset: 1
+        style: object # Single entity.
+        limit: 1 # Only want one entity.
+        offset: 1 # Skip 1 entity.
 
       triptych:
-        style: list
-        limit: 3
-        offset: 2
+        style: list # An array of entities.
+        limit: 3 # Limit to three.
+        offset: 2 # Skip the first 2 in the results from the view.
 
-      _index:
-        field:
-          feature: true
-          other: true
-          triptych: true
+      _index: # Time to put it all together.
+        field: # Define what is available to the template.
+          feature: true # True says that the field is the name of a display in this view.
+          other: true # The display in this view called other.
+          triptych: true # The display called triptych in this view.
           homepage: # (dek, hed, legacy, tellus)
-            view: homepage
-        style: page
-        type: html
-        template:
-          api: content
-          resource: raw
-          arg:
-            path: _cape/homepage.mustache
-          convert: mustache
-        destination:
-          api: cloudfiles
-          resource: upload
-          arg:
-            file: /_index.html
+            view: homepage # Get all the entities from the homepage view.
+        style: page # Save this as a page.
+        type: html # The page has the html format.
+        template: # We want to pass the fields of this display to a template.
+          api: content # Where to get the template from?
+          resource: raw # Use the github raw to load a file.
+          arg: # What args to pass the API
+            path: _cape/homepage.mustache # Define the file path.
+          convert: mustache # What conversion process do we use.
+        destination: # What do we do with the generated file?
+          api: cloudfiles # Send it off somewhere using the API definition above.
+          resource: upload # Upload the file.
+          arg: # Override the API arg values above with those below.
+            file: /_index.html # Tells the API what filename to give this file.
 
       admin:
         style: page
