@@ -1,12 +1,12 @@
 ---
-domain: rwdfruhoh.ookb.co # This is not used for anything yet.
-uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting resources.
+domain: www.rwdfoundation.org # This is not used for anything yet.
+uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting API resources.
 
 api: # An API is just a set of default information.
   cloudfiles:
     provider: cloudfiles
     arg:
-      container: rwdf
+      container: www.rwdfoundation.org
   content:
     provider: github
     arg:
@@ -21,6 +21,23 @@ api: # An API is just a set of default information.
         sha: 819478b5bdf41a8733ee3915bfefdf23373476b5
 
 view:
+  homepage:
+    style: set
+    set_key: _filename
+    filter:
+      api: content
+      must:
+        _id:
+          dirname: homepage
+          ext: .md
+    field: # The base "entity" in CAPE is the _id field. That's it.
+      # To get the contents of the file we need to add a "meta-field"
+      _self: # _self is a special field that will place its fields within the base context.
+        api: content # The _self field is processed first.
+        resource: raw # This just defines what API at github to use.
+        type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
+        arg:
+          path: '{{&_id}}' # The raw github API call requires a path param.
 
   frontpage: # Used to generate the middle area of the homepage.
     style: list
@@ -66,6 +83,8 @@ view:
           feature: true
           other: true
           triptych: true
+          homepage: # (dek, hed, legacy, tellus)
+            view: homepage
         style: page
         type: html
         template:
