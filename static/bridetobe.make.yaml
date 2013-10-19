@@ -1,0 +1,77 @@
+---
+domain: www.bridetobeconsignment.com # This is not used for anything yet.
+uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting API resources.
+
+api: # An API is just a set of default information.
+  cloudfiles: # Used for uploads to the CDN used for the website.
+    provider: cloudfiles
+    arg:
+      container: www.bridetobeconsignment.com
+  content: # Used to get content from github.
+    provider: github
+    arg:
+      repo: bridetobeconsignment
+      owner: sundaysenergy
+      branch: master
+    # CAPE only listens for new or changed content.
+    load: # To load previously created content from this API you need to specificy the load param.
+      resource: tree # Github has a nice index of all content in a repo.
+      _id: path
+      arg:
+        recursive: true # Thankfully they have an option to get results recursively.
+        sha: b10fddb059189bbb0129785ed8a49852a2a442ac # Only problem is having to update the sha.
+        # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
+view:
+  data:
+    style: object
+    filter:
+      api: content
+      must:
+        _id: data.yaml
+    field: # The base "entity" in CAPE is the _id field. That's it.
+      # To get the contents of the file we need to add a "meta-field"
+      _self: # _self is a special meta-field that will place its own fields within the base context.
+        api: content # The _self field is processed first.
+        resource: raw # This just defines what API at github to use.
+        type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
+        arg:
+          path: '{{&_id}}' # The raw github API call requires a path param.
+      info:
+        provider: facebook
+        resource: info
+        arg:
+          id: 166350516717942 # BrideToBe Facebook Page
+
+  pages:
+    style: list
+    filter:
+      api: content
+      must:
+        _id:
+          dirname: content
+          ext: .md
+    field: # The base "entity" in CAPE is the _id field. That's it.
+      # To get the contents of the file we need to add a "meta-field"
+      _self: # _self is a special meta-field that will place its own fields within the base context.
+        api: content # The _self field is processed first.
+        resource: raw # This just defines what API at github to use.
+        type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
+        arg:
+          path: '{{&_id}}' # The raw github API call requires a path param.
+    display:
+      pages:
+        style: pages
+        type: html
+        field:
+          data:
+            view: data
+        pager: # Style pages requires a pager.
+          per_pg: 1 # Entities per page. 1 is the default.
+          id: _filename # Default is to ID the pages with a number. This overrides that.
+        template:
+          api: content
+          resource: raw
+          arg:
+            path: theme/layouts/default.html
+          convert: mustache
+

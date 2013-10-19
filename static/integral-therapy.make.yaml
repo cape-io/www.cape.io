@@ -131,7 +131,7 @@ view: # This is the most important part.
           arg: # The url to grab.
             url: 'http://raw.github.com.img.labori.us/115x155/sundaysenergy/integral-therapy/master/staff/{{_self.photo}}?https=true'
         pager: # Just for example.
-          entities_per: 1 # This is the default for style: file
+          per_pg: 1 # This is the default for style: file
         destination: # Save each file.
           api: cloudfiles # Remember, API just defines a provider and default argumnets.
           resource: upload
