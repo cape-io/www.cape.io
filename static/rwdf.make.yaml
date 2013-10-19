@@ -3,36 +3,38 @@ domain: www.rwdfoundation.org # This is not used for anything yet.
 uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting API resources.
 
 api: # An API is just a set of default information.
-  cloudfiles:
+  cloudfiles: # Used for uploads to the CDN used for the website.
     provider: cloudfiles
     arg:
       container: www.rwdfoundation.org
-  content:
+  content: # Used to get content from github.
     provider: github
     arg:
       repo: rwdfruhoh.ookb.co
       owner: bjornmeansbear
       branch: master
-    load:
-      resource: tree
+    # CAPE only listens for new or changed content.
+    load: # To load previously created content from this API you need to specificy the load param.
+      resource: tree # Github has a nice index of all content in a repo.
       _id: path
       arg:
-        recursive: true
-        sha: 819478b5bdf41a8733ee3915bfefdf23373476b5
-
+        recursive: true # Thankfully they have an option to get results recursively.
+        sha: 819478b5bdf41a8733ee3915bfefdf23373476b5 # Only problem is having to update the sha.
+        # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
 view:
-  homepage:
-    style: set
-    set_key: _filename
+  homepage: # (dek, hed, legacy, tellus)
+    style: set # We want to be able to do stuff like {{homepage.dek}} so we save it as a set instead of an array.
+    # A set has key/value pairs. What field should we use for the key?
+    set_key: _filename # _filename is an autocreated field based on the _id field.
     filter:
       api: content
       must:
-        _id:
+        _id: # We only want content in the homepage directory.
           dirname: homepage
-          ext: .md
+          ext: .md # With the .md extension.
     field: # The base "entity" in CAPE is the _id field. That's it.
       # To get the contents of the file we need to add a "meta-field"
-      _self: # _self is a special field that will place its fields within the base context.
+      _self: # _self is a special meta-field that will place its own fields within the base context.
         api: content # The _self field is processed first.
         resource: raw # This just defines what API at github to use.
         type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
