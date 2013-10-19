@@ -46,24 +46,26 @@ view:
 
     display: # The fun part. A Display defines what to do with the data.
 
-      published: # Create a display that contains only published entities.
-        i: 1
-        filter:
-          must:
-            _list: true
+      feature: # Create a display that contains only published entities.
+        style: object
+        limit: 1
+        offset: 0
 
-      unpublished:
-        i: 2
-        filter:
-          must:
-            _list: false
+      other:
+        style: object
+        limit: 1
+        offset: 1
+
+      triptych:
+        style: list
+        limit: 3
+        offset: 2
 
       _index:
-        i: 3
         field:
-          published:
-            view: frontpage
-            display: published
+          feature: true
+          other: true
+          triptych: true
         style: page
         type: html
         template:
@@ -79,14 +81,6 @@ view:
             file: /_index.html
 
       admin:
-        i: 4
-        field:
-          published:
-            view: frontpage
-            display: published
-          unpublished:
-            view: frontpage
-            display: unpublished
         template:
           api: content
           resource: raw
