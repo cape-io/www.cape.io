@@ -72,7 +72,7 @@ view:
           api: content
           resource: raw
           arg:
-            path: _cape/projects.mustache
+            path: _cape/homepage.mustache
           convert: mustache
         destination:
           api: cloudfiles
