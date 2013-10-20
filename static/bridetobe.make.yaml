@@ -33,14 +33,14 @@ view:
       _self: # _self is a special meta-field that will place its own fields within the base context.
         api: content # The _self field is processed first.
         resource: raw # This just defines what API at github to use.
-        type: yaml # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
+        type: yaml # This tells CAPE what to do with the file that it gets. This should default to the file extension.
         arg:
           path: '{{&_id}}' # The raw github API call requires a path param.
       info:
         provider: facebook
         resource: info
         arg:
-          id: 166350516717942 # BrideToBe Facebook Page
+          id: "166350516717942" # BrideToBe Facebook Page
 
   pages:
     style: list
