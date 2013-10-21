@@ -7,6 +7,13 @@ api: # An API is just a set of default information.
     provider: cloudfiles
     arg:
       container: www.bridetobeconsignment.com
+  fb_coverphotos:
+    provider: facebook
+    load:
+      resource: photos
+      _id: id
+      arg:
+        album: 402236339796024
   content: # Used to get content from github.
     provider: github
     arg:
@@ -21,6 +28,7 @@ api: # An API is just a set of default information.
         recursive: true # Thankfully they have an option to get results recursively.
         sha: 94b09782c72c1b079d094c8606c96cb04d45f70e # Only problem is having to update the sha.
         # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
+
 view:
   data:
     style: object
@@ -36,11 +44,34 @@ view:
         type: yaml # This tells CAPE what to do with the file that it gets. This should default to the file extension.
         arg:
           path: '{{&_id}}' # The raw github API call requires a path param.
+        process:
+          navigation: navigation
       info:
         provider: facebook
         resource: info
         arg:
           id: "166350516717942" # BrideToBe Facebook Page
+        process:
+          hours: fb_hours
+
+  coverphotos:
+    style: list
+    filter:
+      api: fb_coverphotos
+    # No fields will use the _source
+    sort:
+      field: _id
+      order: descending
+    display:
+      slider:
+        style: page
+        type: html
+        limit: 3
+        template:
+          api: content
+          resource: raw
+          arg:
+            path: theme/layouts/slider.html
 
   pages:
     style: list
