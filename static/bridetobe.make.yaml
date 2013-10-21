@@ -13,7 +13,7 @@ api: # An API is just a set of default information.
       resource: photos
       _id: id
       arg:
-        album: 402236339796024
+        album: '402236339796024' # Needs to be text. Bug we need to fix.
   content: # Used to get content from github.
     provider: github
     arg:
