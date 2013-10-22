@@ -2,7 +2,7 @@
 domain: www.bridetobeconsignment.com # This is not used for anything yet.
 uid: 1 # The CAPE user ID to use for authenticating against the providers when requesting API resources.
 
-api: # An API is just a set of default information.
+api: # An API is just a set of default information. Think of an API as a collection of content.
   cloudfiles: # Used for uploads to the CDN used for the website.
     provider: cloudfiles
     arg:
@@ -44,14 +44,14 @@ view:
         type: yaml # This tells CAPE what to do with the file that it gets. This should default to the file extension.
         arg:
           path: '{{&_id}}' # The raw github API call requires a path param.
-        process:
+        map:
           navigation: navigation
       info:
         provider: facebook
         resource: info
         arg:
           id: "166350516717942" # BrideToBe Facebook Page
-        process:
+        map:
           hours: fb_hours
 
   coverphotos:
@@ -62,6 +62,8 @@ view:
     sort:
       field: _id
       order: descending
+    map:
+      images: first
     display:
       slider:
         style: page
