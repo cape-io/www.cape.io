@@ -74,6 +74,7 @@ view:
           resource: raw
           arg:
             path: theme/layouts/slider.html
+          convert: mustache
 
   pages:
     style: list
