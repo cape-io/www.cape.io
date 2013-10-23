@@ -64,6 +64,8 @@ view:
             path: theme/layouts/contact.html
           convert: mustache
         field:
+          data:
+            view: data
           title: Contact
       contact:
         style: page
