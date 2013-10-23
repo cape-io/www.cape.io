@@ -44,8 +44,6 @@ view:
         type: yaml # This tells CAPE what to do with the file that it gets. This should default to the file extension.
         arg:
           path: '{{&_id}}' # The raw github API call requires a path param.
-        map:
-          navigation: navigation
       info:
         provider: facebook
         resource: info
@@ -53,6 +51,35 @@ view:
           id: "166350516717942" # BrideToBe Facebook Page
         map:
           hours: fb_hours
+          about: markdown
+          general_info: markdown
+    display:
+      _contact:
+        style: page
+        type: html
+        template:
+          api: content
+          resource: raw
+          arg:
+            path: theme/layouts/contact.html
+          convert: mustache
+        field:
+          title: Contact
+      contact:
+        style: page
+        type: html
+        template:
+          api: content
+          resource: raw
+          arg:
+            path: theme/layouts/default.html
+        field:
+          data:
+            view: data
+          page:
+            view: data
+            display: _contact
+            _output: content # Instead of using just the _output this includes the output as a field on the _data.
 
   coverphotos:
     style: list
@@ -99,6 +126,8 @@ view:
         field:
           data:
             view: data
+            map:
+              navigation: navigation
           slider:
             view: coverphotos
             display: slider
