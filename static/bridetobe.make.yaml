@@ -26,7 +26,7 @@ api: # An API is just a set of default information. Think of an API as a collect
       _id: path
       arg:
         recursive: true # Thankfully they have an option to get results recursively.
-        sha: a44d73a530623ff1cae81c08faa29b32697c7826 # Only problem is having to update the sha.
+        sha: 9d1b0d6537fcf5836fabfc0b29989228e85430e8 # Only problem is having to update the sha.
         # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
 
 view:
