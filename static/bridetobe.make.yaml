@@ -157,5 +157,5 @@ view:
           api: cloudfiles
           resource: upload # Upload it to cloud files.
           arg:
-            file: /{{_filename}}/index.html # At this file address.
+            file: /{{page._filename}}/index.html # At this file address.
 
