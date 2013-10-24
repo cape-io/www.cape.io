@@ -67,6 +67,12 @@ view:
           data:
             view: data
           title: Contact
+        destination: # What to do with the page.
+          api: cloudfiles
+          resource: upload # Upload it to cloud files.
+          arg:
+            file: /contact.html # At this file address.
+
       contact:
         style: page
         type: html
@@ -82,6 +88,11 @@ view:
             view: data
             display: _contact
             _output: content # Instead of using just the _output this includes the output as a field on the _data.
+        destination: # What to do with the page.
+          api: cloudfiles
+          resource: upload # Upload it to cloud files.
+          arg:
+            file: /contact/index.html # At this file address.
 
   coverphotos:
     style: list
@@ -142,4 +153,9 @@ view:
           arg:
             path: theme/layouts/default.html
           convert: mustache
+        destination: # What to do with the page.
+          api: cloudfiles
+          resource: upload # Upload it to cloud files.
+          arg:
+            file: /{{_filename}}/index.html # At this file address.
 
