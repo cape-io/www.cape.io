@@ -77,9 +77,6 @@ view:
             view: data
             map:
               navigation: navigation
-          slider:
-            view: coverphotos
-            display: slider
         pager: # Style pages requires a pager.
           per_pg: 1 # Entities per page. 1 is the default.
           id: _filename # Default is to ID the pages with a number. This overrides that.
