@@ -20,7 +20,7 @@ api: # An API is a set of default information. Think of an API as a collection o
       _id: path
       arg:
         recursive: true # Thankfully they have an option to get results recursively.
-        sha: 8971f4424f6c647de0ffb6be604816b1c1da000b # Only problem is having to update the sha.
+        sha: bb6489e64411cf9e1aafc95c9c88ead42a7173c3 # Only problem is having to update the sha.
         # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
   theme: # Used to get content from github.
     provider: github
@@ -34,7 +34,7 @@ api: # An API is a set of default information. Think of an API as a collection o
       _id: path
       arg:
         recursive: true # Thankfully they have an option to get results recursively.
-        sha: 21a4435820aa2f11242c14c0fc3a4a047ae5f177 # Only problem is having to update the sha.
+        sha: 2f1efa967618f8649ec7fc14b53ccdc17dad0439 # Only problem is having to update the sha.
         # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
 
 view:
