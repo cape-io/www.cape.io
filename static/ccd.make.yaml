@@ -62,7 +62,7 @@ view:
           ext: .md
     field: # The base "entity" in CAPE is the _id field. That's it.
       # To get the contents of the file we need to add a "meta-field"
-      _self: # _self is a special meta-field that will place its own fields within the base context.
+      html: # _self is a special meta-field that will place its own fields within the base context.
         api: content # The _self field is processed first.
         resource: raw # This just defines what API at github to use.
         type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
