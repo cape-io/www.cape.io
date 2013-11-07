@@ -38,6 +38,42 @@ api: # An API is a set of default information. Think of an API as a collection o
         # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
 
 view:
+  theme:  # theme - all the files...#
+    style: files
+    filter:
+      api: theme
+    field:
+      _self:
+        api: theme
+        resource: raw
+        type: any
+        arg:
+          path: '{{&_id}}'
+    destination: # What to do with the page. Where to send it.
+      api: cloudfiles
+      resource: upload # Upload it to cloud files.
+      arg:
+        file: '/{{_id}}' # At this file address.
+
+  files: # site files within content repo#
+    style: files
+    filter:
+      api: content
+      must:
+        dirname: files
+    field:
+      _self:
+        api: theme
+        resource: raw
+        type: any
+        arg:
+          path: '{{&_id}}'
+    destination: # What to do with the page. Where to send it.
+      api: cloudfiles
+      resource: upload # Upload it to cloud files.
+      arg:
+        file: '/{{_id}}' # At this file address.
+
   data: # data view #
     style: object
     filter:
