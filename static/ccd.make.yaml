@@ -38,7 +38,7 @@ api: # An API is a set of default information. Think of an API as a collection o
         # Will likely create something to auto get the sha in the future. Perhaps getting the args from another view.
 
 view:
-  data:
+  data: # data view #
     style: object
     filter:
       api: content
@@ -53,7 +53,7 @@ view:
         arg:
           path: '{{&_id}}' # The raw github API call requires a path param.
 
-  pages:
+  pages: # pages view #
     style: list
     filter:
       api: content
@@ -62,7 +62,7 @@ view:
           ext: .md
     field: # The base "entity" in CAPE is the _id field. That's it.
       # To get the contents of the file we need to add a "meta-field"
-      html: # _self is a special meta-field that will place its own fields within the base context.
+      _self: # _self is a special meta-field that will place its own fields within the base context.
         api: content # The _self field is processed first.
         resource: raw # This just defines what API at github to use.
         type: md # This tells CAPE what to do with the file that it gets. 'md' converts the yaml into an object and content into html.
