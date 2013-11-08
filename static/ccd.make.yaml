@@ -42,8 +42,11 @@ view:
     style: files
     filter:
       api: theme
+      must_not:
+        _source:
+          type: 'tree'
     field:
-      _self:
+      _file:
         api: theme
         resource: raw
         type: any
@@ -62,7 +65,7 @@ view:
       must:
         dirname: files
     field:
-      _self:
+      _file:
         api: theme
         resource: raw
         type: any
