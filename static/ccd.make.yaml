@@ -42,7 +42,7 @@ view:
     style: files
     filter:
       api: theme
-      must:
+      should:
         _ext: [js, css, mustache]
     field:
       _file:
@@ -62,7 +62,7 @@ view:
     filter:
       api: content
       must:
-        dirname: files
+        _dirname: files
     field:
       _file:
         api: theme
