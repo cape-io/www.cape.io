@@ -65,7 +65,7 @@ view:
         _dirname: files
     field:
       _file:
-        api: theme
+        api: content
         resource: raw
         type: any
         arg:
