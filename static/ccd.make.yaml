@@ -42,9 +42,8 @@ view:
     style: files
     filter:
       api: theme
-      must_not:
-        _source:
-          type: 'tree'
+      must:
+        _ext: [js, css, mustache]
     field:
       _file:
         api: theme
