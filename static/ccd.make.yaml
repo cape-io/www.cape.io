@@ -43,7 +43,7 @@ view:
     filter:
       api: theme
       must:
-        _ext: css
+        _ext: .css
     field:
       _file:
         api: theme
