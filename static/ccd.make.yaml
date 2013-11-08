@@ -42,8 +42,8 @@ view:
     style: files
     filter:
       api: theme
-      should:
-        _ext: [js, css, mustache]
+      must:
+        _ext: css
     field:
       _file:
         api: theme
