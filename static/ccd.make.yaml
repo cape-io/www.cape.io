@@ -55,7 +55,7 @@ view:
       api: cloudfiles
       resource: upload # Upload it to cloud files.
       arg:
-        file: '/{{_id}}' # At this file address.
+        file: '/{{&_id}}' # At this file address.
 
   files: # site files within content repo#
     style: files
@@ -74,7 +74,7 @@ view:
       api: cloudfiles
       resource: upload # Upload it to cloud files.
       arg:
-        file: '/{{_id}}' # At this file address.
+        file: '/{{&_id}}' # At this file address.
 
   data: # data view #
     style: object
