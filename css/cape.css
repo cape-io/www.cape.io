@@ -26,8 +26,8 @@ h2, h3, h4, h5, h6 { font-weight: 600; }
 
 header {
   width: 100%;
-  background: transparent url('../img/everything-is-connected.png') no-repeat center center fixed;
-  border: 1em solid white; 
+  background: transparent url('/media/everything-is-connected.png') no-repeat center center fixed;
+  border: 1em solid white;
  -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -81,18 +81,18 @@ main {
     top:0;
     bottom: 0;
   }
-  
+
   header {
     position: fixed;
   }
-  
+
   main {
     margin: 0;
     margin-left: 50%;
     /**/
     position: absolute;
   }
-  
+
   #logo {
     height: 150px;
     width: 150px;
@@ -102,11 +102,11 @@ main {
     margin-top: -75px;
     margin-left: -75px;
   }
-  
+
   main article {
     padding: 50px;
   }
-  
+
   main article > * {
     max-width: 600px
   }
