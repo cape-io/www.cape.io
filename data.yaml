@@ -1,5 +1,5 @@
-title : Blog Title
-tagline: Blog Tagline
+title : CAPE
+tagline: 'Create Anywhere, Publish Everywhere.'
 author :
   name : Firstname Lastname
   email : blah@email.test
@@ -13,4 +13,4 @@ navigation :
   - categories.html
   - pages.html
   - about.md
-  
+
