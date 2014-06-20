@@ -1,0 +1,113 @@
+
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,300,600");
+
+* {font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
+
+/*******/
+/*******/
+/*******/
+/*******/
+/*******/
+/*******/
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 { font-weight: 800; }
+h2, h3, h4, h5, h6 { font-weight: 600; }
+
+.border-top {
+  border-top: 1px solid black;
+  margin-top: 1.5em;
+  padding-top: 1.5em;
+}
+
+header {
+  width: 100%;
+  background: transparent url('../img/everything-is-connected.png') no-repeat center center fixed;
+  border: 1em solid white; 
+ -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /**/
+  height: 20em;
+  position: relative;
+}
+
+#logo {
+  background: black;
+  color: white;
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 100px;
+  /**/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+
+main {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+}
+
+@media screen and (min-width: 500px) and (max-width: 960px) {
+  header {
+    height: 30em;
+  }
+
+  main {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+@media screen and (min-width: 961px) {
+  header, main {
+    min-height: 100%;
+    height: 100%;
+    width: 50%;
+    /**/
+    top:0;
+    bottom: 0;
+  }
+  
+  header {
+    position: fixed;
+  }
+  
+  main {
+    margin: 0;
+    margin-left: 50%;
+    /**/
+    position: absolute;
+  }
+  
+  #logo {
+    height: 150px;
+    width: 150px;
+    font-size: 122px;
+    line-height: 150px;
+    /**/
+    margin-top: -75px;
+    margin-left: -75px;
+  }
+  
+  main article {
+    padding: 50px;
+  }
+  
+  main article > * {
+    max-width: 600px
+  }
+}
