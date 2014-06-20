@@ -1,6 +1,8 @@
-The content lifecycle
+# About
 
-CAPE.io is a web service that lets curators use content created anywhere and publish it everywhere. Everything that has a feed, API or webhook becomes a content source feeding your data-pool. Content streams in from Facebook, Twitter, Instagram, Flickr, Youtube, Zapier, Dropbox, Git based content repo and other Websites. CAPE.io is an aggregator and search engine for navigating those sources easily. It then allows you to create custom new feeds and/or content sources for use on your website or potentially any app. Think the wordpress.com for Jekyll with more power than Drupal without being limited to a single data source. For example, a user links social media websites with CAPE and sees a website automatically generated based on the information and content available from those sources. A "newspaper" will manually or automatically compile a collection of content from various sources and pass it through templates making it ready print, web, mobile, and syndicates.
+CAPE.io is a web service that lets curators use content created anywhere and publish it everywhere. Anything that has a feed, API or webhook becomes a content source (API) feeding your data-pool (Model). Content streams in from Facebook, Twitter, Instagram, Flickr, Youtube, Zapier, Dropbox, Github and other Websites. CAPE.io is an aggregator, filtering, and rendering engine for utilizing the data sources (API's) easily. It then allows you to create new feeds and/or content sources for use on your website or potentially any app.
+
+Think the wordpress.com for Jekyll with more power than Drupal without being limited to a single data source. For example, a user links social media websites with CAPE and sees a website automatically generated based on the information and content available from those sources. A "newspaper" will manually or automatically compile a collection of content from various sources and pass it through templates making it ready print, web, mobile, and syndicates.
 
 Feeds and moderation. 
 

@@ -1,0 +1,6 @@
+# External fields get a different file.
+_id: 1001
+_source: {} # Origin load.
+_self: {} # When loaded after origin or no origin. Overwrites origin. External field.
+_cape: {} # New simple "internal" fields that are added.
+_file: {} # Files.

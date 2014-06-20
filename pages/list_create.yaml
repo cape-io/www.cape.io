@@ -1,0 +1,20 @@
+# POST /{make_id}/_api/{api_id}/_list
+# application/json
+# host: v2.cape.io
+
+info: # This gets saved as info.json
+  # _id: 1001 # Added by the server.
+  # make_id: rg # Added from URL
+  # api_id: items # Added from URL
+  user_id: 1 # Maybe we get this value from the session.
+  name: Kai's Awesome List
+  status: 1 # Optional. One = added/publish. Zero = removed/unpublished.
+  other_fields: yuppers
+entities: # This is a sub-directory ({list_id}/entities/ )or {list_id}/entities.json.
+  91001-01:
+    sort: 2
+    status: 1 # If status default is set the value is probably the sort value.
+    other_field: sure
+  91002-05:
+    sort: 3
+    status: 1

@@ -1,0 +1,15 @@
+list_id: rg/_api/items/_list/1001 # This is a directory.
+info: # This gets saved as info.json
+  _id: 1001
+  make_id: rg
+  name: Kai's Awesome List
+  api_id: items
+  user_id: 1
+  status: 1 # One is added/publish. Zero is removed/unpublished.
+entities: # This is a sub-directory ({list_id}/entities/ )or {list_id}/entities.json.
+  91001-01:
+    sort: 2
+    status: 1 # If status default is set the value is probably the sort value.
+  91002-05:
+    sort: 3
+    status: 1

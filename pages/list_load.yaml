@@ -1,0 +1,14 @@
+list:
+  _id: 1001
+  info:
+    make_id: rg
+    name: Kai's Awesome List
+    api_id: items
+    user_id: 1
+  entities:
+    -
+      entity_id: 91001-01
+      sort: 2
+    -
+      entity_id: 91002-05
+      sort: 3
