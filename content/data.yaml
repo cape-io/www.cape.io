@@ -1,5 +1,6 @@
 title : CAPE
 tagline: 'Create Anywhere, Publish Everywhere.'
+since: 2010
 author :
   email : info@cape.io
   github : sundaysenergy
@@ -8,7 +9,7 @@ author :
     - Kai Curry
     - KB
     - TL
-navigation :
-  - pages.html
-  - about.md
 
+navigation :
+  - home
+  - domains

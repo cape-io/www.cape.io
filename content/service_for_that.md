@@ -35,9 +35,9 @@ We will have a development site with a different address that we will use for te
 
 ### Calendar
 
-* [Google Calendar](http://www.google.com/calendar/) (Can style from xml/rss stream)
-  * [gCalFlow](http://sugi.github.com/jquery-gcal-flow)
-  * [Full Calendar](http://arshaw.com/fullcalendar/)
+* [Google Calendar](http://www.google.com/calendar/) (Can style from json/xml/rss stream)
+* [gCalFlow](http://sugi.github.com/jquery-gcal-flow)
+* [Full Calendar](http://arshaw.com/fullcalendar/)
 
 ### Comments
 
