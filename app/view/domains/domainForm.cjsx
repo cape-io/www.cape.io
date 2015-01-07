@@ -3,6 +3,8 @@ React = require 'react'
 
 validator = require 'validator'
 
+Domain = require './domain'
+
 module.exports = React.createClass
   getInitialState: ->
     value: ""
@@ -33,23 +35,30 @@ module.exports = React.createClass
     return
 
   render: ->
-
+    {domains} = @props
     {value} = @state
+
     style = @validationState()
 
-    <form>
-      <Input
-        type="text"
-        value={value}
-        placeholder="example.com"
-        label="Please enter your domain"
-        help="Without http or www please."
-        bsStyle={style}
-        hasFeedback
-        ref="input"
-        groupClassName="group-class"
-        wrapperClassName="wrapper-class"
-        labelClassName="label-class"
-        onChange={@handleChange}
-      />
-    </form>
+    if value and domain = domains[value]
+      DomainInfo = <Domain domain={domain} />
+
+    <div className="domain-search">
+      <form>
+        <Input
+          type="text"
+          value={value}
+          placeholder="example.com"
+          label="Please enter your domain"
+          help="Without http or www please."
+          bsStyle={style}
+          hasFeedback
+          ref="input"
+          groupClassName="group-class"
+          wrapperClassName="wrapper-class"
+          labelClassName="label-class"
+          onChange={@handleChange}
+        />
+      </form>
+      {DomainInfo}
+    </div>
