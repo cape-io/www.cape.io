@@ -6,11 +6,11 @@ DomainForm = require './domainForm'
 module.exports = React.createClass
   render: ->
 
-    {data} = @props
+    {domains} = @props.data
 
     <main className="row">
       <Col xs={6} xsOffset={3}>
         <h2>Renew your Domain</h2>
-        <DomainForm />
+        <DomainForm domains={domains} />
       </Col>
     </main>

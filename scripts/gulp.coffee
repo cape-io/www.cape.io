@@ -106,8 +106,10 @@ gulp.task 'serverData', ['data'], (cb) ->
 gulp.task 'templates', (cb) ->
   # Calling an external script for this.
   exec 'coffee ./scripts/renderMarkup.coffee', (err, stdout, stderr) ->
-    console.log stdout
-    console.log stderr
+    if stdout
+      console.log stdout
+    if stderr
+      console.log stderr
     cb err
 
 # Process LESS to CSS.

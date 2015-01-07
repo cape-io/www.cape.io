@@ -60,7 +60,8 @@ module.exports = (callback) ->
     {domains} = serverData
 
     if domains
-      data.domains = domains
+      data.domains = _.indexBy domains, (domain) ->
+        domain.sld+'.'+domain.tld
 
     fs.outputJsonSync 'app/data/index.json', data
     if _.isFunction callback

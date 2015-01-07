@@ -8,14 +8,16 @@ module.exports = React.createClass
     value: ""
 
   validationState: ->
+    {domains} = @props
     value = @state.value
     length = value.length
     isDomain = validator.isFQDN value
-    if isDomain
-      "success"
-    else if length < 5
-      "warning"
-    else "error"
+    if length
+      if isDomain and domains[value]
+        "success"
+      else if length < 5
+        "warning"
+      else "error"
 
   handleChange: ->
     # This could be done using ReactLink:
@@ -25,9 +27,8 @@ module.exports = React.createClass
     value = value.split('/')[0]
     subdomains = value.split('.')
     if subdomains.length > 3
-      tld = subdomains.pop()
-      domain = subdomains.pop()
-      value = "#{domain}.#{tld}"
+      subdomains.shift()
+      value = subdomains.join('.')
     @setState value: value
     return
 
@@ -40,9 +41,9 @@ module.exports = React.createClass
       <Input
         type="text"
         value={value}
-        placeholder="Enter text"
+        placeholder="example.com"
         label="Please enter your domain"
-        help="Without http and without www please."
+        help="Without http or www please."
         bsStyle={style}
         hasFeedback
         ref="input"

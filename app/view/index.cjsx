@@ -23,6 +23,7 @@ module.exports = React.createClass
           <RouteHandler data={data} />
           <Foot data={data} />
         </div>
+        <script src="https://checkout.stripe.com/checkout.js"></script>
         <script src="/assets/app.js" />
       </body>
     </html>
