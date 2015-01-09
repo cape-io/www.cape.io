@@ -4,6 +4,7 @@ React = require 'react'
 validator = require 'validator'
 
 Domain = require './domain'
+Renew = require './renew'
 
 module.exports = React.createClass
   getInitialState: ->
@@ -41,7 +42,8 @@ module.exports = React.createClass
     style = @validationState()
 
     if value and domain = domains[value]
-      DomainInfo = <Domain domain={domain} />
+      DomainInfo = <Domain domain={domain}  />
+      DomainRenew = <Renew model={domain} domain={value} />
 
     <div className="domain-search">
       <form>
@@ -60,5 +62,6 @@ module.exports = React.createClass
           onChange={@handleChange}
         />
       </form>
+      {DomainRenew}
       {DomainInfo}
     </div>

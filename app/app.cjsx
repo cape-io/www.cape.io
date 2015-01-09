@@ -6,31 +6,22 @@ Router = require 'react-router'
 data = require './data'
 #data.content = require './data/content'
 
-Index = require './view/index'
-Home = require './view/home/home'
-Domains = require './view/domains/domains'
+Routes = require './routes'
 
 inBrowser = typeof window isnt "undefined"
 
 App = (vars, render) ->
   props =
     name: 'app'
-    handler: Index
     path: vars.path or '/'
-
-  routes =
-    <Route name="app" path="/" handler={Index}>
-      <Route name="domains" path="/domains/" handler={Domains} />
-      <DefaultRoute handler={Home}/>
-    </Route>
 
   Render = (Handler) ->
     render Handler, {data: data, vars: vars}
 
   if inBrowser
-    Router.run routes, Router.HistoryLocation, Render
+    Router.run Routes, Router.HistoryLocation, Render
   else
-    Router.run routes, props.path, Render
+    Router.run Routes, props.path, Render
 
 if inBrowser
   window.onload = -> # Attach event handlers.

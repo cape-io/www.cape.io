@@ -8,14 +8,19 @@ Foot = require './foot/foot'
 module.exports = React.createClass
   render: ->
     {data} = @props
-    {title} = @props.data
+    {title, sha} = data
+    appFileName = sha or 'app'
+    cssFilePath = "/assets/#{appFileName}.css"
+    jsFilePath = "/assets/#{appFileName}.js"
 
     <html>
       <head>
         <title>{title}</title>
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/assets/app.css" />
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href={cssFilePath} />
+
       </head>
       <body>
         <div id="wrapper">
@@ -23,7 +28,7 @@ module.exports = React.createClass
           <RouteHandler data={data} />
           <Foot data={data} />
         </div>
-        <script src="https://checkout.stripe.com/checkout.js"></script>
-        <script src="/assets/app.js" />
+        <script src="https://checkout.stripe.com/checkout.js" type="text/javascript" />
+        <script src={jsFilePath} type="text/javascript" />
       </body>
     </html>
