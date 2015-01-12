@@ -52,7 +52,7 @@ module.exports = (callback) ->
     url = "http://social.cape.io/instagram/#{data.instagram}"
     getData.insta = makeReq url
 
-  url = "http://rs.cape.io:8000/domains"
+  url = "http://social.cape.io/_simpurl/domains"
   getData.domains = makeReq url
 
   save = (err, serverData) ->
@@ -60,8 +60,7 @@ module.exports = (callback) ->
     {domains} = serverData
 
     if domains
-      data.domains = _.indexBy domains, (domain) ->
-        domain.sld+'.'+domain.tld
+      data.domains = domains
 
     fs.outputJsonSync 'app/data/index.json', data
     if _.isFunction callback

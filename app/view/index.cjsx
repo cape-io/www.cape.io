@@ -30,5 +30,7 @@ module.exports = React.createClass
         </div>
         <script src="https://checkout.stripe.com/checkout.js" type="text/javascript" />
         <script src={jsFilePath} type="text/javascript" />
+        <div id="fb-root"></div>
+        <script id="facebook-jssdk" src="//connect.facebook.net/en_US/sdk.js" type="text/javascript" />
       </body>
     </html>

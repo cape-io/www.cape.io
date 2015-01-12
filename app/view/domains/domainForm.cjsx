@@ -1,5 +1,5 @@
 React = require 'react'
-{Input} = require 'react-bootstrap'
+{Input, Row, Col} = require 'react-bootstrap'
 
 validator = require 'validator'
 
@@ -15,10 +15,10 @@ module.exports = React.createClass
     value = @state.value
     length = value.length
     isDomain = validator.isFQDN value
-    if length
-      if isDomain and domains[value]
+    if length > 5
+      if isDomain and domains.get(value)
         "success"
-      else if length < 5
+      else if isDomain
         "warning"
       else "error"
 
@@ -41,7 +41,7 @@ module.exports = React.createClass
 
     style = @validationState()
 
-    if value and domain = domains[value]
+    if value and domain = domains.get(value)
       DomainInfo = <Domain domain={domain}  />
       DomainRenew = <Renew model={domain} domain={value} />
 
@@ -62,6 +62,8 @@ module.exports = React.createClass
           onChange={@handleChange}
         />
       </form>
-      {DomainRenew}
-      {DomainInfo}
+      <Row>
+        <Col xs={8} md={8}>{DomainRenew}</Col>
+        <Col xs={4} md={4}>{DomainInfo}</Col>
+      </Row>
     </div>

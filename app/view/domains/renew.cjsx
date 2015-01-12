@@ -1,7 +1,9 @@
 React = require 'react'
 {Button, Input, Option} = require 'react-bootstrap'
+_ = require 'lodash'
 
 validator = require 'validator'
+http = require 'superagent'
 
 module.exports = React.createClass
   getInitialState: ->
@@ -9,13 +11,32 @@ module.exports = React.createClass
     price: 1400
     years: 1
     desc: @getDesc @props.domain, true, 1
+    renewed: false
+
+  handleStripeCard: (token) ->
+    domain = @props.model
+    domainInfo = _.extend domain.toJSON(), @state
+    domainInfo.email = token.email
+    domainInfo.source = 'simpurl'
+    console.log domainInfo
+    http.post 'http://kc.l/_stripe/'+token.id
+      .send domainInfo
+      .set 'Accept', 'application/json'
+      .end (res) =>
+        if res.ok and res.body
+          if res.body.expires and res.body.expires != domain.expires
+            domain.expires = res.body.expires
+            @setState renewed: true
+          else
+            # FAIL?!?
+            console.log 'FAIL', res.body
+    console.log token
 
   componentDidMount: ->
     @handler = StripeCheckout.configure
       key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
       # image: "/square-image.png"
-      token: (token) ->
-        console.log token
+      token: @handleStripeCard
     window.addEventListener 'popstate', @handleNavAway, false
     history.pushState {}, ''
 
@@ -28,9 +49,9 @@ module.exports = React.createClass
 
   getDesc: (domain, auto, years) ->
     if auto
-      desc = "Renew #{domain} every #{years} yr(s)."
+      "Renew #{domain} every #{years} yr(s)."
     else
-      desc = "Extend #{domain} #{years} more yr(s)."
+      "Extend #{domain} #{years} more yr(s)."
 
   handleInput: ->
     auto = @refs.auto.getChecked()
@@ -59,6 +80,7 @@ module.exports = React.createClass
     {price, auto, years} = @state
     btnTxt = "Pay $#{price/100} by Card"
     <form>
+      <h3>{@getDesc domain, auto, years}</h3>
       <Input type="checkbox" ref="auto" label="Auto Renew" checked={auto} onChange={@handleInput} />
       <Input type="select" ref="years" label='Years' defaultValue="select" onChange={@handleInput} selected={years+''}>
         <option value="1">1</option>
@@ -67,6 +89,5 @@ module.exports = React.createClass
         <option value="5">5</option>
         <option value="10">10</option>
       </Input>
-      <h3>{@getDesc domain, auto, years}</h3>
       <Button bsStyle="primary" onClick={@handleClick}>{btnTxt}</Button>
     </form>

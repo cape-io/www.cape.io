@@ -1,11 +1,15 @@
 React = require 'react'
 
-{Nav} = require 'react-bootstrap'
+{Nav, Navbar} = require 'react-bootstrap'
 {NavItemLink} = require 'react-router-bootstrap'
+{Link} = require 'react-router'
 
 module.exports = React.createClass
   render: ->
-    <Nav>
-      <NavItemLink to="app">Home</NavItemLink>
-      <NavItemLink to="domains">Domains</NavItemLink>
-    </Nav>
+    {title} = @props.data
+    Brand = <Link to="app">{title}</Link>
+    <Navbar brand={Brand}>
+      <Nav>
+        <NavItemLink to="domains">Domains</NavItemLink>
+      </Nav>
+    </Navbar>
