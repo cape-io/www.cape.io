@@ -19,7 +19,7 @@ module.exports = React.createClass
     domainInfo.email = token.email
     domainInfo.source = 'simpurl'
     #console.log domainInfo
-    http.post 'http://kc.l/_stripe/'+token.id
+    http.post 'https://social.cape.io/_stripe/'+token.id
       .send domainInfo
       .set 'Accept', 'application/json'
       .end (res) =>
@@ -34,8 +34,8 @@ module.exports = React.createClass
 
   componentDidMount: ->
     @handler = StripeCheckout.configure
-      key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
-      #key: "pk_live_gnmGNwWeIYmg8GnpzX3onnto"
+      #key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
+      key: "pk_live_gnmGNwWeIYmg8GnpzX3onnto"
       # image: "/square-image.png"
       token: @handleStripeCard
     window.addEventListener 'popstate', @handleNavAway, false
@@ -80,7 +80,7 @@ module.exports = React.createClass
     {domain} = @props
     {price, auto, years, renewed} = @state
     btnTxt = "Pay $#{price/100} by Card"
-    thanksTxt = "Thanks for renewing! Your new expiration date is #{domain.expiration}."
+    thanksTxt = "Thanks for renewing! Your new expiration date is #{domain.expires}."
     if renewed
       thanks = <Alert bsStyle="success">{thanksTxt}</Alert>
     <div>
