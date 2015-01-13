@@ -9,7 +9,7 @@ module.exports = React.createClass
     {domains} = @props.data
 
     <main className="row">
-      <Col xs={6} xsOffset={3}>
+      <Col md={10} xsOffset={1}>
         <h2>Renew your Domain</h2>
         <DomainForm domains={domains} />
       </Col>

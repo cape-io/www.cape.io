@@ -1,5 +1,5 @@
 React = require 'react'
-{Button, Input, Option} = require 'react-bootstrap'
+{Button, Input, Option, Alert, Well} = require 'react-bootstrap'
 _ = require 'lodash'
 
 validator = require 'validator'
@@ -15,10 +15,10 @@ module.exports = React.createClass
 
   handleStripeCard: (token) ->
     domain = @props.model
-    domainInfo = _.extend domain.toJSON(), @state
+    domainInfo = _.extend _.omit(domain, 'collection'), @state
     domainInfo.email = token.email
     domainInfo.source = 'simpurl'
-    console.log domainInfo
+    #console.log domainInfo
     http.post 'http://kc.l/_stripe/'+token.id
       .send domainInfo
       .set 'Accept', 'application/json'
@@ -34,8 +34,8 @@ module.exports = React.createClass
 
   componentDidMount: ->
     @handler = StripeCheckout.configure
-      #key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
-      key: "pk_live_gnmGNwWeIYmg8GnpzX3onnto"
+      key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
+      #key: "pk_live_gnmGNwWeIYmg8GnpzX3onnto"
       # image: "/square-image.png"
       token: @handleStripeCard
     window.addEventListener 'popstate', @handleNavAway, false
@@ -78,17 +78,25 @@ module.exports = React.createClass
 
   render: ->
     {domain} = @props
-    {price, auto, years} = @state
+    {price, auto, years, renewed} = @state
     btnTxt = "Pay $#{price/100} by Card"
-    <form>
-      <h3>{@getDesc domain, auto, years}</h3>
-      <Input type="checkbox" ref="auto" label="Auto Renew" checked={auto} onChange={@handleInput} />
-      <Input type="select" ref="years" label='Years' defaultValue="select" onChange={@handleInput} selected={years+''}>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-      </Input>
-      <Button bsStyle="primary" onClick={@handleClick}>{btnTxt}</Button>
-    </form>
+    thanksTxt = "Thanks for renewing! Your new expiration date is #{domain.expiration}."
+    if renewed
+      thanks = <Alert bsStyle="success">{thanksTxt}</Alert>
+    <div>
+      {thanks}
+      <Well>
+        <p className="lead">{@getDesc domain, auto, years}</p>
+        <form>
+          <Input type="checkbox" ref="auto" label="Auto Renew" checked={auto} onChange={@handleInput} />
+          <Input type="select" ref="years" label='Years' defaultValue="select" onChange={@handleInput} selected={years+''}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+          </Input>
+          <Button bsStyle="primary" onClick={@handleClick}>{btnTxt}</Button>
+        </form>
+      </Well>
+    </div>

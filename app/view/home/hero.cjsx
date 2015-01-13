@@ -8,6 +8,6 @@ module.exports = React.createClass
     {title, tagline} = data
 
     <Jumbotron id="hero">
-      <h1>{title}<small>{tagline}</small></h1>
+      <h1>{title} <small>{tagline}</small></h1>
       <p>{lead}</p>
     </Jumbotron>

@@ -22,7 +22,9 @@ module.exports = React.createClass
         "warning"
       else "error"
 
-  handleChange: ->
+  handleChange: (e) ->
+    if e.preventDefault
+      e.preventDefault()
     # This could be done using ReactLink:
     # http://facebook.github.io/react/docs/two-way-binding-helpers.html
     # However, we need custom editing of input.
@@ -46,7 +48,7 @@ module.exports = React.createClass
       DomainRenew = <Renew model={domain} domain={value} />
 
     <div className="domain-search">
-      <form>
+      <form onSubmit={@handleChange}>
         <Input
           type="text"
           value={value}
