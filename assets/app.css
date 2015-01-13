@@ -1,0 +1,41 @@
+/* ------------------------------------------------------*/
+/* ---------->>> everything gets imported! <<<-----------*/
+/* ------------------------------------------------------*/
+/* -----------------------------------------------------*/
+/* --------------->>> variables.less <<<----------------*/
+/* -----------------------------------------------------*/
+/** FONT STACK TO USE FOR NOW: **/
+.sans {
+  font-family: 'Franklin Gothic', 'Liberation Sans', 'Nimbus Sans L', Helvetica, Arial, Sans-Serif;
+}
+.serif {
+  font-family: 'New Century Schoolbook', Constantia, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+}
+/*** Colors ***/
+/* # Colors */
+/* # alt colors or tweaks */
+/* «— is there some other way to do this??? */
+/**********************/
+/** # helper classes **/
+/**********************/
+.add-top {
+  margin-top: 1.5rem;
+}
+.add-top-2x {
+  margin-top: 3rem;
+}
+.add-bottom {
+  margin-bottom: 1.5rem;
+}
+.add-bottom-2x {
+  margin-bottom: 3rem;
+}
+/** for anything needing to stick to whole page in 1 place **/
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
