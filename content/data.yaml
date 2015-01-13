@@ -2,6 +2,15 @@ title : CAPE
 tagline: 'Create Anywhere, Publish Everywhere.'
 snipit: Assembling Crafting Expressions
 since: 2010
+
+builtDesigned:
+  -
+    name: OOKB
+    link: http://www.ookb.co
+  -
+    name: Sundays Energy
+    link: http://www.sundaysenergy.com
+
 author :
   email : info@cape.io
   github : sundaysenergy

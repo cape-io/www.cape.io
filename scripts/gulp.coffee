@@ -47,6 +47,8 @@ gulp.task "browser-sync", ['compile-watch', 'styles', 'static'], ->
   browserSync
     server:
       baseDir: 'public'
+    open: 'external'
+    host: 'l.cape.io'
     logConnections: true
     injectChanges: false
     #logLevel: 'debug'

@@ -33,21 +33,22 @@ App = (vars, render) ->
 
 if inBrowser
   testAPI = ->
-    console.log "Welcome!  Fetching your information.... "
+    console.log "Welcome! Fetching your information from Facebook.... "
     FB.api "/me", (response) ->
       console.log response
       return
     return
 
   statusChangeCallback = (response) ->
-    console.log "statusChangeCallback"
     {status, authResponse} = response
-    console.log status
+    console.log "statusChangeCallback", status
+
     if status is "connected"
       accessToken = authResponse.accessToken
-      console.log accessToken
+      console.log 'FB logged in.'
+      #console.log accessToken
       # Logged into your app and Facebook.
-      testAPI()
+      #testAPI()
     else if status is "not_authorized"
       # The person is logged into Facebook, but not your app.
     else # unkown
