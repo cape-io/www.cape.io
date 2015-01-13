@@ -18,7 +18,7 @@ transform = require 'vinyl-transform'
 
 less = require 'gulp-less'
 gutil = require 'gulp-util'
-#clean = require 'gulp-clean'
+clean = require 'gulp-clean'
 #zopfli = require 'gulp-zopfli'
 rename = require 'gulp-rename'
 uglify = require 'gulp-uglify'
@@ -34,7 +34,7 @@ serverData = require './serverData'
 content = require './content'
 
 # Default gulp tasks watches files for changes
-gulp.task "default", ['serverData', 'content', 'browser-sync'], ->
+gulp.task "default", ['browser-sync'], ->
   #gulp.watch './app/**/*.*', ['templates', browserSync.reload]
   gulp.watch "styles/*.less", ["styles", browserSync.reload]
   gulp.watch 'static/**', ['static', browserSync.reload]
@@ -86,7 +86,8 @@ bundle = () ->
     .pipe gulp.dest('./public/assets')
     .pipe browserSync.reload({stream:true})
 w.on 'update', bundle
-gulp.task 'compile-watch', bundle
+
+gulp.task 'compile-watch', ['serverData'], bundle
 
 
 # Convert yaml files from the content dir to json files.
@@ -96,10 +97,14 @@ gulp.task 'data', ->
     .pipe gulp.dest('./app/data/')
 
 # Convert markdown files from content dir to json files.
+# gulp.task 'content', ->
+#   content()
 gulp.task 'content', ->
-  content()
+  gulp.src './content/**/*.md'
+    .pipe markdown()
+    .pipe gulp.dest('./app/data/')
 
-gulp.task 'serverData', ['data'], (cb) ->
+gulp.task 'serverData', ['data', 'content'], (cb) ->
   serverData cb
 
 # Compile the static html files.
@@ -125,7 +130,16 @@ gulp.task 'static', ->
 
 # - - - - prod - - - -
 
-gulp.task 'deploy', ['static', 'serverData', 'templates', 'styles'], ->
+gulp.task 'prod', ['prod_clean'], (cb) ->
+  runSequence ['static', 'serverData'], ['templates', 'compile', 'styles'], cb
+
+# Remove contents from public directory.
+gulp.task 'prod_clean', ->
+  gulp.src('./public', read: false)
+    .pipe(clean())
+
+
+gulp.task 'deploy', ['prod'], ->
   gulp.src './public/**/*'
     .pipe deploy cacheDir: './tmp'
 
