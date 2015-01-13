@@ -34,7 +34,8 @@ module.exports = React.createClass
 
   componentDidMount: ->
     @handler = StripeCheckout.configure
-      key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
+      #key: "pk_test_ngNDwpo48cw9L6PQeiZL59w5"
+      key: "pk_live_gnmGNwWeIYmg8GnpzX3onnto"
       # image: "/square-image.png"
       token: @handleStripeCard
     window.addEventListener 'popstate', @handleNavAway, false
