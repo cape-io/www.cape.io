@@ -78,9 +78,10 @@ module.exports = React.createClass
 
   render: ->
     {domain} = @props
+    {expires} = domain
     {price, auto, years, renewed} = @state
     btnTxt = "Pay $#{price/100} by Card"
-    thanksTxt = "Thanks for renewing! Your new expiration date is #{domain.expires}."
+    thanksTxt = "Thanks for renewing! Your new expiration date is #{expires}."
     if renewed
       thanks = <Alert bsStyle="success">{thanksTxt}</Alert>
     <div>
