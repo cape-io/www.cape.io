@@ -23,7 +23,7 @@ module.exports = React.createClass
 
       </head>
       <body>
-        <div id="wrapper">
+        <div id="wrapper" className="container">
           <Head data={data} />
           <RouteHandler data={data} />
           <Foot data={data} />

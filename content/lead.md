@@ -1,1 +1,0 @@
-The way the contemporary web works is increasingly about linking together disparate and specialized services; not providing a single website with all solutions pre-built or hardwired into the site itself. CAPE accepts and embraces this new ecosystem.
