@@ -7,6 +7,6 @@ module.exports = React.createClass
 
     {title} = @props.data
 
-    <header className="container">
+    <header>
       <Nav data={@props.data} />
     </header>

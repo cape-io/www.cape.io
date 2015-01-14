@@ -8,6 +8,9 @@ module.exports = React.createClass
     {title, tagline} = data
 
     <Jumbotron id="hero">
-      <h1>{title} <small>{tagline}</small></h1>
-      <p>{lead}</p>
+      <div className="grouped">
+        <h1>{title}</h1>
+        <h2>{tagline}</h2>
+        <p>{lead}</p>
+      </div>
     </Jumbotron>

@@ -15,5 +15,7 @@ module.exports = React.createClass
 
     <main>
       <Hero data={data} lead={lead} />
-      <div className="content" dangerouslySetInnerHTML={__html: body} />
+      <article className="container">
+        <div className="content" dangerouslySetInnerHTML={__html: body} />
+      </article>
     </main>

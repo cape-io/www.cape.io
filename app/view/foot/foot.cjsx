@@ -64,17 +64,21 @@ module.exports = React.createClass
         Name = <p>{loggedInText}</p>
 
     <footer>
-      {Name}
-      <div className="connect">
-        <h4>Login</h4>
-        <ButtonToolbar>
-          {FbLogin}
-          {GoogleLogin}
-        </ButtonToolbar>
+      <div className="container">
+        <div className="row">
+          {Name}
+          <div className="connect col-sm-4">
+            <h4>Login</h4>
+            <ButtonToolbar>
+              {FbLogin}
+              {GoogleLogin}
+            </ButtonToolbar>
+          </div>
+          {Logout}
+          <div className="col-sm-4 footer-credits">
+            <Credits builtDesigned={builtDesigned} />
+          </div>
+          <p>{msg}</p>
+        </div>
       </div>
-      {Logout}
-      <div className="column span1 footer-credits">
-        <Credits builtDesigned={builtDesigned} />
-      </div>
-      <p>{msg}</p>
     </footer>

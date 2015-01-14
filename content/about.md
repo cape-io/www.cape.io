@@ -35,7 +35,8 @@ CAPE.io is a web service that uses content created anywhere to form useful outpu
 * [Rogers & Goffigon](http://www.rogersandgoffigon.com/#landing) - Inventory management and dropbox.
 * [Baltimore Bartenders' Guild](http://www.bmorebarguild.com) - Facebook and Google sheets for the member list.
 * [Hunting Ground](http://www.shophuntingground.com) - Facebook and Instagram.
-* [Robert W. Deutsch Foundation](http://www.rwdfoundation.org)
+* [Prairie Pasque Farm](http://www.prairiepasquefarm.com) - Facebook and Instagram.
+* [Robert W. Deutsch Foundation](http://www.rwdfoundation.org) - Dropbox.
 * [C&H Restoration](http://www.candhrestoration.com) - Dropbox.
-* [Mica Gradshow 2015](http://www.micagradshow.com) - Google sheets, custom file uploader and profile forms.
+* [MICA Gradshow 2015](http://www.micagradshow.com) - Google sheets, custom file uploader and profile forms.
 * [Center for Collaborative Democracy](http://www.genuinerepresentation.org) - Github yaml and markdown files for all content and configuration.
