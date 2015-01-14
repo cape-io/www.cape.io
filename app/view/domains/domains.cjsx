@@ -1,5 +1,5 @@
 React = require 'react'
-{Col} = require 'react-bootstrap'
+{Row, Col} = require 'react-bootstrap'
 
 DomainForm = require './domainForm'
 
@@ -8,9 +8,11 @@ module.exports = React.createClass
 
     {domains} = @props.data
 
-    <main className="row">
-      <Col md={10} xsOffset={1}>
-        <h2>Renew your Domain</h2>
-        <DomainForm domains={domains} />
-      </Col>
+    <main className="container">
+      <Row>
+        <Col md={10} xsOffset={1}>
+          <h2>Renew your Domain</h2>
+          <DomainForm domains={domains} />
+        </Col>
+      </Row>
     </main>

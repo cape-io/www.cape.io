@@ -1,6 +1,6 @@
 React = require 'react'
 
-{ButtonToolbar, Button} = require 'react-bootstrap'
+{ButtonToolbar, Button, Row, Col} = require 'react-bootstrap'
 
 Credits   = require './credits'
 
@@ -65,20 +65,22 @@ module.exports = React.createClass
 
     <footer>
       <div className="container">
-        <div className="row">
+        <Row>
           {Name}
-          <div className="connect col-sm-4">
+          <Col sm={4} className="connect">
             <h4>Login</h4>
             <ButtonToolbar>
               {FbLogin}
               {GoogleLogin}
             </ButtonToolbar>
-          </div>
+          </Col>
           {Logout}
-          <div className="col-sm-4 footer-credits">
+          <Col sm={4} className="footer-credits">
             <Credits builtDesigned={builtDesigned} />
-          </div>
-          <p>{msg}</p>
-        </div>
+          </Col>
+          <Col sm={4}>
+            <p>{msg}</p>
+          </Col>
+        </Row>
       </div>
     </footer>

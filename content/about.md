@@ -6,7 +6,7 @@ lead: The web is increasingly about linking together disparate and specialized s
 
 We collaborate with clients to create original, valuable web projects using the CAPE.io platform.
 
-CAPE.io is a web service that uses content created anywhere to form useful output that can be used in print, online, or in various apps. CAPE provides curation and management to an otherwise unbridled stream of content.
+CAPE.io is a web service that uses content created anywhere to form useful output to be used wherever you choose: in print, online, apps, etc. CAPE provides curation and management to an otherwise unbridled stream of content.
 
 ### Our Steps
 
