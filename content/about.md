@@ -23,6 +23,7 @@ CAPE.io is a web service that uses content created anywhere to form useful outpu
 * Google (sheets, calendar, drive)
 * Twitter
 * Behance
+* Wufoo
 * Flickr
 * Youtube
 * Zapier
