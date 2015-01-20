@@ -1,5 +1,6 @@
 React = require 'react'
 {Input, Row, Col} = require 'react-bootstrap'
+{Navigation, State} = require 'react-router'
 
 validator = require 'validator'
 
@@ -7,6 +8,8 @@ Domain = require './domain'
 Renew = require './renew'
 
 module.exports = React.createClass
+  mixins: [Navigation, State]
+
   getInitialState: ->
     value: ""
 
@@ -28,19 +31,26 @@ module.exports = React.createClass
     # This could be done using ReactLink:
     # http://facebook.github.io/react/docs/two-way-binding-helpers.html
     # However, we need custom editing of input.
-    value = @refs.input.getValue().replace /^https?:\/\//, ''
+    value = @refs.input.getValue().toLowerCase()
+    value = value.replace /^https?:\/\//, ''
     value = value.split('/')[0]
     subdomains = value.split('.')
     if subdomains.length > 3
       subdomains.shift()
       value = subdomains.join('.')
-    @setState value: value
+    @replaceWith @getPathname(), {}, {domain:value}
+    #@setState value: value
     return
+
+  componentDidMount: ->
+    if @getQuery().domain
+      @forceUpdate()
 
   render: ->
     {domains} = @props
-    {value} = @state
-
+    # {value} = @state
+    q = @getQuery() or {}
+    value = if @isMounted() then q.domain else ''
     style = @validationState()
 
     if value and domain = domains.get(value)
