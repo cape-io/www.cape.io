@@ -14,7 +14,7 @@ module.exports = React.createClass
     domain = @props.model
     domainInfo = _.extend _.omit(domain, 'collection'), @state
     domainInfo.email = token.email
-    domainInfo.source = 'cape'
+    domainInfo.source = 'cape.io'
     domainInfo.service = 'cape-basic'
     #console.log domainInfo
     http.post 'https://social.cape.io/_stripe/'+token.id
