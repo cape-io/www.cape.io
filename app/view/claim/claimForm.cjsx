@@ -73,14 +73,16 @@ module.exports = React.createClass
     {price, desc, success} = @state
 
     btnTxt = "Pay $#{price/100} by Card"
-    description = "Start your year of CAPE.io basic service now!"
+    description = "Start your year of CAPE Basic service now!"
     thanksTxt = "Thanks for joining! Your site will be activated shortly."
+    includes = "Price includes the cost of domain name registration."
     if success
       output = <Alert bsStyle="success">{thanksTxt}</Alert>
     else
       output =
         <Well>
           <p className="lead">{description}</p>
+          <p>{includes}</p>
           <Button bsStyle="primary" onClick={@handleClick}>{btnTxt}</Button>
         </Well>
 
