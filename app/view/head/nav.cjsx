@@ -10,6 +10,8 @@ module.exports = React.createClass
     Brand = <Link to="app">{title}</Link>
     <Navbar brand={Brand}>
       <Nav>
-        <NavItemLink to="domains">Domains</NavItemLink>
+        <NavItemLink to="start">Get Started</NavItemLink>
+        <NavItemLink to="domains">Domain Renewal</NavItemLink>
+        <NavItemLink to="claim">Claim Your Site</NavItemLink>
       </Nav>
     </Navbar>

@@ -50,7 +50,7 @@ module.exports = React.createClass
 
     unless facebook
       FbLogin = <Button onClick={@fbClick}>Facebook</Button>
-    unless google
+    if false and not google
       GoogleLogin = <Button onClick={@googleClick}>Google</Button>
 
     if facebook or google
