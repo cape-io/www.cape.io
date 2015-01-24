@@ -7,7 +7,8 @@ http = require 'superagent'
 module.exports = React.createClass
   getInitialState: ->
     price: 5000
-    desc: 'CAPE.io Basic - 1yr'
+    desc: 'CAPE Basic - 1yr'
+    years: 1
     success: false
 
   handleStripeCard: (token) ->
@@ -22,7 +23,7 @@ module.exports = React.createClass
       .set 'Accept', 'application/json'
       .end (res) =>
         if res.ok and res.body
-          if res.body.success
+          if res.body.paymentId
             @setState success: true
           else
             # FAIL?!?
@@ -75,13 +76,16 @@ module.exports = React.createClass
     description = "Start your year of CAPE.io basic service now!"
     thanksTxt = "Thanks for joining! Your site will be activated shortly."
     if success
-      thanks = <Alert bsStyle="success">{thanksTxt}</Alert>
-    <Row className="claim">
-      <Col xs={8} md={8} mdOffset={2}>
-        {thanks}
+      output = <Alert bsStyle="success">{thanksTxt}</Alert>
+    else
+      output =
         <Well>
           <p className="lead">{description}</p>
           <Button bsStyle="primary" onClick={@handleClick}>{btnTxt}</Button>
         </Well>
+
+    <Row className="claim">
+      <Col xs={8} md={8} mdOffset={2}>
+        {output}
       </Col>
     </Row>
