@@ -4,22 +4,22 @@
   "version": "0.0.1",
   "description": "Website files for http://www.cape.io",
   "main": "app/app.cjsx",
+  "browserify": {
+    "transform": [["coffee-reactify"]]
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run markup && npm run build && browser-sync start --files \"public/index.html, public/assets/*.*\" --server public",
-    "markup": "coffee ./scripts/renderMarkup.coffee",
-    "update-dev": "npm run markup && npm run build",
-    "build": "NODE_ENV=production browserify ./ > ./public/assets/app.js && zopfli ./public/assets/app.js",
-    "clean": "rm -f ./public/assets/*"
+    "sync": "browser-sync start --proxy 'w.l.cape.io' --files 'public/*.js'",
+    "dev": "watchify app/app.cjsx --extension='.cjsx' --extension='.coffee' -d -v -o 'exorcist public/app.js.map > public/app.js'",
+    "build": "browserify ./ --extension='.cjsx' --extension='.coffee' -g uglifyify --debug | exorcist public/app.js.map > public/app.js  && zopfli public/app.js",
+    "clean": "rm -f ./public/*"
   },
   "author": "Kai Curry <kai@cape.io> (http://www.cape.io/)",
   "license": "ISC",
   "dependencies": {
     "lodash": "3.x",
     "react": "0.13.x",
-    "react-router": "0.x",
-    "react-bootstrap": "0.x",
-    "react-router-bootstrap": "0.x",
+    "react-router": "0.13.x",
     "superagent": "0.x",
     "moment": "2.x",
     "ampersand-state": "4.x",
@@ -27,9 +27,16 @@
     "validator": "3.x",
     "qs": "2.x"
   },
+  "global": [
+    "node-zopfli",
+    "watchify",
+    "browserify",
+    "exorcist",
+    "browser-sync",
+    "async"
+  ],
   "devDependencies": {
-    "cape-gulp": "git+https://github.com/cape-io/cape-gulp.git",
-    "gulp": "3.x",
-    "coffee-script": "1.x"
+    "coffee-reactify": "^3.0.0",
+    "uglifyify": "^3.0.1"
   }
 }

@@ -4,8 +4,7 @@ React = require 'react'
 
 module.exports = React.createClass
   render: ->
-    {lead, data} = @props
-    {title, tagline} = data
+    {lead, title, tagline} = @props
 
     <Jumbotron id="hero">
       <div className="grouped">

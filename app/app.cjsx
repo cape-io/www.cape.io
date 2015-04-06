@@ -13,9 +13,12 @@ App = (data, render, onError, onAbort) ->
   if not data.path then data.path = '/'
   # Process the initial data. (index.json)
   data = processData(data)
-
-  Render = (Handler) ->
+  console.log 'Init react with data.'
+  Render = (Handler, state) ->
+    if not inBrowser and not state.routes.length
+      return onAbort {notFound: true}
     # This is the default props sent to the Index view.
+    #console.log React.renderToStaticMarkup(React.createElement(Handler, data))
     render Handler, data
 
   if inBrowser
@@ -43,37 +46,5 @@ if inBrowser
         return console.error err or res
       # Trigger render.
       App res.body, render
-      console.log 'Init react with data.'
 
 module.exports = App
-
-  # testAPI = ->
-  #   console.log "Welcome! Fetching your information from Facebook.... "
-  #   FB.api "/me", (response) ->
-  #     console.log response
-  #     return
-  #   return
-  #
-  # statusChangeCallback = (response) ->
-  #   {status, authResponse} = response
-  #   console.log "statusChangeCallback", status
-  #
-  #   if status is "connected"
-  #     accessToken = authResponse.accessToken
-  #     console.log 'FB logged in.'
-  #     #console.log accessToken
-  #     # Logged into your app and Facebook.
-  #     #testAPI()
-  #   else if status is "not_authorized"
-  #     # The person is logged into Facebook, but not your app.
-  #   else # unkown
-  #     # The person is not logged into Facebook, so we're not sure if
-  #     # they are logged into this app or not.
-  #   return
-  # window.fbAsyncInit = ->
-  #   FB.init
-  #     appId: "109302492423481"
-  #     cookie: true # enable cookies to allow the server to access the session?
-  #     version: "v2.1" # use version 2.1
-  #   FB.getLoginStatus statusChangeCallback
-  #   return
