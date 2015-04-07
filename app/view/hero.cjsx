@@ -1,15 +1,13 @@
 React = require 'react'
 
-{Jumbotron} = require 'react-bootstrap'
-
 module.exports = React.createClass
   render: ->
     {lead, title, tagline} = @props
 
-    <Jumbotron id="hero">
+    <div id="hero", className="jumbotron">
       <div className="grouped">
         <h1>{title}</h1>
-        <h2>{tagline}</h2>
-        <p>{lead}</p>
+        <h2 className="tagline">{tagline}</h2>
+        <p className="lead">{lead}</p>
       </div>
-    </Jumbotron>
+    </div>

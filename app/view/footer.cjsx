@@ -7,7 +7,7 @@ module.exports = React.createClass
       startYear += '–'
     else
       startYear = ''
-    console.log currentYear, startYear
+
     txt = "All works © #{startYear}#{currentYear} #{author or title}"
     <footer>
       <p>{txt}</p>

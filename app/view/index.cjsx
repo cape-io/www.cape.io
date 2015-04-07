@@ -12,18 +12,19 @@ module.exports = React.createClass
   }
   render: ->
     {db, title, sha, domains, theme, currentYear, startYear} = @props
-    {author, description, wufoo} = db
-    {css, js, meta, settings} = theme
-    {primaryMenu, homepageId} = settings
+    {author, description, wufoo, tagline, lead} = db
+    {css, js, meta, settings, navTitle} = theme
+    {primaryMenu, homepageId, titleInNav, display} = settings
     {pageId, contentId} = @context.router.getCurrentParams()
+    if currentRoutes = @context.router.getCurrentRoutes()
+      currentRoute = currentRoutes[currentRoutes.length-1]
     # Theme overrides the settings in index.yaml.
-    pageId = pageId or homepageId or db.homepageId or 'homepage'
-    console.log pageId
-
+    pageId = pageId or currentRoute?.name or homepageId or db.homepageId or 'homepage'
+    displayType = display?[pageId]
     # Grab pageData
     pageData = db[pageId] or {}
+    # console.log pageId, displayType, pageData
     pageTitle = if pageData.title then "#{title} | #{pageData.title}" else title
-
     <html>
       <head>
         <title>{pageTitle}</title>
@@ -43,10 +44,9 @@ module.exports = React.createClass
       </head>
       <body>
         <div className="container">
-          <h2>Hi</h2>
-          <Header primaryMenu={primaryMenu} />
-          <Main pageData={pageData} />
-          <Footer currentYear={currentYear} startYear={startYear} />
+          <Header primaryMenu={primaryMenu} title={title} titleInNav={titleInNav} />
+          <Main pageData={pageData} displayType={displayType} tagline={tagline} lead={lead} title={title} />
+          <Footer currentYear={currentYear} startYear={startYear} author={author} title={title} />
           <div id="fb-root"></div>
         </div>
       </body>

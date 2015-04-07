@@ -55,7 +55,7 @@ module.exports = (data) ->
       if key is 'contact' and wufoo
         data.db[key].wufoo = wufoo
 
-  # cape.io specific.
+  # cape.io specific...
   domains = _.map data.domains, (domain) ->
     domain.id = domain.sld + '.' + domain.tld
     return domain

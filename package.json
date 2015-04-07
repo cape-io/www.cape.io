@@ -4,9 +4,6 @@
   "version": "0.0.1",
   "description": "Website files for http://www.cape.io",
   "main": "app/app.cjsx",
-  "browserify": {
-    "transform": [["coffee-reactify"]]
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sync": "browser-sync start --proxy 'w.l.cape.io' --files 'public/*.js'",
@@ -17,26 +14,16 @@
   "author": "Kai Curry <kai@cape.io> (http://www.cape.io/)",
   "license": "ISC",
   "dependencies": {
+    "ampersand-collection": "1.x",
+    "ampersand-state": "4.x",
+    "cookies-js": "^1.2.1",
     "lodash": "3.x",
+    "moment": "2.x",
+    "qs": "2.x",
     "react": "0.13.x",
+    "react-bootstrap": "^0.20.1",
     "react-router": "0.13.x",
     "superagent": "0.x",
-    "moment": "2.x",
-    "ampersand-state": "4.x",
-    "ampersand-collection": "1.x",
-    "validator": "3.x",
-    "qs": "2.x"
-  },
-  "global": [
-    "node-zopfli",
-    "watchify",
-    "browserify",
-    "exorcist",
-    "browser-sync",
-    "async"
-  ],
-  "devDependencies": {
-    "coffee-reactify": "^3.0.0",
-    "uglifyify": "^3.0.1"
+    "validator": "3.x"
   }
 }
