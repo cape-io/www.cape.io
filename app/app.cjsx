@@ -2,6 +2,7 @@ React = require 'react'
 Router = require 'react-router'
 http = require 'superagent'
 
+User = require './model/user'
 Routes = require './routes'
 processData = require './processData'
 
@@ -13,6 +14,9 @@ App = (data, render, onError, onAbort) ->
   if not data.path then data.path = '/'
   # Process the initial data. (index.json)
   data = processData(data)
+  if inBrowser
+    data.me = new User()
+    data.me.checkSession()
   console.log 'Init react with data.'
   Render = (Handler, state) ->
     if not inBrowser and not state.routes.length

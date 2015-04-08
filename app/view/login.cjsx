@@ -6,9 +6,14 @@ http = require 'superagent'
 emailIndex = {}
 
 module.exports = React.createClass
-  contextTypes: {
+  statics:
+    willTransitionTo: (transition, params) ->
+      if typeof app isnt "undefined" and app?.me?.isAuthenticated
+        transition.redirect 'mixer'
+
+  contextTypes:
     router: React.PropTypes.func.isRequired
-  }
+
   getInitialState: ->
     email: ''
     emailStatus: null
@@ -16,21 +21,33 @@ module.exports = React.createClass
     passwordStatus: null
     providers: []
 
+  handleLogin: (usr, isAuthenticated) ->
+    if isAuthenticated
+      @context.router.transitionTo('mixer')
+
   componentDidMount: ->
-    http.get('/user/session.json')
-    .accept('json')
-    .end (err, res) =>
-      if info = res?.body
-        if info.auth
-          console.log 'authenticated'
-        else if app.me = info.user
-          if app.me.providers
-            emailIndex[app.me.email] = app.me
-            @setState {
-              email: app.me.email
-              emailStatus: 'success'
-              providers: app.me.providers
-            }
+    app.me.on 'change:isAuthenticated', @handleLogin
+    return
+
+  componentWillUnmount: ->
+    app.me.off 'change:isAuthenticated', @handleLogin
+    console.log 'disable listen for isAuthenticated'
+  #   http.get('/user/session.json')
+  #   .accept('json')
+  #   .end (err, res) =>
+  #     if info = res?.body
+  #       if info.auth
+  #         console.log 'authenticated'
+  #         # Redirect to mixer.
+  #         # @context.router.transitionTo('mixer')
+  #       else if app.me = info.user
+  #         if app.me.providers
+  #           emailIndex[app.me.email] = app.me
+  #           @setState {
+  #             email: app.me.email
+  #             emailStatus: 'success'
+  #             providers: app.me.providers
+  #           }
 
   changeEmail: ->
     email = @refs.email.getValue()
