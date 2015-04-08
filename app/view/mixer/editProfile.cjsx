@@ -1,8 +1,9 @@
 React = require 'react'
-{RouteHandler} = require 'react-router'
-{Input} = require 'react-bootstrap'
-
+t = require 'tcomb-form'
+toTcomb = require 'tcomb-json-schema'
 Menu = require '../menu'
+
+Form = t.form.Form
 
 module.exports = React.createClass
   getInitialState: ->
@@ -17,18 +18,40 @@ module.exports = React.createClass
   handleFieldSubmit: (fieldId, value) ->
     app.me.save fieldId, value
 
+  handleSubmit: ->
+    value = @refs.form.getValue()
+    if value
+      console.log value
+
   render: ->
     {user} = @props
     {fullName} = user
-    console.log fullName
+
+    profileSchema =
+      type: 'object'
+      properties:
+        fullName:
+          type: 'string'
+        email:
+          type: 'string'
+      required: ['fullName', 'email']
+
+    profileFieldOps =
+      fullName:
+        label: 'Full Name'
+        help: 'Your full name as it will be displayed on your profile.'
+
+    Profile = toTcomb(profileSchema)
+
+    options =
+      auto: 'labels'#placeholders
+      fields: profileFieldOps
+
     if fullName
       titleEl = <h2 className="display-name">{fullName}</h2>
 
     <div className="row profile-edit">
       {titleEl}
-      <form className="form-horizontal">
-        <fieldset>
-
-        </fieldset>
-      </form>
+      <Form ref="form" type={Profile} options={options} value={user} />
+      <button onClick={@handleSubmit}>Submit</button>
     </div>

@@ -25,6 +25,10 @@
     "react-bootstrap": "^0.20.1",
     "react-router": "0.13.x",
     "superagent": "0.x",
+    "tcomb": "^1.0.1",
+    "tcomb-form": "^0.4.8",
+    "tcomb-json-schema": "^0.1.2",
+    "tcomb-validation": "^1.0.3",
     "validator": "3.x"
   }
 }
