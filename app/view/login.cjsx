@@ -9,7 +9,7 @@ module.exports = React.createClass
   statics:
     willTransitionTo: (transition, params) ->
       if typeof app isnt "undefined" and app?.me?.isAuthenticated
-        transition.redirect 'mixer'
+        transition.redirect 'editProfile'
 
   contextTypes:
     router: React.PropTypes.func.isRequired
@@ -23,7 +23,7 @@ module.exports = React.createClass
 
   handleLogin: (usr, isAuthenticated) ->
     if isAuthenticated
-      @context.router.transitionTo('mixer')
+      @context.router.transitionTo('editProfile')
 
   componentDidMount: ->
     app.me.on 'change:isAuthenticated', @handleLogin

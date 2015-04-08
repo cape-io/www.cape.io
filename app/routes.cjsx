@@ -17,7 +17,7 @@ module.exports =
   <Route name="app" path="/" handler={Index}>
     <DefaultRoute handler={Page}/>
     <Route name="mixer" handler={Mixer}>
-      <Route name="editProfile" path="profile" handler={EditProfile} />
+      <Route name="editProfile" path="profile/" handler={EditProfile} />
     </Route>
     <Route name="login" path="user/login/" handler={Login} />
     <Route name="page" path=":pageId/?:contentId?" handler={Page} />

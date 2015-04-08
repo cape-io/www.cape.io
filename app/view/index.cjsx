@@ -11,18 +11,24 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {db, title, sha, domains, theme, currentYear, startYear} = @props
+    {db, title, sha, domains, theme, currentYear, startYear, me} = @props
     {author, description, wufoo, tagline, lead} = db
     {css, js, meta, settings, navTitle} = theme
     {primaryMenu, homepageId, titleInNav, display} = settings
     {pageId, contentId} = @context.router.getCurrentParams()
     if currentRoutes = @context.router.getCurrentRoutes()
-      currentRoute = currentRoutes[currentRoutes.length-1]
+      currentRouteIndex = currentRoutes.length-1
+      currentRoute = currentRoutes[currentRouteIndex]
+      parentRoute = currentRoutes[currentRouteIndex-1]
     # Theme overrides the settings in index.yaml.
     pageId = pageId or currentRoute?.name or homepageId or db.homepageId or 'homepage'
     displayType = display?[pageId]
     # Grab pageData
-    pageData = db[pageId] or {}
+    if pageId is 'mixer' or parentRoute?.name is 'mixer'
+      pageData = {user: me}
+      console.log 'mixer data'
+    else
+      pageData = db[pageId] or {}
     # console.log pageId, displayType, pageData
     pageTitle = if pageData.title then "#{title} | #{pageData.title}" else title
     <html>

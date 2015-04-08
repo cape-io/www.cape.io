@@ -18,10 +18,11 @@ module.exports = React.createClass
     app.me.save fieldId, value
 
   render: ->
-    {pic, title} = @props
-
-    if title
-      titleEl = <h2 className="display-name">{title}</h2>
+    {user} = @props
+    {fullName} = user
+    console.log fullName
+    if fullName
+      titleEl = <h2 className="display-name">{fullName}</h2>
 
     <div className="row profile-edit">
       {titleEl}

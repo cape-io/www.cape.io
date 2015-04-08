@@ -20,6 +20,6 @@ module.exports = React.createClass
       <h1>{title}</h1>
       <Menu menu={nav} className="mixer-nav" />
       <section>
-        { React.createElement(RouteHandler, user) }
+        { React.createElement(RouteHandler, {user:user}) }
       </section>
     </div>
