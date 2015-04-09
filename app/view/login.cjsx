@@ -19,34 +19,22 @@ module.exports = React.createClass
     emailStatus: null
     password: ''
     passwordStatus: null
-    providers: []
 
-  handleLogin: (usr, isAuthenticated) ->
-    if isAuthenticated
+  handleMeChange: (usr, changedThing, more) ->
+    if usr.isAuthenticated
       @context.router.transitionTo('editProfile')
+    else if usr.email
+      emailIndex[usr.email] = usr
+      @setState {
+        emailStatus: 'success'
+        email: usr.email
+      }
 
   componentDidMount: ->
-    app.me.on 'change:isAuthenticated', @handleLogin
-    return
+    app.me.on 'change', @handleMeChange
 
   componentWillUnmount: ->
-    app.me.off 'change:isAuthenticated', @handleLogin
-  #   http.get('/user/session.json')
-  #   .accept('json')
-  #   .end (err, res) =>
-  #     if info = res?.body
-  #       if info.auth
-  #         console.log 'authenticated'
-  #         # Redirect to mixer.
-  #         # @context.router.transitionTo('mixer')
-  #       else if app.me = info.user
-  #         if app.me.providers
-  #           emailIndex[app.me.email] = app.me
-  #           @setState {
-  #             email: app.me.email
-  #             emailStatus: 'success'
-  #             providers: app.me.providers
-  #           }
+    app.me.off 'change', @handleMeChange
 
   changeEmail: ->
     email = @refs.email.getValue()
@@ -68,8 +56,9 @@ module.exports = React.createClass
           .withCredentials()
           .accept('json').end (err, res) =>
             if not err and res and res.body
-              if emailIndex[email] = res.body[0] or false
-                @setState emailStatus: 'success'
+              emailIndex[email] = res.body[0] or false
+              if emailIndex[email]
+                @setState { emailStatus: 'success' }
               else
                 @setState emailStatus: 'warning'
             else
@@ -130,12 +119,13 @@ module.exports = React.createClass
 
   #mixins: [Navigation, CurrentPath]
   render: ->
-    {email, emailStatus, passwordStatus, providers} = @state
+    {email, emailStatus, passwordStatus} = @state
     {email_help, expired_account, title, lead} = @props
     lead = lead or 'You are great!'
     providerList = false
+
     if emailStatus is 'success'
-      {fullName, expired} = emailIndex[email]
+      {fullName, expired, providers} = emailIndex[email]
       welcome = "Welcome, #{fullName}!"
       lead = welcome + ' ' + lead
       console.log welcome
