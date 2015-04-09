@@ -1,8 +1,7 @@
-Collection = require 'ampersand-collection'
+Collection = require 'ampersand-rest-collection'
 Model = require 'ampersand-model'
 
 Website = Model.extend
-  urlRoot: '/api/website'
   props:
     api: 'object'
     facebook: 'string'
@@ -19,3 +18,4 @@ Website = Model.extend
 
 module.exports = Collection.extend
   model: Website
+  url: '/api/website'

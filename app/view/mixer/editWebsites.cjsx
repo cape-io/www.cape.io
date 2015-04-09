@@ -9,19 +9,19 @@ FileSource = t.struct(
   prefix: t.Str
 )
 Website = t.struct {
-  id: t.Str
+  id: t.maybe(t.Str)
   title: t.Str
   sld: t.Str
-  vhost: t.Str
+  vhost: t.maybe(t.Str)
   ssFiles: t.list(FileSource)
-  facebook: t.Str
+  facebook: t.maybe(t.Str)
   plan: t.enums({free: 'Free', light: 'Light', basic: 'Basic', advanced: 'Advanced', pro: 'Pro'})
   apis: t.list(t.struct({id: t.Str, value: t.Str}))
   theme: t.struct(
     appId: t.enums({cape: 'cape', ezle3: 'ezle3'})
     cssId: t.enums({default: 'default', cape: 'cape'})
     settings: t.struct(
-      homepageId: t.Str
+      homepageId: t.maybe(t.Str)
       js: t.list(t.Str)
       css: t.list(t.Str)
       primaryMenu: t.list(t.struct({link:t.Str, title:t.Str}))
@@ -33,7 +33,8 @@ websiteFieldOps = {
   id:
     disabled: true
   title:
-    help: 'Default title for your website.'
+    help: 'Name of your new site. Used as the default title.'
+    placeholder: 'My awesome website!'
   sld:
     label: 'Subdomain'
     help: 'Pick a subdomain. You can add a custom domain later.'
@@ -76,9 +77,14 @@ module.exports = React.createClass
   }
   handleSubmit: (e) ->
     e.preventDefault()
+    {user} = @props
     value = @refs.form.getValue()
     if value
-      console.log value
+      if value.id
+        user.website.get(value.id).save(value)
+      else
+        user.websites.create(value)
+    console.log 'create/save', value
 
   render: ->
     {user} = @props
@@ -97,19 +103,24 @@ module.exports = React.createClass
 
     if siteId and siteInfo = user.websites.get(siteId)
       siteInfo = siteInfo.toJSON()
-      if siteInfo.ssFiles?.length
-        siteInfo.ssFiles = filter siteInfo.ssFiles, 'provider'
+      # if siteInfo.ssFiles?.length
+      #   siteInfo.ssFiles = filter siteInfo.ssFiles, 'provider'
     else
-      siteInfo = {title: 'New Website'}
+      siteInfo =
+        tld: 'ezle.io'
+        plan: 'free'
+        theme:
+          appId: 'cape'
+          cssId: 'cape'
 
     siteOptions =
-      legend: <h3>{siteInfo.title or siteInfo.id}</h3>
+      legend: <h3>{siteInfo.title or siteInfo.id or 'New Website'}</h3>
       fields: websiteFieldOps
 
     <div className="sites">
       <h3>Websites</h3>
       <Table data={sites} sortable={true} />
-      <form onSubmit={@handleSubmit}>
+      <form onSubmit={@handleSubmit} autoComplete="off">
         <Form ref="form" type={Website} options={siteOptions} value={siteInfo} />
         <button type="submit">Submit</button>
       </form>
