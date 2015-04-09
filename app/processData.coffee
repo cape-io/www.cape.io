@@ -3,6 +3,7 @@ Collection = require 'ampersand-collection'
 
 module.exports = (data) ->
   {db, theme} = data
+  db = db or {}
   {css, js} = theme
   {author, description, title} = db
 
