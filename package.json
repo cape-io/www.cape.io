@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sync": "browser-sync start --proxy 'w.l.cape.io' --files 'public/*.js'",
     "dev": "watchify app/app.cjsx --extension='.cjsx' --extension='.coffee' -d -v -o 'exorcist public/app.js.map > public/app.js'",
-    "build": "browserify ./ --extension='.cjsx' --extension='.coffee' -g uglifyify --debug | exorcist public/app.js.map > public/app.js  && zopfli public/app.js",
+    "build": "browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' -g uglifyify --debug | exorcist public/app.js.map > public/app.js  && zopfli public/app.js",
     "clean": "rm -f ./public/*"
   },
   "author": "Kai Curry <kai@cape.io> (http://www.cape.io/)",
@@ -35,6 +35,7 @@
     "validator": "3.x"
   },
   "devDependencies": {
+    "coffee-reactify": "*",
     "uglifyify": "^3.0.1"
   }
 }
