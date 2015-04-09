@@ -9,7 +9,7 @@ module.exports = (data) ->
 
   meta = [
     ['viewport', 'width=device-width, initial-scale=1']
-    ['generator', 'CAPE.io, see www.cape.io']
+    ['generator', 'CAPE.io, v5.0.0 see www.cape.io']
   ]
   if _.isString author
     meta.push ['author', author]
