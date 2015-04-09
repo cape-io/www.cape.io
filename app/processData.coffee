@@ -2,8 +2,8 @@ _ = require 'lodash'
 Collection = require 'ampersand-collection'
 
 module.exports = (data) ->
+  data.db = data.db or {}
   {db, theme} = data
-  db = db or {}
   {css, js} = theme
   {author, description, title} = db
 
