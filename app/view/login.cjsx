@@ -58,7 +58,7 @@ module.exports = React.createClass
             if not err and res and res.body
               emailIndex[email] = res.body[0] or false
               if emailIndex[email]
-                @setState { emailStatus: 'success' }
+                app.me.set(emailIndex[email])
               else
                 @setState emailStatus: 'warning'
             else
