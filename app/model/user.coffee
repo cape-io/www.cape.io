@@ -1,5 +1,6 @@
 Model = require "ampersand-model"
 http = require 'superagent'
+Websites = require './websites'
 
 module.exports = Model.extend
   url: '/user/me.json'
@@ -11,7 +12,10 @@ module.exports = Model.extend
     fullName: 'string'
     providers: 'array'
     ids: 'array'
+  collections:
+    websites: Websites
   extraProperties: 'allow'
+
   checkSession: ->
     http.get('/user/session.json')
     .accept('json')

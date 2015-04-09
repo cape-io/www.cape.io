@@ -26,7 +26,6 @@ module.exports = React.createClass
     # Grab pageData
     if pageId is 'mixer' or parentRoute?.name is 'mixer'
       pageData = {user: me}
-      console.log 'mixer data'
     else
       pageData = db[pageId] or {}
     # console.log pageId, displayType, pageData

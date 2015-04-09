@@ -31,7 +31,6 @@ module.exports = React.createClass
 
   componentWillUnmount: ->
     app.me.off 'change:isAuthenticated', @handleLogin
-    console.log 'disable listen for isAuthenticated'
   #   http.get('/user/session.json')
   #   .accept('json')
   #   .end (err, res) =>
