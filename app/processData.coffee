@@ -4,7 +4,7 @@ Collection = require 'ampersand-collection'
 module.exports = (data) ->
   data.db = data.db or {}
   {db, theme} = data
-  {css, js} = theme
+  {css, js, settings} = theme
   {author, description, title} = db
 
   meta = [
@@ -20,11 +20,30 @@ module.exports = (data) ->
   title = data.title = db.title or '[title]'
 
   data.currentYear = new Date().getFullYear()
+
+  data.filterIndex = {}
+  if settings?.filters
+    _.each settings.filters, (fltr) ->
+      data.filterIndex[fltr.prop] = {filters: fltr.filters, option: {}}
+      _.each fltr.filters, (fop) ->
+        data.filterIndex[fltr.prop].option[fop.field] = {}
+
+  addFilterOpt = (prop, fieldId, filtOpt) ->
+    # Add value to option index.
+    if data.filterIndex[prop].option[fieldId][filtOpt]
+      data.filterIndex[prop].option[fieldId][filtOpt]++
+    else
+      data.filterIndex[prop].option[fieldId][filtOpt] = 1
+  if settings.pagesMenu
+    data.pages = []
+
   if db
     data.startYear = db.startYear or db.since
     # For each key in the database.
     _.each db, (val, key) ->
-      {contents, wufoo, filename} = val
+      {contents, wufoo, filename, content, title} = val
+      if content and settings.pagesMenu
+        data.pages.push {link: key, title: title or filename}
       unless contents
         return
       # If the value has a contents property
@@ -46,6 +65,19 @@ module.exports = (data) ->
         item.prevIndex = prevIndex
         item._next = contents[nextIndex]
         item.last = i is lastIndex
+
+        # Filters
+        if data.filterIndex[key]
+          # Check content against every filter.
+          _.each data.filterIndex[key].filters, (fltr) ->
+            # Content has a field that matches this filter.
+            if item[fltr.field]
+              filterOpt = item[fltr.field]
+              if _.isArray filterOpt
+                _.each filterOpt, (fltrOptItem) ->
+                  addFilterOpt key, fltr.field, fltrOptItem
+              else
+                addFilterOpt key, fltr.field, filterOpt
 
         if val[contentId]
           item.data = val[contentId]

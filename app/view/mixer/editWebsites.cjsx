@@ -32,6 +32,7 @@ Website = t.struct {
     )
     settings: t.struct(
       hasLogin: t.Bool
+      pagesMenu: t.Bool
       homepageId: t.maybe(t.Str)
       defaultDisplay: t.maybe(t.enums(
         imageGrid: 'Image Grid'
@@ -169,7 +170,7 @@ module.exports = React.createClass
         theme:
           appId: 'cape'
           cssId: 'cape-style'
-
+          defaultDisplay: 'imageGrid'
     siteOptions =
       legend: <h3>{siteInfo.title or siteInfo.id or 'New Website'}</h3>
       fields: websiteFieldOps

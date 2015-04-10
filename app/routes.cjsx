@@ -21,5 +21,6 @@ module.exports =
       <Route name="mySites" path="sites/:siteId?" handler={EditWebsites} />
     </Route>
     <Route name="login" path="user/login/" handler={Login} />
+    <Route name="filter" path=":pageId/filter/:filterType/:filterValue" handler={Page} />
     <Route name="page" path=":pageId/?:contentId?" handler={Page} />
   </Route>

@@ -11,7 +11,7 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {db, title, sha, domains, theme, currentYear, startYear, me} = @props
+    {db, title, sha, domains, theme, currentYear, startYear, me, pages} = @props
     {author, description, wufoo, tagline, lead} = db
     {css, js, meta, settings, navTitle} = theme
     {primaryMenu, homepageId, titleInNav, display, defaultDisplay} = settings
@@ -30,7 +30,7 @@ module.exports = React.createClass
     else if contentId
       pageData = db[pageId]?[contentId] or {}
     else
-      pageData = db[pageId] or {}
+      pageData = db[pageId] or db
     pageData._sectionId = pageId
     #console.log pageId, displayType, pageData._sectionId
 
@@ -58,7 +58,7 @@ module.exports = React.createClass
       <body>
         <div className="container">
           <Header primaryMenu={primaryMenu} title={title} titleInNav={titleInNav} />
-          <Main pageData={pageData} tagline={tagline} lead={lead} title={title} />
+          <Main pageData={pageData} tagline={tagline} lead={lead} title={title} pages={pages} />
           <Footer currentYear={currentYear} startYear={startYear} author={author} title={title} />
           <div id="fb-root"></div>
         </div>
