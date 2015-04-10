@@ -22,7 +22,7 @@ module.exports = React.createClass
       parentRoute = currentRoutes[currentRouteIndex-1]
     # Theme overrides the settings in index.yaml.
     pageId = pageId or currentRoute?.name or homepageId or db.homepageId or 'homepage'
-    displayType = display?[pageId] or defaultDisplay
+    displayType = display?[pageId] or defaultDisplay or 'imageGrid'
 
     # Grab pageData
     if pageId is 'mixer' or parentRoute?.name is 'mixer'
