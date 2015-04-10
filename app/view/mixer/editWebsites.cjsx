@@ -19,7 +19,7 @@ Website = t.struct {
   apis: t.list(t.struct({id: t.Str, value: t.Str}))
   theme: t.struct(
     appId: t.enums({cape: 'cape', ezle3: 'ezle3'})
-    cssId: t.enums({default: 'default', cape: 'cape'})
+    cssId: t.enums({default: 'default', 'cape-style': 'cape'})
     settings: t.struct(
       homepageId: t.maybe(t.Str)
       js: t.list(t.Str)
@@ -81,7 +81,7 @@ module.exports = React.createClass
     value = @refs.form.getValue()
     if value
       if value.id
-        user.website.get(value.id).save(value)
+        user.websites.get(value.id).save(value)
       else
         user.websites.create(value)
     console.log 'create/save', value

@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sync": "browser-sync start --proxy 'w.l.cape.io' --files 'public/*.js'",
     "dev": "watchify app/app.cjsx --extension='.cjsx' --extension='.coffee' -d -v -o 'exorcist public/app.js.map > public/app.js'",
-    "build": "browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' -g uglifyify --debug | exorcist public/app.js.map > public/app.js  && zopfli public/app.js",
+    "build": "browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' -g uglifyify --debug | exorcist public/app.js.map > public/app.js && zopfli public/app.js",
+    "prod": "browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' | uglifyjs > public/app.js && zopfli public/app.js",
     "clean": "rm -f ./public/*"
   },
   "author": "Kai Curry <kai@cape.io> (http://www.cape.io/)",
@@ -30,7 +31,6 @@
     "superagent": "0.x",
     "tcomb": "^1.0.1",
     "tcomb-form": "^0.4.8",
-    "tcomb-json-schema": "^0.1.2",
     "tcomb-validation": "^1.0.3",
     "validator": "3.x"
   },
