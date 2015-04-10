@@ -111,7 +111,7 @@ module.exports = React.createClass
         plan: 'free'
         theme:
           appId: 'cape'
-          cssId: 'cape'
+          cssId: 'cape-style'
 
     siteOptions =
       legend: <h3>{siteInfo.title or siteInfo.id or 'New Website'}</h3>
