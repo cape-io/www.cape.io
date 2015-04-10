@@ -170,7 +170,10 @@ module.exports = React.createClass
         theme:
           appId: 'cape'
           cssId: 'cape-style'
-          defaultDisplay: 'imageGrid'
+          settings:
+            defaultDisplay: 'imageGrid'
+            css: ['/theme/app.css']
+            js: ['/theme/app.js']
     siteOptions =
       legend: <h3>{siteInfo.title or siteInfo.id or 'New Website'}</h3>
       fields: websiteFieldOps
