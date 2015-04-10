@@ -15,6 +15,7 @@ Website = Model.extend
     theme: 'object'
     userId: 'string'
     vhost: 'string'
+  extraProperties: 'allow'
 
 module.exports = Collection.extend
   model: Website

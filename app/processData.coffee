@@ -37,12 +37,12 @@ module.exports = (data) ->
         contentId = slug or path or filename
 
         item._sectionId = filename
-        prevIndex = if i is 0 then lastIndex else dataIndex - 1
+        prevIndex = if i is 0 then lastIndex else i - 1
         item.prevIndex = prevIndex
         item._previous = contents[prevIndex]
         item.first = i is 0
 
-        nextIndex = if i is lastIndex then 0 else dataIndex + 1
+        nextIndex = if i is lastIndex then 0 else i + 1
         item.prevIndex = prevIndex
         item._next = contents[nextIndex]
         item.last = i is lastIndex

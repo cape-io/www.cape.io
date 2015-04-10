@@ -13,25 +13,25 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {content, title, images, dir, wufoo, contents, display, quote, theme} = @props
+    {content, title, images, dir, wufoo, contents, displayType, quote, theme} = @props
     {_next, _previous, _sectionId, slug, path, filename} = @props
     if not theme then theme = {}
     if contents?.length or images?.length
-      if display is 'slideShow' or display is 'slideshow'
+      if displayType is 'slideShow' or displayType is 'slideshow'
         if not theme.slideShow then theme.slideShow = {slideDuration: 3500}
         displayProps = _.merge theme.slideShow, {
           images: images or contents
           baseDir: dir
         }
         SlideShowEl = React.createElement(SlideShow, displayProps)
-      else if display is 'imageGrid'
+      else if displayType is 'imageGrid'
         if not theme.imageGrid then theme.imageGrid = {height:400, width:400}
         displayProps = _.merge theme.imageGrid, {
           images: images or contents
           baseDir: dir
         }
         Grid = React.createElement(ImageGrid, displayProps)
-      else if display is 'titleList'
+      else if displayType is 'titleList'
         if not theme.titleList then theme.titleList = {dateFormat: 'L'}
         displayProps = _.merge theme.titleList, {
           items: images or contents
@@ -39,7 +39,7 @@ module.exports = React.createClass
         }
         ListEl = React.createElement(List, displayProps)
       else
-        console.log 'no display'
+        console.log 'no display', displayType
     if _next and _previous
       currentPath = '/' + _sectionId
       prevUrl = currentPath + '/' + (_previous.slug or _previous.path or _previous.filename)

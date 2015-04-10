@@ -15,17 +15,56 @@ Website = t.struct {
   vhost: t.maybe(t.Str)
   ssFiles: t.list(FileSource)
   facebook: t.maybe(t.Str)
-  plan: t.enums({free: 'Free', light: 'Light', basic: 'Basic', advanced: 'Advanced', pro: 'Pro'})
+  plan: t.enums(
+    free: 'Free'
+    light: 'Light'
+    basic: 'Basic'
+    advanced: 'Advanced'
+    pro: 'Pro'
+  )
   apis: t.list(t.struct({id: t.Str, value: t.Str}))
   theme: t.struct(
     appId: t.enums({cape: 'cape', ezle3: 'ezle3'})
-    cssId: t.enums({default: 'default', 'cape-style': 'cape'})
+    cssId: t.enums(
+      default: 'default'
+      'cape-style': 'CAPE'
+      'ookb-style': 'OOKB'
+    )
     settings: t.struct(
+      hasLogin: t.Bool
       homepageId: t.maybe(t.Str)
+      defaultDisplay: t.maybe(t.enums(
+        imageGrid: 'Image Grid'
+        slideShow: 'Slideshow'
+        titleList: 'List of Titles'
+      ))
+      imageGrid: t.struct(
+        width: t.maybe(t.Num)
+        height: t.maybe(t.Num)
+        fit: t.maybe(t.Str)
+        hideInfo: t.Bool
+      )
+      slideShow: t.struct(
+        slideDuration: t.maybe(t.Num)
+      )
+      titleList: t.struct(
+        dateFormat: t.maybe(t.Str)
+      )
+      display: t.maybe(t.Str)
       js: t.list(t.Str)
       css: t.list(t.Str)
       primaryMenu: t.list(t.struct({link:t.Str, title:t.Str}))
       titleInNav: t.Bool
+      filters: t.list(
+        t.struct(
+          prop: t.Str
+          filters: t.list(t.struct(
+            field: t.Str
+            title: t.Str
+            orderBy: t.enums({valueUp: 'Asec value', valueDown: 'Desc Value', countDown: 'Qty down', countUp: 'Qty up'})
+          ))
+        )
+      )
     )
   )
 }
@@ -65,10 +104,25 @@ websiteFieldOps = {
         help: 'Select the style or "theme" that will be used on your site.'
       settings:
         fields:
+          display:
+            help: 'yaml'
           homepageId:
             label: 'Homepage data source'
             help: 'Default data or section to use. A directory name or data source like facebook.'
             placeholder: 'homepage'
+          imageGrid:
+            fields:
+              fit:
+                placeholder: 'crop'
+          slideShow:
+            fields:
+              slideDuration:
+                help: 'Time in ms.'
+                placeholder: '4000'
+          titleList:
+            fields:
+              dateFormat:
+                placeholder: 'DD MMM YYYY'
 }
 
 module.exports = React.createClass
@@ -84,8 +138,10 @@ module.exports = React.createClass
         user.websites.get(value.id).save(value)
       else
         user.websites.create(value)
+      @context.router.transitionTo('editProfile')
+    else
+      alert('Please review for errors')
     console.log 'create/save', value
-    @context.router.transitionTo('editProfile')
 
   render: ->
     {user} = @props

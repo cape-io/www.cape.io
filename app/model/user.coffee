@@ -37,5 +37,5 @@ module.exports = Model.extend
       if user.email
         unless @set @parse(user)
           console.error 'Unable to save user info.'
-      else
-        console.log 'No user info.'
+      # else
+      #   console.log 'No user info.'
