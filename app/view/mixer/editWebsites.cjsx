@@ -85,6 +85,7 @@ module.exports = React.createClass
       else
         user.websites.create(value)
     console.log 'create/save', value
+    @context.router.transitionTo('editProfile')
 
   render: ->
     {user} = @props
