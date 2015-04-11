@@ -21,19 +21,19 @@ module.exports = (data) ->
 
   data.currentYear = new Date().getFullYear()
 
-  data.filterIndex = {}
   if settings?.filters
+    data.filterIndex = {}
     _.each settings.filters, (fltr) ->
       data.filterIndex[fltr.prop] = {filters: fltr.filters, option: {}}
       _.each fltr.filters, (fop) ->
         data.filterIndex[fltr.prop].option[fop.field] = {}
 
-  addFilterOpt = (prop, fieldId, filtOpt) ->
+  addFilterOpt = (prop, fieldId, filtOpt, i) ->
     # Add value to option index.
     if data.filterIndex[prop].option[fieldId][filtOpt]
-      data.filterIndex[prop].option[fieldId][filtOpt]++
+      data.filterIndex[prop].option[fieldId][filtOpt].push i
     else
-      data.filterIndex[prop].option[fieldId][filtOpt] = 1
+      data.filterIndex[prop].option[fieldId][filtOpt] = [i]
   if settings.pagesMenu
     data.pages = []
 
@@ -67,7 +67,7 @@ module.exports = (data) ->
         item.last = i is lastIndex
 
         # Filters
-        if data.filterIndex[key]
+        if settings?.filters and data.filterIndex[key]
           # Check content against every filter.
           _.each data.filterIndex[key].filters, (fltr) ->
             # Content has a field that matches this filter.
@@ -75,9 +75,9 @@ module.exports = (data) ->
               filterOpt = item[fltr.field]
               if _.isArray filterOpt
                 _.each filterOpt, (fltrOptItem) ->
-                  addFilterOpt key, fltr.field, fltrOptItem
+                  addFilterOpt key, fltr.field, fltrOptItem, i
               else
-                addFilterOpt key, fltr.field, filterOpt
+                addFilterOpt key, fltr.field, filterOpt, i
 
         if val[contentId]
           item.data = val[contentId]
@@ -87,7 +87,23 @@ module.exports = (data) ->
       # Add wufoo information to contact page.
       if key is 'contact' and wufoo
         data.db[key].wufoo = wufoo
-
+    if data.filterIndex
+      data.filterIndex._blocks = []
+      _.each data.filterIndex, (filterInfo, pageId) ->
+        _.each filterInfo.filters, (filterSettings) ->
+          {field, title, orderBy} = filterSettings
+          if filterOptions = filterInfo.option[field]
+            blockInfo = {title: title, menu:[], key: field}
+            # Add all options to blockInfo menu.
+            _.each filterOptions, (iArray, filterValue) ->
+              blockInfo.menu.push {
+                to: 'filter'
+                params: {filterType: field, filterValue: filterValue, pageId: pageId}
+                qty: iArray.length
+                title: filterValue
+              }
+            # Sort the menu
+            data.filterIndex._blocks.push blockInfo
   # cape.io specific...
   domains = _.map data.domains, (domain) ->
     domain.id = domain.sld + '.' + domain.tld

@@ -8,7 +8,7 @@ Hero = require './hero'
 module.exports = React.createClass
 
   render: ->
-    {pageData, sections, sectionsData, lead, tagline, displayType, title, pages} = @props
+    {pageData, filterIndex, lead, tagline, displayType, title, pages} = @props
 
     SectionMenuEl = (sectionId, i) ->
       <Menu
@@ -19,11 +19,16 @@ module.exports = React.createClass
       />
     if displayType is 'hero'
       HeroEl = <Hero tagline={tagline} title={title} lead={lead} />
+
+    if filterIndex and filterIndex._blocks
+      filterMenuBlocks = _.map filterIndex._blocks, (block) ->
+        <Menu key={block.key} menu={block.menu} className={block.key} title={block.title} />
+
     <main>
       <aside>
         <nav>
-          { _.map sections, SectionMenuEl }
           { if pages then <Menu menu={pages} title="Pages" /> }
+          { filterMenuBlocks }
         </nav>
       </aside>
       {HeroEl}

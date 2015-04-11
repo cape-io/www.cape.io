@@ -51,7 +51,7 @@ Website = t.struct {
       titleList: t.struct(
         dateFormat: t.maybe(t.Str)
       )
-      display: t.maybe(t.Str)
+      #displays: t.maybe(t.Str)
       js: t.list(t.Str)
       css: t.list(t.Str)
       primaryMenu: t.list(t.struct({link:t.Str, title:t.Str}))

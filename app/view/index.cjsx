@@ -11,11 +11,11 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {db, title, sha, domains, theme, currentYear, startYear, me, pages} = @props
+    {db, title, sha, domains, theme, currentYear, startYear, me, pages, filterIndex} = @props
     {author, description, wufoo, tagline, lead} = db
     {css, js, meta, settings, navTitle} = theme
     {primaryMenu, homepageId, titleInNav, display, defaultDisplay} = settings
-    {pageId, contentId} = @context.router.getCurrentParams()
+    {pageId, contentId, filterType, filterValue} = @context.router.getCurrentParams()
     if currentRoutes = @context.router.getCurrentRoutes()
       currentRouteIndex = currentRoutes.length-1
       currentRoute = currentRoutes[currentRouteIndex]
@@ -29,8 +29,16 @@ module.exports = React.createClass
       pageData = {user: me}
     else if contentId
       pageData = db[pageId]?[contentId] or {}
+    else if filterType
+      #console.log filterType, filterValue, db[pageId]
+      pageData = db[pageId]
+      pageData.filtered = _.map filterIndex[pageId].option[filterType][filterValue], (contentIndex) ->
+        pageData.contents[contentIndex]
+      console.log filterIndex[pageId].option[filterType][filterValue], pageData.filtered.length
     else
       pageData = db[pageId] or db
+    unless filterType
+      delete pageData.filtered
     pageData._sectionId = pageId
     #console.log pageId, displayType, pageData._sectionId
 
@@ -58,7 +66,7 @@ module.exports = React.createClass
       <body>
         <div className="container">
           <Header primaryMenu={primaryMenu} title={title} titleInNav={titleInNav} />
-          <Main pageData={pageData} tagline={tagline} lead={lead} title={title} pages={pages} />
+          <Main pageData={pageData} tagline={tagline} lead={lead} title={title} pages={pages} filterIndex={filterIndex} />
           <Footer currentYear={currentYear} startYear={startYear} author={author} title={title} />
           <div id="fb-root"></div>
         </div>

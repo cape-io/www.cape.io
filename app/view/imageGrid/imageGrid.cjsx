@@ -46,6 +46,7 @@ module.exports = React.createClass
         if images
           {id, filename, rev} = images[0]
       key = key or rev or id or i
+
       # Try to figure out if this element has an image.
       if id
         ext = id.split('.').pop()
@@ -88,6 +89,7 @@ module.exports = React.createClass
       else
         widthOfImages = (images.length + 4) * (width or height)
       style = {width: widthOfImages + paddingMargin}
+    console.log 'images', images.length
     <ul className="image-grid" style={style}>
       { _.map images, ImageEl }
     </ul>

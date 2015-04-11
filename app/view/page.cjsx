@@ -13,27 +13,27 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {content, title, images, dir, wufoo, contents, displayType, quote, theme} = @props
+    {content, title, images, dir, wufoo, contents, displayType, quote, theme, filtered} = @props
     {_next, _previous, _sectionId, slug, path, filename} = @props
     if not theme then theme = {}
     if contents?.length or images?.length
       if displayType is 'slideShow' or displayType is 'slideshow'
         if not theme.slideShow then theme.slideShow = {slideDuration: 3500}
-        displayProps = _.merge theme.slideShow, {
+        displayProps = _.assign theme.slideShow, {
           images: images or contents
           baseDir: dir
         }
         SlideShowEl = React.createElement(SlideShow, displayProps)
       else if displayType is 'imageGrid'
         if not theme.imageGrid then theme.imageGrid = {height:400, width:400}
-        displayProps = _.merge theme.imageGrid, {
-          images: images or contents
+        displayProps = _.assign theme.imageGrid, {
+          images: filtered or images or contents
           baseDir: dir
         }
         Grid = React.createElement(ImageGrid, displayProps)
       else if displayType is 'titleList'
         if not theme.titleList then theme.titleList = {dateFormat: 'L'}
-        displayProps = _.merge theme.titleList, {
+        displayProps = _.assign theme.titleList, {
           items: images or contents
           sectionId: _sectionId
         }
