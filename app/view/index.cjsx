@@ -11,10 +11,10 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {db, title, sha, domains, theme, currentYear, startYear, me, pages, filterIndex} = @props
-    {author, description, wufoo, tagline, lead} = db
+    {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex} = @props
+    {author, description, wufoo, tagline, lead, title} = db
     {css, js, meta, settings, navTitle} = theme
-    {primaryMenu, homepageId, titleInNav, display, defaultDisplay} = settings
+    {primaryMenu, homepageId, titleInNav, display, defaultDisplay, hasLogin} = settings
     {pageId, contentId, filterType, filterValue} = @context.router.getCurrentParams()
     if currentRoutes = @context.router.getCurrentRoutes()
       currentRouteIndex = currentRoutes.length-1
@@ -66,7 +66,15 @@ module.exports = React.createClass
       <body>
         <div className="container">
           <Header primaryMenu={primaryMenu} title={title} titleInNav={titleInNav} />
-          <Main pageData={pageData} tagline={tagline} lead={lead} title={title} pages={pages} filterIndex={filterIndex} />
+          <Main
+            pageData={pageData}
+            tagline={tagline}
+            lead={lead}
+            title={title}
+            pages={pages}
+            filterIndex={filterIndex}
+            hasLogin={hasLogin}
+          />
           <Footer currentYear={currentYear} startYear={startYear} author={author} title={title} />
           <div id="fb-root"></div>
         </div>

@@ -136,7 +136,9 @@ module.exports = React.createClass
         </div>
       if providers.length
         providerList =
+          <h3>Login With</h3>
           <ul>
+            <li>Email</li>
             {
               _.map providers, @providerLinks
             }

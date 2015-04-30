@@ -39,3 +39,10 @@ module.exports = Model.extend
           console.error 'Unable to save user info.'
       # else
       #   console.log 'No user info.'
+  logout: ->
+    http.get('/user/logout').accept('json').end (err, res) =>
+      if err
+        return console.error err
+      console.log 'logout', res
+      @clear()
+      # @TODO define other props to unset...

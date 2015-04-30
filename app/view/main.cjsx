@@ -4,11 +4,12 @@ _ = require 'lodash'
 
 Menu = require './menu'
 Hero = require './hero'
+AuthMenu = require './user/authMenu'
 
 module.exports = React.createClass
 
   render: ->
-    {pageData, filterIndex, lead, tagline, displayType, title, pages} = @props
+    {pageData, filterIndex, lead, tagline, displayType, title, pages, hasLogin} = @props
 
     SectionMenuEl = (sectionId, i) ->
       <Menu
@@ -23,14 +24,18 @@ module.exports = React.createClass
     if filterIndex and filterIndex._blocks
       filterMenuBlocks = _.map filterIndex._blocks, (block) ->
         <Menu key={block.key} menu={block.menu} className={block.key} title={block.title} />
+    if pages
+      pagesMenuBlock = <Menu menu={pages} title="Pages" />
+    if hasLogin
+      userMenu = <AuthMenu />
+    if filterMenuBlocks or pagesMenuBlock
+      sidebar =
+        <aside>
+          <nav> { pagesMenuBlock } { filterMenuBlocks } { userMenu } </nav>
+        </aside>
 
     <main>
-      <aside>
-        <nav>
-          { if pages then <Menu menu={pages} title="Pages" /> }
-          { filterMenuBlocks }
-        </nav>
-      </aside>
+      {sidebar}
       {HeroEl}
       <section>
         { React.createElement(RouteHandler, pageData) }

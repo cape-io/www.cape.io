@@ -5,8 +5,7 @@ module.exports = (data) ->
   data.db = data.db or {}
   {db, theme} = data
   {css, js, settings} = theme
-  {author, description, title} = db
-
+  {author, description} = db
   meta = [
     ['viewport', 'width=device-width, initial-scale=1']
     ['generator', 'CAPE.io, v5.0.1 see www.cape.io']
@@ -17,7 +16,6 @@ module.exports = (data) ->
     meta.push ['description', description]
 
   data.theme.meta = meta
-  title = data.title = db.title or '[title]'
 
   data.currentYear = new Date().getFullYear()
 

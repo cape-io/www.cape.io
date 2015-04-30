@@ -11,6 +11,7 @@ FileSource = t.struct(
 Website = t.struct {
   id: t.maybe(t.Str)
   title: t.Str
+  email: t.Str
   sld: t.Str
   vhost: t.maybe(t.Str)
   ssFiles: t.list(FileSource)

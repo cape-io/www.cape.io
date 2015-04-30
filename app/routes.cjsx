@@ -3,7 +3,8 @@ Router = require 'react-router'
 {Route, DefaultRoute} = Router
 
 Index = require './view/index'
-Login = require './view/login'
+Login = require './view/user/login'
+Logout = require './view/user/logout'
 Page = require './view/page'
 Mixer = require './view/mixer/mixer'
 EditProfile = require './view/mixer/editProfile'
@@ -21,6 +22,7 @@ module.exports =
       <Route name="mySites" path="sites/:siteId?" handler={EditWebsites} />
     </Route>
     <Route name="login" path="user/login/" handler={Login} />
+    <Route name="logout" path="user/logout/" handler={Logout} />
     <Route name="filter" path=":pageId/filter/:filterType/:filterValue" handler={Page} />
     <Route name="page" path=":pageId/?:contentId?" handler={Page} />
   </Route>

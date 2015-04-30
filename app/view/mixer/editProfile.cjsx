@@ -44,10 +44,20 @@ module.exports = React.createClass
       email:
         label: 'Primary Email'
         help: 'This is the email we will use to communicate with you.'
+      bio:
+        label: 'Brief Biography'
+        type: 'textarea'
+      statement:
+        label: 'Artist Statement'
+        help: 'The statement you want to accompany your work. *Italic* **Bold**.'
+        type: 'textarea'
+      # image
 
     Profile = t.struct {
       fullName: t.Str
       email: Email
+      bio: t.Str
+      statement: t.Str
     }
     options =
       legend: <h3>Profile Edit</h3>
