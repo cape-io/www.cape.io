@@ -5,7 +5,8 @@ Websites = require './websites'
 module.exports = Model.extend
   url: '/user/me.json'
   session:
-    isAuthenticated: ['boolean', true, false],
+    isAuthenticated: ['boolean', true, false]
+    tokenSent: ['boolean', false, false]
   props:
     id: 'string'
     email: 'string'
@@ -46,3 +47,20 @@ module.exports = Model.extend
       console.log 'logout', res
       @clear()
       # @TODO define other props to unset...
+
+  requestToken: (cb) ->
+    if @email
+      console.log 'Token request.'
+      http.get('/user/requestToken')
+      .withCredentials()
+      .accept('json')
+      .end (err, res) =>
+        if res.body.msgId
+          @tokenSent = true
+          cb(true)
+        else
+          console.error res.body
+          cb(false)
+      return
+    else
+      console.error 'No email!'

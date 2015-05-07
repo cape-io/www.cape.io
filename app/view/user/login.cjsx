@@ -25,6 +25,8 @@ module.exports = React.createClass
       @context.router.transitionTo('editProfile')
     else if usr.email
       emailIndex[usr.email] = usr
+      # If valid email and that is our only provider redirect.
+
       @setState {
         emailStatus: 'success'
         email: usr.email
@@ -67,25 +69,34 @@ module.exports = React.createClass
       emailStatus: null
       email: email
 
+  clickEmail: ->
+    app.me.requestToken (res) =>
+      if res
+        @context.router.transitionTo('checkEmail')
+      else
+        @context.router.transitionTo('loginFail')
+      return
+    @context.router.transitionTo('emailPending')
+
   changePass: ->
     pass = @refs.pass.getValue()
     @setState password: pass, passwordStatus: null
 
   handleSubmit: (e) ->
     e.preventDefault()
-    {email, password} = @state
-    {id} = emailIndex[email]
-    http.post('/user/login')
-      .send({id: id, password: password})
-      .accept('json')
-      .end (err, res) =>
-        console.error err if err
-        if res.body
-          app.me = res.body
-          console.log res.body
-        else
-          console.log 'failed login'
-          @setState passwordStatus: 'error'
+    # {email, password} = @state
+    # {id} = emailIndex[email]
+    # http.post('/user/login')
+    #   .send({id: id, password: password})
+    #   .accept('json')
+    #   .end (err, res) =>
+    #     console.error err if err
+    #     if res.body
+    #       app.me = res.body
+    #       console.log res.body
+    #     else
+    #       console.log 'failed login'
+    #       @setState passwordStatus: 'error'
 
   providerLinks: (id) ->
     {pass_help, pass_link} = @props
@@ -114,7 +125,7 @@ module.exports = React.createClass
       instagram: '/user/login/instagram'
     if link = providerIndex[id]
       msg = "Login with #{id}."
-      return <li key={id}><a href={link} title={msg}>{id}</a></li>
+      return <li key={id} className={id}><a href={link} title={msg}>{_.capitalize(id)}</a></li>
     return false
 
   #mixins: [Navigation, CurrentPath]
@@ -135,14 +146,18 @@ module.exports = React.createClass
           {if expired then <p>{expired_account}</p> else false}
         </div>
       if providers.length
+        # Allow password?
+        # Always allow email. Auto email login when that is the only option.
         providerList =
-          <h3>Login With</h3>
-          <ul>
-            <li>Email</li>
-            {
-              _.map providers, @providerLinks
-            }
-          </ul>
+          <div className="login-links">
+            <h3>Login With</h3>
+            <ul>
+              <li className="email"> Email </li>
+              {
+                _.map providers, @providerLinks
+              }
+            </ul>
+          </div>
     else
       userInfo = false
       emailHelpTxt = email_help
