@@ -59,6 +59,7 @@ Website = t.struct {
       titleInNav: t.Bool
       aboutInHeader: t.Bool
       taglineInHeader: t.Bool
+      singlePage: t.Bool
       filters: t.list(
         t.struct(
           prop: t.Str
