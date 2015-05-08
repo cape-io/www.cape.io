@@ -55,7 +55,7 @@ module.exports = React.createClass
         </aside>
 
     <div className="page">
-      { if title then <h1>{title}</h1> }
+      { if title and not theme.singlePage then <h1>{title}</h1> }
       { SlideShowEl }
       { if quote then React.createElement(Quote, quote) }
       { if content

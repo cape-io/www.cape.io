@@ -9,7 +9,8 @@ AuthMenu = require './user/authMenu'
 module.exports = React.createClass
 
   render: ->
-    {pageData, filterIndex, lead, tagline, displayType, title, pages, hasLogin} = @props
+    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme} = @props
+    {hasLogin, singlePage} = pageData.theme
 
     SectionMenuEl = (sectionId, i) ->
       <Menu
@@ -18,6 +19,7 @@ module.exports = React.createClass
         className={sectionId}
         title={_.capitalize(sectionId)}
       />
+
     if displayType is 'hero'
       HeroEl = <Hero tagline={tagline} title={title} lead={lead} />
 
@@ -34,10 +36,15 @@ module.exports = React.createClass
           <nav> { pagesMenuBlock } { filterMenuBlocks } { userMenu } </nav>
         </aside>
 
+    if singlePage
+      # Include contact form.
+      contactEl = <section></section>
+
     <main>
       {sidebar}
       {HeroEl}
       <section>
         { React.createElement(RouteHandler, pageData) }
       </section>
+      {contactEl}
     </main>
