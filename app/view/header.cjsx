@@ -4,12 +4,25 @@ Menu = require './menu'
 
 module.exports = React.createClass
   render: ->
-    {primaryMenu, title, titleInNav} = @props
+    {title, about, tagline, settings} = @props
+    {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader} = settings
+
+    if about and aboutInHeader
+      aboutEl = <p>{about}</p>
+    else
+      aboutEl = false
+    if tagline and taglineInHeader
+      taglineEl = <h2>{tagline}</h2>
+    else
+      taglineEl = false
 
     # Decide if the title should be in an h1 or within the navBar.
     if title and not titleInNav
       # Create title h1 and remove title variable.
-      TitleEl = <Link to="/"><h1>{title}</h1></Link>
+      if singlePage
+        TitleEl = <h1>{title}</h1>
+      else
+        TitleEl = <Link to="/"><h1>{title}</h1></Link>
       title = false
 
     if primaryMenu
@@ -20,6 +33,10 @@ module.exports = React.createClass
         </nav>
 
     <header>
-      {TitleEl}
-      {PrimaryMenuEl}
+      <div className="inner">
+        {TitleEl}
+        {taglineEl}
+        {aboutEl}
+        {PrimaryMenuEl}
+      </div>
     </header>

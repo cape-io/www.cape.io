@@ -57,6 +57,8 @@ Website = t.struct {
       css: t.list(t.Str)
       primaryMenu: t.list(t.struct({link:t.Str, title:t.Str}))
       titleInNav: t.Bool
+      aboutInHeader: t.Bool
+      taglineInHeader: t.Bool
       filters: t.list(
         t.struct(
           prop: t.Str
@@ -99,10 +101,10 @@ websiteFieldOps = {
   theme:
     fields:
       appId:
-        label: 'Layout'
+        label: 'Structure'
         help: 'Select the app that will create the HTML for your site.'
       cssId:
-        label: 'Style'
+        label: 'Layout and Style'
         help: 'Select the style or "theme" that will be used on your site.'
       settings:
         fields:

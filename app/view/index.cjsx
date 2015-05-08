@@ -12,9 +12,9 @@ module.exports = React.createClass
   }
   render: ->
     {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex} = @props
-    {author, description, wufoo, tagline, lead, title} = db
+    {author, description, wufoo, tagline, lead, title, about} = db
     {css, js, meta, settings, navTitle} = theme
-    {primaryMenu, homepageId, titleInNav, display, defaultDisplay, hasLogin} = settings
+    {homepageId, display, defaultDisplay, hasLogin} = settings
     {pageId, contentId, filterType, filterValue} = @context.router.getCurrentParams()
     if currentRoutes = @context.router.getCurrentRoutes()
       currentRouteIndex = currentRoutes.length-1
@@ -65,7 +65,7 @@ module.exports = React.createClass
       </head>
       <body>
         <div className="container">
-          <Header primaryMenu={primaryMenu} title={title} titleInNav={titleInNav} />
+          <Header title={title} tagline={tagline} about={about} settings={settings} />
           <Main
             pageData={pageData}
             tagline={tagline}
