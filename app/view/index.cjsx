@@ -11,7 +11,7 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex} = @props
+    {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex, facebook} = @props
     {author, description, wufoo, tagline, lead, title, about} = db
     {css, js, meta, settings, navTitle} = theme
     {homepageId, display, defaultDisplay} = settings
@@ -45,7 +45,7 @@ module.exports = React.createClass
     pageData.displayType = displayType
     pageData.theme = settings
     pageTitle = if pageData.title then "#{title} | #{pageData.title}" else title
-
+    coverImg = facebook?.coverImg?.source
     <html>
       <head>
         <title>{pageTitle}</title>
@@ -65,7 +65,7 @@ module.exports = React.createClass
       </head>
       <body>
         <div className="container">
-          <Header title={title} tagline={tagline} about={about} settings={settings} />
+          <Header title={title} tagline={tagline} about={about} settings={settings} coverImg={coverImg} />
           <Main
             pageData={pageData}
             tagline={tagline}

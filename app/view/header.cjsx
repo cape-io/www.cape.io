@@ -4,8 +4,8 @@ Menu = require './menu'
 
 module.exports = React.createClass
   render: ->
-    {title, about, tagline, settings} = @props
-    {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader} = settings
+    {title, about, tagline, settings, coverImg} = @props
+    {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader, bgImgs} = settings
 
     if about and aboutInHeader
       aboutEl = <p>{about}</p>
@@ -32,7 +32,12 @@ module.exports = React.createClass
           <Menu menu={primaryMenu} title={title} />
         </nav>
 
-    <header>
+    if bgImgs and coverImg
+      headerStyle =
+        backgroundImage: "url('#{coverImg}')"
+    else
+      headerStyle = {}
+    <header style={headerStyle}>
       <div className="inner">
         {TitleEl}
         {taglineEl}
