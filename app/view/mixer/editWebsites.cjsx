@@ -30,6 +30,7 @@ Website = t.struct {
       default: 'default'
       'cape-style': 'CAPE'
       'ookb-style': 'OOKB'
+      'fbpl-bgbleed': 'Single Page w/ Background Images'
     )
     settings: t.struct(
       hasLogin: t.Bool
