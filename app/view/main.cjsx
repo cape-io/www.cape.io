@@ -5,6 +5,7 @@ _ = require 'lodash'
 Menu = require './menu'
 Hero = require './hero'
 AuthMenu = require './user/authMenu'
+Contact = require './contact'
 
 module.exports = React.createClass
 
@@ -38,7 +39,7 @@ module.exports = React.createClass
 
     if singlePage
       # Include contact form.
-      contactEl = <section></section>
+      contactEl = <Contact />
 
     <main>
       {sidebar}
