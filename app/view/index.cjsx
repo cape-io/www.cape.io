@@ -45,7 +45,6 @@ module.exports = React.createClass
     pageData.displayType = displayType
     pageData.theme = settings
     pageTitle = if pageData.title then "#{title} | #{pageData.title}" else title
-    coverImg = facebook?.coverImg?.source
     <html>
       <head>
         <title>{pageTitle}</title>
@@ -65,7 +64,13 @@ module.exports = React.createClass
       </head>
       <body>
         <div className="container">
-          <Header title={title} tagline={tagline} about={about} settings={settings} coverImg={coverImg} />
+          <Header
+            title={title}
+            tagline={tagline}
+            about={about}
+            settings={settings}
+            coverImg={facebook?.coverPhotos?[0]}
+          />
           <Main
             pageData={pageData}
             tagline={tagline}
@@ -73,6 +78,7 @@ module.exports = React.createClass
             title={title}
             pages={pages}
             filterIndex={filterIndex}
+            bgImg={facebook?.coverPhotos?[1]}
           />
           <Footer currentYear={currentYear} startYear={startYear} author={author} title={title} />
           <div id="fb-root"></div>

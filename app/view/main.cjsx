@@ -10,8 +10,8 @@ Contact = require './contact'
 module.exports = React.createClass
 
   render: ->
-    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme} = @props
-    {hasLogin, singlePage} = pageData.theme
+    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg} = @props
+    {hasLogin, singlePage, bgImgs} = pageData.theme
 
     SectionMenuEl = (sectionId, i) ->
       <Menu
@@ -41,7 +41,13 @@ module.exports = React.createClass
       # Include contact form.
       contactEl = <Contact />
 
-    <main>
+    if bgImgs and bgImg
+      mainStyle =
+        backgroundImage: "url('#{bgImg}')"
+    else
+      mainStyle = {}
+
+    <main style={mainStyle}>
       {sidebar}
       {HeroEl}
       <section>
