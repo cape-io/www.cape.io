@@ -10,7 +10,7 @@ Contact = require './contact'
 module.exports = React.createClass
 
   render: ->
-    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg} = @props
+    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg, contact} = @props
     {hasLogin, singlePage, bgImgs} = pageData.theme
 
     SectionMenuEl = (sectionId, i) ->
@@ -39,7 +39,7 @@ module.exports = React.createClass
 
     if singlePage
       # Include contact form.
-      contactEl = <Contact />
+      contactEl = <Contact contact={pageData.contact} title={title} />
 
     if bgImgs and bgImg
       mainStyle =
