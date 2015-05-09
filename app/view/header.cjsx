@@ -34,7 +34,7 @@ module.exports = React.createClass
 
     if bgImgs and coverImg
       headerStyle =
-        backgroundImage: "url('#{coverImg}')"
+        backgroundImage: "url('#{coverImg.urlDark}')"
     else
       headerStyle = {}
     <header style={headerStyle}>

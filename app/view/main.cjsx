@@ -43,7 +43,7 @@ module.exports = React.createClass
 
     if bgImgs and bgImg
       mainStyle =
-        backgroundImage: "url('#{bgImg}')"
+        backgroundImage: "url('#{bgImg.urlDark}')"
     else
       mainStyle = {}
 
