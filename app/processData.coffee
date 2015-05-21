@@ -39,6 +39,8 @@ module.exports = (data) ->
     data.startYear = db.startYear or db.since
     # For each key in the database.
     _.each db, (val, key) ->
+      unless _.isObject val
+        return
       {contents, wufoo, filename, content, title} = val
       if content and settings.pagesMenu
         data.pages.push {link: key, title: title or filename}
