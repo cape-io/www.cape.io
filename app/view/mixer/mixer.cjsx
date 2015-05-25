@@ -16,8 +16,8 @@ module.exports = React.createClass
       {link:'mixer/sites', title:'Websites'}
     ]
 
-    <div className="row">
-      <h1>{title}</h1>
+    <div className="group">
+      <h1 className="twelve columns">{title}</h1>
       <Menu menu={nav} className="mixer-nav" />
       <section>
         { React.createElement(RouteHandler, {user:user}) }
