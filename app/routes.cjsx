@@ -21,7 +21,12 @@ module.exports =
       <Route name="editProfile" path="profile/" handler={EditProfile} />
       <Route name="mySites" path="sites/:siteId?" handler={EditWebsites} />
     </Route>
-    <Route name="login" path="user/login/" handler={Login} />
+    <Route name="login" handler={Login}>
+      <DefaultRoute handler={LoginForm} />
+      <Route name="checkEmail" path="/login/ok" handler={LoginOk}>
+      <Route name="emailPending" path="/login/pending" handler={LoginPending}>
+      <Route name="LoginFail" path="/login/fail" handler={LoginFail}>
+    </Route>
     <Route name="logout" path="user/logout/" handler={Logout} />
     <Route name="filter" path=":pageId/filter/:filterType/:filterValue" handler={Page} />
     <Route name="page" path=":pageId/?:contentId?" handler={Page} />
