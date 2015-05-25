@@ -18,8 +18,8 @@ module.exports = React.createClass
 
     <div className="group">
       <h1 className="twelve columns">{title}</h1>
-      <Menu menu={nav} className="mixer-nav" />
-      <section>
+      <Menu menu={nav} className="mixer-nav two columns" />
+      <section className="ten columns">
         { React.createElement(RouteHandler, {user:user}) }
       </section>
     </div>
