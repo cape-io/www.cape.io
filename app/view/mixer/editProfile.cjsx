@@ -67,7 +67,7 @@ module.exports = React.createClass
     if fullName
       titleEl = <h2 className="display-name">{fullName}</h2>
 
-    <div className="row profile-edit">
+    <div className="profile-edit">
       {titleEl}
       <Form ref="form" type={Profile} options={options} value={user.toJSON()} />
       <button onClick={@handleSubmit}>Submit</button>
