@@ -152,7 +152,7 @@ module.exports = React.createClass
           <div className="login-links">
             <h3>Login With</h3>
             <ul>
-              <li className="email"> Email </li>
+              <li className="email"> <a href="/user/email-token">Email</a> </li>
               {
                 _.map providers, @providerLinks
               }
