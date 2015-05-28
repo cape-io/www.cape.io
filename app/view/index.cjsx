@@ -13,7 +13,7 @@ module.exports = React.createClass
   render: ->
     {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex, facebook} = @props
     {author, description, wufoo, tagline, lead, title, about} = db
-    {css, js, meta, settings, navTitle} = theme
+    {css, js, meta, settings, navTitle, fluid} = theme
     {homepageId, display, defaultDisplay} = settings
     {pageId, contentId, filterType, filterValue} = @context.router.getCurrentParams()
     if currentRoutes = @context.router.getCurrentRoutes()
@@ -63,7 +63,7 @@ module.exports = React.createClass
         }
       </head>
       <body>
-        <div className="container">
+        <div className={if fluid then "container-fluid" else "container"}>
           <Header
             title={title}
             tagline={tagline}

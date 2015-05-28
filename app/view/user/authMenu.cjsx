@@ -23,6 +23,6 @@ module.exports = React.createClass
         {link: 'user/logout/', title: 'Logout'}
       ]
     else
-      links = [{link: 'user/login/', title: 'Login'}]
+      links = [{link: 'login', title: 'Login'}]
 
     <Menu menu={links} title="User Menu" />

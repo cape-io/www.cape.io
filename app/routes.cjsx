@@ -4,6 +4,11 @@ Router = require 'react-router'
 
 Index = require './view/index'
 Login = require './view/user/login'
+LoginForm = require './view/user/loginForm'
+LoginPending = require './view/user/login'
+LoginOk = require './view/user/loginOk'
+LoginFail = require './view/user/login'
+
 Logout = require './view/user/logout'
 Page = require './view/page'
 Mixer = require './view/mixer/mixer'
@@ -23,9 +28,9 @@ module.exports =
     </Route>
     <Route name="login" handler={Login}>
       <DefaultRoute handler={LoginForm} />
-      <Route name="checkEmail" path="/login/ok" handler={LoginOk}>
-      <Route name="emailPending" path="/login/pending" handler={LoginPending}>
-      <Route name="LoginFail" path="/login/fail" handler={LoginFail}>
+      <Route name="checkEmail" path="/login/ok" handler={LoginOk} />
+      <Route name="emailPending" path="/login/pending" handler={LoginPending} />
+      <Route name="LoginFail" path="/login/fail" handler={LoginFail} />
     </Route>
     <Route name="logout" path="user/logout/" handler={Logout} />
     <Route name="filter" path=":pageId/filter/:filterType/:filterValue" handler={Page} />

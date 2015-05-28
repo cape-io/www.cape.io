@@ -35,6 +35,7 @@ Website = t.struct {
     settings: t.struct(
       hasLogin: t.Bool
       pagesMenu: t.Bool
+      fluid: t.Bool
       homepageId: t.maybe(t.Str)
       defaultDisplay: t.maybe(t.enums(
         imageGrid: 'Image Grid'
@@ -111,6 +112,8 @@ websiteFieldOps = {
         help: 'Select the style or "theme" that will be used on your site.'
       settings:
         fields:
+          fluid:
+            help: 'Select to give the container a "container-fluid" class. Default is "container".'
           display:
             help: 'yaml'
           homepageId:

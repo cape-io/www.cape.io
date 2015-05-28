@@ -38,18 +38,21 @@ module.exports = React.createClass
   componentWillUnmount: ->
     app.me.off 'change', @handleMeChange
 
+  # User has made a change to the email address field.
   changeEmail: ->
     email = @refs.email.getValue()
+    # Check our app memory cache for known invalid emails.
     if emailIndex[email] is false
       @setState
         emailStatus: 'error'
         email: email
       return
+    # Known valid email address.
     if emailIndex[email]
-      @setState
-        emailStatus: 'success'
-        email: email
+      app.me.set(emailIndex[email])
       return
+
+    # Previously unknown value in the email field.
     if _.contains(email, '@') and domain = email.split('@')[1]
       if _.contains(domain, '.') and tld = domain.split('.')[1]
         if tld.length > 1
@@ -64,7 +67,12 @@ module.exports = React.createClass
               else
                 @setState emailStatus: 'warning'
             else
-              console.log err, res
+              console.error err, res
+              if navigator.onLine
+                alert 'Please check your internet connection and try again.'
+              else
+                # @TODO send a notice to hipchat or email or SMS of error.
+
     @setState
       emailStatus: null
       email: email
@@ -162,6 +170,10 @@ module.exports = React.createClass
       userInfo = false
       emailHelpTxt = email_help
 
+    <div className="login-form">
+      <p className="lead">
+        {lead or 'You are great!'}
+      </p>
       <form onSubmit={@handleSubmit}>
         <Input
           type="text"
@@ -180,3 +192,4 @@ module.exports = React.createClass
         {userInfo}
         {providerList}
       </form>
+    </div>
