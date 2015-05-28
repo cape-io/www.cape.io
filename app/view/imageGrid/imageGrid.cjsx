@@ -77,8 +77,10 @@ module.exports = React.createClass
       unless ImageElement or Text or Detail
         return false
       <li className={className} key={key} style={style} >
-        {ImageElement}
-        {Text}
+        <figure>
+          {ImageElement}
+          {Text}
+        </figure>
         {Detail}
       </li>
 

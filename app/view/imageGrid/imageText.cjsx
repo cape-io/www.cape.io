@@ -6,7 +6,7 @@ module.exports = React.createClass
     if height or width and not size
       size = "#{height}\" × #{width}\""
 
-    <div className="info">
+    <figcaption className="info">
       {if title then <h2>{title}</h2>}
       <ul className="details">
         {if collection then <li className="collection">{collection}</li>}
@@ -18,4 +18,4 @@ module.exports = React.createClass
       { if content
           <div className="content" dangerouslySetInnerHTML={ __html: content }/>
       }
-    </div>
+    </figcaption>
