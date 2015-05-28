@@ -13,8 +13,8 @@ module.exports = React.createClass
   render: ->
     {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex, facebook} = @props
     {author, description, wufoo, tagline, lead, title, about} = db
-    {css, js, meta, settings, navTitle, fluid} = theme
-    {homepageId, display, defaultDisplay} = settings
+    {css, js, meta, settings, navTitle} = theme
+    {homepageId, display, defaultDisplay, fluid} = settings
     {pageId, contentId, filterType, filterValue} = @context.router.getCurrentParams()
     if currentRoutes = @context.router.getCurrentRoutes()
       currentRouteIndex = currentRoutes.length-1
