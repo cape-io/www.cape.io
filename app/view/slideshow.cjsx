@@ -47,7 +47,7 @@ module.exports = React.createClass
 
   render: ->
     {currentIndex} = @state
-    {images, baseDir} = @props
+    {images, baseDir, width} = @props
     console.log 'slideShow'
     SlideEl = (props, i) ->
       if _.isString props
@@ -66,6 +66,7 @@ module.exports = React.createClass
         caption={caption}
         active={active}
         baseDir={baseDir}
+        width={width}
       />
 
     <ul className="slideshow">

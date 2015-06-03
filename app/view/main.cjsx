@@ -10,7 +10,7 @@ Contact = require './contact'
 module.exports = React.createClass
 
   render: ->
-    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg, contact} = @props
+    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg, contact, iframe} = @props
     {hasLogin, singlePage, bgImgs} = pageData.theme
 
     SectionMenuEl = (sectionId, i) ->
@@ -31,7 +31,7 @@ module.exports = React.createClass
       pagesMenuBlock = <Menu menu={pages} title="Pages" />
     if hasLogin
       userMenu = <AuthMenu />
-    if filterMenuBlocks or pagesMenuBlock
+    if (filterMenuBlocks or pagesMenuBlock) and not iframe
       sidebar =
         <aside>
           <nav> { pagesMenuBlock } { filterMenuBlocks } { userMenu } </nav>

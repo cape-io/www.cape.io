@@ -45,25 +45,22 @@ module.exports = React.createClass
     pageData.displayType = displayType
     pageData.theme = settings
     pageTitle = if pageData.title then "#{title} | #{pageData.title}" else title
-    <html>
-      <head>
-        <title>{pageTitle}</title>
-        <meta charSet="utf-8" />
-        {
-          _.map meta, (metaArr, i) ->
-            <meta key={'m'+i} name={metaArr[0]} content={metaArr[1]} />
-        }
-        {
-          _.map css, (cssFilePath, i) ->
-            <link key={'c'+i} rel="stylesheet" type="text/css" href={cssFilePath} />
-        }
-        {
-          _.map js, (jsFilePath, i) ->
-            <script key={'j'+i} type="text/javascript" src={jsFilePath} async defer />
-        }
-      </head>
-      <body>
-        <div className={if fluid then "container-fluid" else "container"}>
+
+    if currentRoute?.name is 'iframe'
+      bodyEl =
+        <Main
+          pageData={pageData}
+          tagline={tagline}
+          lead={lead}
+          title={title}
+          pages={pages}
+          filterIndex={filterIndex}
+          bgImg={facebook?.coverPhotos?[1]}
+          iframe={true}
+        />
+    else
+      bodyEl =
+        <div className="iframe">
           <Header
             title={title}
             tagline={tagline}
@@ -83,5 +80,25 @@ module.exports = React.createClass
           <Footer currentYear={currentYear} startYear={startYear} author={author} title={title} />
           <div id="fb-root"></div>
         </div>
+
+    <html>
+      <head>
+        <title>{pageTitle}</title>
+        <meta charSet="utf-8" />
+        {
+          _.map meta, (metaArr, i) ->
+            <meta key={'m'+i} name={metaArr[0]} content={metaArr[1]} />
+        }
+        {
+          _.map css, (cssFilePath, i) ->
+            <link key={'c'+i} rel="stylesheet" type="text/css" href={cssFilePath} />
+        }
+        {
+          _.map js, (jsFilePath, i) ->
+            <script key={'j'+i} type="text/javascript" src={jsFilePath} async defer />
+        }
+      </head>
+      <body>
+        {bodyEl}
       </body>
     </html>

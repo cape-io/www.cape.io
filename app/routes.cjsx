@@ -33,6 +33,7 @@ module.exports =
       <Route name="LoginFail" path="/login/fail" handler={LoginFail} />
     </Route>
     <Route name="logout" path="user/logout/" handler={Logout} />
+    <Route name="iframe" path="iframe/:pageId/?:contentId?" handler={Page} />
     <Route name="filter" path=":pageId/filter/:filterType/:filterValue" handler={Page} />
     <Route name="page" path=":pageId/?:contentId?" handler={Page} />
   </Route>
