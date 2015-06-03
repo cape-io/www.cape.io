@@ -10,12 +10,12 @@ module.exports = React.createClass
           {name, cover, description, start_time, end_time, location} = eventInfo
           <li className="item event">
             <ul className="info">
-              <li className="name">{name}</li>
-              <li className="cover"><img src={cover.source} alt={cover.id} /></li>
-              <li className="start">{start_time}</li>
-              <li className="end">{end_time}</li>
-              <li className="location">{location}</li>
-              <li className="description">{description}</li>
+              {if name then <li className="name">{name}</li>}
+              {if cover then <li className="cover"><img src={cover.source} alt={cover.id} /></li>}
+              {if start_time then <li className="start">{start_time}</li>}
+              {if end_time then <li className="end">{end_time}</li>}
+              {if location then <li className="location">{location}</li>}
+              {if description then <li className="description" dangerouslySetInnerHTML={ __html: description }></li>}
             </ul>
           </li>
       }
