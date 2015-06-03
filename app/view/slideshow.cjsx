@@ -13,9 +13,9 @@ Slide = React.createClass
       unless url.slice(0, 4) is 'http'
         unless url[0] is '/'
           url = '/'+url
-        url = "http://ezle.imgix.net/#{baseDir}#{url}?w=#{width}"
+        url = "//ezle.imgix.net/#{baseDir}#{url}?w=#{width}"
     else if id
-      url = "http://ezle.imgix.net/#{id}?w=#{width}"
+      url = "//ezle.imgix.net/#{id}?w=#{width}"
     else
       msg = "Missing image."
       return <span className="missing-image">{msg}</span>

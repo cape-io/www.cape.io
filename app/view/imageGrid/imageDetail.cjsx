@@ -8,7 +8,7 @@ module.exports = React.createClass
 
   render: ->
     {id, filename, maxIndex, i, skip} = @props
-    imgUrl = "http://ezle.imgix.net/#{id}?w=1200"
+    imgUrl = "//ezle.imgix.net/#{id}?w=1200"
     nextIndex = if i is maxIndex then 0 else i+1
     prevIndex = if i is 0 then maxIndex else i-1
     path = @context.router.getCurrentPathname()

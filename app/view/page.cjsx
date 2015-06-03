@@ -7,13 +7,14 @@ SlideShow = require './slideshow'
 ImageGrid = require './imageGrid/imageGrid'
 Quote = require './quote'
 List = require './list'
+FbEvents = require './fbEvents'
 
 module.exports = React.createClass
   contextTypes: {
     router: React.PropTypes.func.isRequired
   }
   render: ->
-    {content, title, images, dir, wufoo, contents, displayType, quote, theme, filtered} = @props
+    {content, title, images, dir, wufoo, contents, displayType, quote, theme, filtered, data} = @props
     {_next, _previous, _sectionId, slug, path, filename} = @props
     if not theme then theme = {}
     if contents?.length or images?.length
@@ -53,7 +54,8 @@ module.exports = React.createClass
             Next
           </Link>
         </aside>
-
+    if _sectionId is 'fb-events' and data
+      facebookEvents = <FbEvents events={data} />
     <div className="page">
       { if title and not theme.singlePage then <h1>{title}</h1> }
       { SlideShowEl }
@@ -61,6 +63,7 @@ module.exports = React.createClass
       { if _.isString content
           <div className="content" dangerouslySetInnerHTML={ __html: content }/>
       }
+      { facebookEvents }
       { Pager }
       { Grid }
       { ListEl }

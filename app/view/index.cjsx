@@ -35,6 +35,8 @@ module.exports = React.createClass
       pageData.filtered = _.map filterIndex[pageId].option[filterType][filterValue], (contentIndex) ->
         pageData.contents[contentIndex]
       console.log filterIndex[pageId].option[filterType][filterValue], pageData.filtered.length
+    else if pageId is 'fb-events'
+      pageData = facebook.events
     else
       pageData = db[pageId] or @props[pageId] or db
     unless filterType
