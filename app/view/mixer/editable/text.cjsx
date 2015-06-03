@@ -12,10 +12,10 @@ module.exports = React.createClass
     {label, id, value, onChange, type, placeholder, help} = @props
 
     <div className="form-group">
-      <label className="col-md-2 control-label" htmlFor={id}>
+      <label className="two columns control-label" htmlFor={id}>
         {label}
       </label>
-      <div className="col-md-8">
+      <div className="eight columns">
         <input
           className="form-control"
           id={id}

@@ -57,7 +57,7 @@ module.exports = React.createClass
 
     # RENDER
     <div id={id} className={rowClasses}>
-      <div className"col-md-2 text-right">
+      <div className"two columns text-right">
         {label}
         {valueEl}
       </div>

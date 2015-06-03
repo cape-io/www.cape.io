@@ -64,7 +64,7 @@ module.exports = React.createClass
     # else
     extraEl = false
 
-    <div className="col-md-8 form-inline editableform">
+    <div className="eight columns form-inline editableform">
       {extraEl}
       <div className="editable-input">
         {formFieldEl}

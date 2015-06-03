@@ -189,9 +189,11 @@ module.exports = React.createClass
 
     <div className="sites">
       <h3>Websites</h3>
-      <Table data={sites} sortable={true} />
+      <div className="skinny scrollable">
+        <Table data={sites} sortable={true} />
+      </div>
       <form onSubmit={@handleSubmit} autoComplete="off">
         <Form ref="form" type={Website} options={siteOptions} value={siteInfo} />
-        <button type="submit">Submit</button>
+        <button className="big clickable" type="submit">Submit</button>
       </form>
     </div>
