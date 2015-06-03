@@ -8,10 +8,10 @@ module.exports = React.createClass
     eventUrl = "https://www.facebook.com/events/#{id}/"
     if start_time
       dateFormat = 'dddd, MMMM Do [at] h:mma'
-      startMoment = moment(start_time)
+      startMoment = moment.parseZone(start_time)
       startStr = startMoment.format(dateFormat)
       if end_time
-        endMoment = moment(end_time)
+        endMoment = moment.parseZone(end_time)
         if startMoment.isSame(endMoment, 'day')
           endStr = endMoment.format(' - h:mma')
         else
