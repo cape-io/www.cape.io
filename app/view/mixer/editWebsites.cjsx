@@ -50,6 +50,7 @@ Website = t.struct {
       )
       slideShow: t.struct(
         slideDuration: t.maybe(t.Num)
+        width: t.maybe(t.Num)
       )
       titleList: t.struct(
         dateFormat: t.maybe(t.Str)
