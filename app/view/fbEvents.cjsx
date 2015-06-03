@@ -7,7 +7,7 @@ module.exports = React.createClass
     <ul className="fb-events">
       {
         events.map (eventInfo) ->
-          {name, cover, description, start_time, location} = eventInfo
+          {name, cover, description, start_time, end_time, location} = eventInfo
           <li className="item event">
             <ul className="info">
               <li className="name">{name}</li>
