@@ -31,8 +31,8 @@ module.exports = React.createClass
 
     <li className="item event" key={id}>
       <ul className="info">
-        {if name then <li className="name"><h3><a href={eventUrl}>{name}</a></h3></li>}
         {if cover then <li className="cover"><a href={eventUrl}><img src={cover.source} alt={cover.id} /></a></li>}
+        {if name then <li className="name"><h3><a href={eventUrl}>{name}</a></h3></li>}
         { dateTime }
         { locationEl }
         {if description then <li className="description" dangerouslySetInnerHTML={ __html: description }></li>}
