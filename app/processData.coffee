@@ -103,6 +103,7 @@ module.exports = (data) ->
                 title: filterValue
               }
             # Sort the menu
+            blockInfo.menu = _.sortBy blockInfo.menu, 'title'
             data.filterIndex._blocks.push blockInfo
   # cape.io specific...
   domains = _.map data.domains, (domain) ->

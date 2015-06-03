@@ -58,7 +58,7 @@ module.exports = React.createClass
       { if title and not theme.singlePage then <h1>{title}</h1> }
       { SlideShowEl }
       { if quote then React.createElement(Quote, quote) }
-      { if content
+      { if _.isString content
           <div className="content" dangerouslySetInnerHTML={ __html: content }/>
       }
       { Pager }

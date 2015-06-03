@@ -3,18 +3,25 @@ _ = require 'lodash'
 
 Slide = React.createClass
   render: ->
-    {caption, url, active, baseDir, width} = @props
+    {caption, url, active, baseDir, width, id, key} = @props
     className = if active then 'slide active' else 'slide'
     if caption
       CaptionEl = <p className="slide-caption">{caption}</p>
     unless width
       width = 500
-    unless url.slice(0, 4) is 'http'
-      unless url[0] is '/'
-        url = '/'+url
-      url = "http://ezle.imgix.net/#{baseDir}#{url}?w=#{width}"
+    if url
+      unless url.slice(0, 4) is 'http'
+        unless url[0] is '/'
+          url = '/'+url
+        url = "http://ezle.imgix.net/#{baseDir}#{url}?w=#{width}"
+    else if id
+      url = "http://ezle.imgix.net/#{id}?w=#{width}"
+    else
+      msg = "Missing image."
+      return <span className="missing-image">{msg}</span>
+
     <li className={className}>
-      <img src={url} />
+      <img src={url} alt={key} />
       {CaptionEl}
     </li>
 
@@ -55,6 +62,7 @@ module.exports = React.createClass
       <Slide
         url={url}
         key={key}
+        id={id}
         caption={caption}
         active={active}
         baseDir={baseDir}

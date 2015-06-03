@@ -36,7 +36,7 @@ module.exports = React.createClass
         pageData.contents[contentIndex]
       console.log filterIndex[pageId].option[filterType][filterValue], pageData.filtered.length
     else
-      pageData = db[pageId] or db
+      pageData = db[pageId] or @props[pageId] or db
     unless filterType
       delete pageData.filtered
     pageData._sectionId = pageId
