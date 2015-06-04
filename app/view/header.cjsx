@@ -5,7 +5,7 @@ Menu = require './menu'
 module.exports = React.createClass
   render: ->
     {title, about, tagline, settings, coverImg, mission} = @props
-    {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader, bgImgs} = settings
+    {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader, missionInHeader, bgImgs} = settings
 
     if about and aboutInHeader
       aboutEl = <p className="about">{about}</p>
