@@ -16,6 +16,7 @@ Website = t.struct {
   vhost: t.maybe(t.Str)
   ssFiles: t.list(FileSource)
   facebook: t.maybe(t.Str)
+  instagram: t.maybe(t.Str)
   plan: t.enums(
     free: 'Free'
     light: 'Light'
@@ -31,6 +32,10 @@ Website = t.struct {
       'cape-style': 'CAPE'
       'ookb-style': 'OOKB'
       'fbpl-bgbleed': 'Single Page w/ Background Images'
+      'hg-style': 'Hunting Ground'
+      'acf-style': 'American Composers Forum'
+      'bbg-style': 'Baltimore Bartender'
+      'ppf-style': 'Prairiepasque'
     )
     settings: t.struct(
       hasLogin: t.Bool
