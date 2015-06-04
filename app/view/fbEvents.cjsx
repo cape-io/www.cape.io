@@ -13,7 +13,7 @@ module.exports = React.createClass
       if end_time
         endMoment = moment.parseZone(end_time)
         if startMoment.isSame(endMoment, 'day')
-          endStr = endMoment.format(' - h:mma')
+          endStr = "\u2014" + endMoment.format('h:mma')
         else
           endStr = endMoment.format(dateFormat)
       dateTime =
