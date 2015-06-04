@@ -10,7 +10,7 @@ Contact = require './contact'
 module.exports = React.createClass
 
   render: ->
-    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg, contact, iframe} = @props
+    {pageData, filterIndex, lead, tagline, displayType, title, pages, theme, bgImg, contact, iframe, mission} = @props
     {hasLogin, singlePage, bgImgs} = pageData.theme
 
     SectionMenuEl = (sectionId, i) ->
@@ -22,7 +22,7 @@ module.exports = React.createClass
       />
 
     if displayType is 'hero'
-      HeroEl = <Hero tagline={tagline} title={title} lead={lead} />
+      HeroEl = <Hero tagline={tagline} title={title} lead={lead or mission} />
 
     if filterIndex and filterIndex._blocks
       filterMenuBlocks = _.map filterIndex._blocks, (block) ->

@@ -62,7 +62,7 @@ module.exports = React.createClass
         />
     else
       bodyEl =
-        <div className="iframe">
+        <div>
           <Header
             title={title}
             tagline={tagline}
