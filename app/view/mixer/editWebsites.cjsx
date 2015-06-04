@@ -66,6 +66,7 @@ Website = t.struct {
       primaryMenu: t.list(t.struct({link:t.Str, title:t.Str}))
       titleInNav: t.Bool
       aboutInHeader: t.Bool
+      missionInHeader: t.Bool
       taglineInHeader: t.Bool
       singlePage: t.Bool
       bgImgs: t.Bool

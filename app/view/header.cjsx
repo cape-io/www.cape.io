@@ -4,11 +4,13 @@ Menu = require './menu'
 
 module.exports = React.createClass
   render: ->
-    {title, about, tagline, settings, coverImg} = @props
+    {title, about, tagline, settings, coverImg, mission} = @props
     {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader, bgImgs} = settings
 
     if about and aboutInHeader
-      aboutEl = <p>{about}</p>
+      aboutEl = <p className="about">{about}</p>
+    else if mission and missionInHeader
+      missionEl = <p className="mission">{mission}</p>
     else
       aboutEl = false
     if tagline and taglineInHeader
@@ -42,6 +44,7 @@ module.exports = React.createClass
         {TitleEl}
         {taglineEl}
         {aboutEl}
+        {missionEl}
         {PrimaryMenuEl}
       </div>
     </header>

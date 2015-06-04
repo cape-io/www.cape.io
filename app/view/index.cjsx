@@ -12,7 +12,7 @@ module.exports = React.createClass
   }
   render: ->
     {db, sha, domains, theme, currentYear, startYear, me, pages, filterIndex, facebook} = @props
-    {author, description, wufoo, tagline, lead, title, about} = db
+    {author, description, wufoo, tagline, lead, title, about, mission} = db
     {css, js, meta, settings, navTitle} = theme
     {homepageId, display, defaultDisplay, fluid} = settings
     {pageId, contentId, filterType, filterValue} = @context.router.getCurrentParams()
@@ -67,6 +67,7 @@ module.exports = React.createClass
             title={title}
             tagline={tagline}
             about={about}
+            mission={mission}
             settings={settings}
             coverImg={facebook?.coverPhotos?[0]}
           />
