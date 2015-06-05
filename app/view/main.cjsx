@@ -50,7 +50,7 @@ module.exports = React.createClass
     <main style={mainStyle}>
       {sidebar}
       {HeroEl}
-      <section>
+      <section className="page-content">
         { React.createElement(RouteHandler, pageData) }
       </section>
       {contactEl}
