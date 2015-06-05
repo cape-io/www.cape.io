@@ -26,7 +26,11 @@ Website = t.struct {
   )
   apis: t.list(t.struct({id: t.Str, value: t.Str}))
   theme: t.struct(
-    appId: t.enums({cape: 'cape', ezle3: 'ezle3'})
+    appId: t.enums(
+      cape: 'cape'
+      ezle3: 'ezle3'
+      'single-page': 'Single Page (FB-Page)'
+    )
     cssId: t.enums(
       default: 'default'
       'cape-style': 'CAPE'
@@ -68,7 +72,6 @@ Website = t.struct {
       aboutInHeader: t.Bool
       missionInHeader: t.Bool
       taglineInHeader: t.Bool
-      singlePage: t.Bool
       bgImgs: t.Bool
       filters: t.list(
         t.struct(
