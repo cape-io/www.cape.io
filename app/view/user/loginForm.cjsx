@@ -19,6 +19,7 @@ module.exports = React.createClass
     emailStatus: null
     password: ''
     passwordStatus: null
+    warningMsg: ''
 
   handleMeChange: (usr, changedThing, more) ->
     if usr.isAuthenticated
@@ -65,19 +66,26 @@ module.exports = React.createClass
           http.get('/user/email/'+email)
           .withCredentials()
           .accept('json').end (err, res) =>
-            if not err and res and res.body
-              emailIndex[email] = res.body[0] or false
-              if emailIndex[email]
-                app.me.set(emailIndex[email])
-              else
-                @setState emailStatus: 'warning'
-            else
+            if err
               console.error err, res
-              if navigator.onLine
+              unless navigator.onLine
                 alert 'Please check your internet connection and try again.'
               else
                 # @TODO send a notice to hipchat or email or SMS of error.
-
+            else if res
+              if res.badRequest
+                emailIndex[email] = false
+                @setState
+                  emailStatus: 'warning'
+                  warningMsg: "#{email} is not a valid email. Please check for typing mistakes."
+              else if res.body
+                emailIndex[email] = res.body[0] or false
+                if emailIndex[email]
+                  app.me.set(emailIndex[email])
+                else
+                  @setState
+                    emailStatus: 'warning'
+                    warningMsg: "We could not find #{email} in our database of users."
     @setState
       emailStatus: null
       email: email
@@ -143,7 +151,7 @@ module.exports = React.createClass
 
   #mixins: [Navigation, CurrentPath]
   render: ->
-    {email, emailStatus, passwordStatus} = @state
+    {email, emailStatus, passwordStatus, warningMsg} = @state
     {email_help, expired_account, title, lead} = @props
     lead = lead or 'You are great!'
     providerList = false
@@ -173,8 +181,10 @@ module.exports = React.createClass
           </div>
     else
       userInfo = false
-      emailHelpTxt = email_help
-
+      if emailStatus is 'warning' and warningMsg
+        lead = warningMsg
+      else
+        lead = "Enter your email to start the login process."
     <div className="login-form">
       <p className="lead">
         {lead or 'You are great!'}
