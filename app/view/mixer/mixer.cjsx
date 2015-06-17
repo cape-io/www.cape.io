@@ -6,7 +6,7 @@ module.exports = React.createClass
   statics:
     willTransitionTo: (transition, params) ->
       if typeof app is "undefined" or not app?.me?.isAuthenticated
-        transition.redirect '/user/login/'
+        transition.redirect '/login'
 
   render: ->
     {title, nav, user} = @props
