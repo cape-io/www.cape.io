@@ -49,7 +49,12 @@ module.exports = React.createClass
       return
     # Known valid email address.
     if emailIndex[email]
-      app.me.set(emailIndex[email])
+      if app.me.email is email
+        @setState
+          emailStatus: 'success'
+          email: email
+      else
+        app.me.set(emailIndex[email])
       return
 
     # Previously unknown value in the email field.
