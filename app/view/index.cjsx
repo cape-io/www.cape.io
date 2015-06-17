@@ -62,7 +62,7 @@ module.exports = React.createClass
         />
     else
       bodyEl =
-        <div>
+        <div className="container">
           <Header
             title={title}
             tagline={tagline}
