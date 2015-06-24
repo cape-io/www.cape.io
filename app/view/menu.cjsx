@@ -19,7 +19,7 @@ MenuItem = React.createClass
       linkEl = <a href={link}>{title}</a>
     else
       # Make router link.
-      linkEl = <Link to={to} params={params}>{title or shortTitle}{qtyEl}</Link>
+      linkEl = <Link to={to} params={params}>{title or shortTitle} {qtyEl}</Link>
 
     <li>{linkEl}</li>
 

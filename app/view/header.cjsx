@@ -2,7 +2,16 @@ React = require 'react'
 Menu = require './menu'
 {Link} = require 'react-router'
 
+# Can we repeat the menu toggle pattern from micagradshow.com in our default template?
+# I got the toggle.cjsx file added, as well as a few other things...
+# http://codepen.io/bjornmeansbear/pen/EjbRde - basic functionality desired
+# Toggle = require './toggle'
+# LARGE_SCREEN_SIZE = 767
+
 module.exports = React.createClass
+  getInitialState: ->
+    menuOpen: true
+
   render: ->
     {title, about, tagline, settings, coverImg, mission} = @props
     {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader, missionInHeader, bgImgs} = settings
@@ -32,6 +41,7 @@ module.exports = React.createClass
       PrimaryMenuEl =
         <nav>
           <Menu menu={primaryMenu} title={title} />
+          # {ToggleEl}
         </nav>
 
     if bgImgs and coverImg
