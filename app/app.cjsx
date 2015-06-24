@@ -39,6 +39,27 @@ App = (data, render, onError, onAbort) ->
     r.run Render
 
 if inBrowser
+  statusChangeCallback = (response) ->
+    console.log "statusChangeCallback"
+    {status} = response
+    console.log status
+    if status is "connected"
+      app.me.fbConnected = true
+      # Logged into your app and Facebook.
+    else if status is "not_authorized"
+      # The person is logged into Facebook, but not your app.
+    else # unkown
+      # The person is not logged into Facebook, so we're not sure if
+      # they are logged into this app or not.
+    return
+
+  window.fbAsyncInit = ->
+    FB.init
+      appId: "109302492423481"
+      cookie: true # enable cookies to allow the server to access the session?
+      version: "v2.3"
+    FB.getLoginStatus statusChangeCallback
+    return
   window.onload = -> # Attach event handlers.
     # This is created specific to the client.
     render = (Handler, props) ->

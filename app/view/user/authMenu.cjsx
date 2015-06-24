@@ -20,6 +20,7 @@ module.exports = React.createClass
     if isAuthenticated
       links = [
         {link: 'mixer/profile/', title: 'Edit Profile'}
+        {link: 'mixer/events/', title: 'Events'}
         {link: 'user/logout/', title: 'Logout'}
       ]
     else

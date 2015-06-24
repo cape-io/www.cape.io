@@ -13,6 +13,7 @@ module.exports = Model.extend
     fullName: 'string'
     providers: 'array'
     ids: 'array'
+    fbConnected: 'bool'
   collections:
     websites: Websites
   extraProperties: 'allow'
