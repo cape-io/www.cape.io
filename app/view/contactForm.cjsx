@@ -14,7 +14,7 @@ module.exports = React.createClass
     if e.preventDefault
       e.preventDefault()
 
-    data = formValues()
+    data = @formValues()
     if data.spam
       console.log 'SPAM!'
     else

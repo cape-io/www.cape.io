@@ -32,7 +32,8 @@
     "tcomb": "^1.0.1",
     "tcomb-form": "^0.4.8",
     "tcomb-validation": "^1.0.3",
-    "validator": "3.x"
+    "validator": "3.x",
+    "formsy-react-components": "^0.3.0"
   },
   "devDependencies": {
     "coffee-reactify": "*",

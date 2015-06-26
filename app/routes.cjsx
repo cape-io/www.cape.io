@@ -9,6 +9,8 @@ LoginPending = require './view/user/login'
 LoginOk = require './view/user/loginOk'
 LoginFail = require './view/user/login'
 
+Contact = require './view/contactFormsy'
+
 Logout = require './view/user/logout'
 Page = require './view/page'
 Mixer = require './view/mixer/mixer'
@@ -19,6 +21,8 @@ EditEvents = require './view/mixer/editEvents'
 # Domains = require './view/domains/domains'
 # Start = require './view/start/start'
 # Claim = require './view/claim/claim'
+
+WX = require './view/wx/superior-wind'
 
 module.exports =
   <Route name="app" path="/" handler={Index}>
@@ -34,6 +38,8 @@ module.exports =
       <Route name="emailPending" path="/login/pending" handler={LoginPending} />
       <Route name="LoginFail" path="/login/fail" handler={LoginFail} />
     </Route>
+    <Route name="wx" handler={WX} />
+    <Route name="contact" handler={Contact} />
     <Route name="logout" path="user/logout/" handler={Logout} />
     <Route name="iframe" path="iframe/:pageId/?:contentId?" handler={Page} />
     <Route name="filter" path=":pageId/filter/:filterType/:filterValue" handler={Page} />
