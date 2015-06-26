@@ -28,10 +28,11 @@ Slide = React.createClass
 module.exports = React.createClass
   getInitialState: ->
     currentIndex: 0
+    auto: true
 
   tick: ->
     {images} = @props
-    {currentIndex} = @state
+    {currentIndex, auto} = @state
     maxIndex = images.length-1
     nextIndex = currentIndex + 1
     nextIndex = if nextIndex is maxIndex then 0 else nextIndex
@@ -45,10 +46,19 @@ module.exports = React.createClass
   componentWillUnmount: ->
     clearInterval @interval
 
+  toggleAuto: ->
+    {auto} = @state
+    @setState auto: !auto
+    if auto
+      console.log 'hold auto-advance'
+      @componentWillUnmount()
+    else
+      console.log 'activate auto-advance'
+      @componentDidMount()
+
   render: ->
     {currentIndex} = @state
     {images, baseDir, width} = @props
-    console.log 'slideShow'
     SlideEl = (props, i) ->
       if _.isString props
         key = i
@@ -69,6 +79,6 @@ module.exports = React.createClass
         width={width}
       />
 
-    <ul className="slideshow">
+    <ul className="slideshow" onDoubleClick={@toggleAuto} onClick={@tick} >
       { _.map images, SlideEl }
     </ul>
