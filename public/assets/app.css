@@ -1,0 +1,160 @@
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,700,300,600");
+/* ------------------------------------------------------*/
+/* ---------->>> everything gets imported! <<<-----------*/
+/* ------------------------------------------------------*/
+/* -----------------------------------------------------*/
+/* --------------->>> variables.less <<<----------------*/
+/* -----------------------------------------------------*/
+/** FONT STACK TO USE FOR NOW: **/
+.sans {
+  font-family: 'Franklin Gothic', 'Liberation Sans', 'Nimbus Sans L', Helvetica, Arial, Sans-Serif;
+}
+.serif {
+  font-family: 'New Century Schoolbook', Constantia, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+}
+/*** Colors ***/
+/* # Colors */
+/* # alt colors or tweaks */
+/* «— is there some other way to do this??? */
+/**********************/
+/** # helper classes **/
+/**********************/
+.add-top {
+  margin-top: 1.5rem;
+}
+.add-top-2x {
+  margin-top: 3rem;
+}
+.add-bottom {
+  margin-bottom: 1.5rem;
+}
+.add-bottom-2x {
+  margin-bottom: 3rem;
+}
+/** for anything needing to stick to whole page in 1 place **/
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
+/* ----------------------------------------------------*/
+/* --------------->>> fontface.less <<<----------------*/
+/* ----------------------------------------------------*/
+/* ========================================== */
+/* ITC FRANKLIN GOTHIC FONT-FACE DECLARATIONS */
+/* ========================================== */
+@font-face {
+  font-family: 'Franklin Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('ff/fgbook.eot');
+  src: local('ITC Franklin Gothic Std Book'), local('ITCFranklinGothicStd-Book'), local('☺'), url('ff/fgbook.woff') format('woff'), url('ff/fgbook.ttf') format('truetype'), url('ff/fgbook.svg') format('svg');
+}
+@font-face {
+  font-family: 'Franklin Gothic';
+  font-style: italic;
+  font-weight: 400;
+  src: url('ff/fgbookital.eot');
+  src: local('ITC Franklin Gothic Std Book Italic'), local('ITCFranklinGothicStd-BookIt'), local('☺'), url('ff/fgbookital.woff') format('woff'), url('ff/fgbookital.ttf') format('truetype'), url('ff/fgbookital.svg') format('svg');
+}
+@font-face {
+  font-family: 'Franklin Gothic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('ff/fgdemi.eot');
+  src: local('ITC Franklin Gothic Std Demi'), local('ITCFranklinGothicStd-Demi'), local('☺'), url('ff/fgdemi.woff') format('woff'), url('ff/fgdemi.ttf') format('truetype'), url('ff/fgdemi.svg') format('svg');
+}
+@font-face {
+  font-family: 'Franklin Gothic';
+  font-style: italic;
+  font-weight: 700;
+  src: url('ff/fgdemiital.eot');
+  src: local('ITC Franklin Gothic Std Demi Italic'), local('ITCFranklinGothicStd-DemiIt'), local('☺'), url('ff/fgdemiital.woff') format('woff'), url('ff/fgdemiital.ttf') format('truetype'), url('ff/fgdemiital.svg') format('svg');
+}
+/* ========================================== */
+/* NEW CENTURY SCHOOL BOOK FONT-FACE DECLARATIONS */
+/* ========================================== */
+@font-face {
+  font-family: 'New Century Schoolbook';
+  font-style: normal;
+  font-weight: 400;
+  src: url('ff/newcenturyschlbkltstd_roman-webfont.eot');
+  src: local('New Century Schoolbook LT STD Roman'), local('NewCenturySchlbkLTStd-Roman'), local('☺'), url('ff/newcenturyschlbkltstd_roman-webfont.woff') format('woff'), url('ff/newcenturyschlbkltstd_roman-webfont.ttf') format('truetype'), url('ff/newcenturyschlbkltstd_roman-webfont.svg#new_century_schoolbook_lroman') format('svg');
+}
+@font-face {
+  font-family: 'New Century Schoolbook';
+  font-style: italic;
+  font-weight: 400;
+  src: url('ff/newcenturyschlbkltstd_it-webfont.eot');
+  src: local('New Century Schoolbook LT STD Italic'), local('NewCenturySchlbkLTStd-It'), local('☺'), url('ff/newcenturyschlbkltstd_it-webfont.woff') format('woff'), url('ff/newcenturyschlbkltstd_it-webfont.ttf') format('truetype'), url('ff/newcenturyschlbkltstd_it-webfont.svg#newcenturyschlbk_lt_stditalic') format('svg');
+}
+@font-face {
+  font-family: 'New Century Schoolbook';
+  font-style: normal;
+  font-weight: 700;
+  src: url('ff/newcenturyschlbkltstd_bd-webfont.eot');
+  src: local('New Century Schoolbook LT STD Bold'), local('NewCenturySchlbkLTStd-Bd'), local('☺'), url('ff/newcenturyschlbkltstd_bd-webfont.woff') format('woff'), url('ff/newcenturyschlbkltstd_bd-webfont.ttf') format('truetype'), url('ff/newcenturyschlbkltstd_bd-webfont.svg#newcenturyschlbk_lt_stdbold') format('svg');
+}
+@font-face {
+  font-family: 'New Century Schoolbook';
+  font-style: italic;
+  font-weight: 700;
+  src: url('ff/newcenturyschlbkltstd_bdit-webfont.eot');
+  src: local('New Century Schoolbook LT STD Bold Italic'), local('NewCenturySchlbkLTStd-BdIt'), local('☺'), url('ff/newcenturyschlbkltstd_bdit-webfont.woff') format('woff'), url('ff/newcenturyschlbkltstd_bdit-webfont.ttf') format('truetype'), url('ff/newcenturyschlbkltstd_bdit-webfont.svg#newcenturyschlbk_lt_stdBdIt') format('svg');
+}
+* {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+/*******/
+/*******/
+/*******/
+/*******/
+/*******/
+/*******/
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-weight: 800;
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+.navbar-default {
+  background: white;
+  border: 0;
+  border-bottom: 2px solid black;
+  border-radius: 0;
+}
+.navbar {
+  margin-bottom: 0;
+}
+#hero {
+  background: #eeeeee url('/everything-is-connected.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-align: center;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
+}
+#hero .grouped {
+  background: white;
+  margin: 5em auto;
+  padding: 3em;
+  max-width: 50em;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.33);
+}
+footer {
+  margin-top: 4em;
+  margin-bottom: 8em;
+}

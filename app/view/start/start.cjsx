@@ -1,5 +1,4 @@
 React = require 'react'
-{Row, Col} = require 'react-bootstrap'
 
 module.exports = React.createClass
   render: ->
@@ -7,8 +6,10 @@ module.exports = React.createClass
     {domains} = @props.data
 
     <main className="container">
-      <Row>
-        <h2>Getting Started</h2>
-        <p>Enter your Facebook page id.</p>
-      </Row>
+      <div className="group">
+        <div className="six columns offset-by-three">
+          <h2>Getting Started</h2>
+          <p>Enter your Facebook page id.</p>
+        </div>
+      </div>
     </main>
