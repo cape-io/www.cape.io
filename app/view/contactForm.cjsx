@@ -13,8 +13,8 @@ module.exports = React.createClass
   handleSubmit: (e) ->
     if e.preventDefault
       e.preventDefault()
-    data =
 
+    data = formValues()
     if data.spam
       console.log 'SPAM!'
     else
