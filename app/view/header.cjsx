@@ -15,7 +15,7 @@ module.exports = React.createClass
   render: ->
     {title, about, tagline, settings, coverImg, mission} = @props
     {primaryMenu, titleInNav, singlePage, aboutInHeader, taglineInHeader, missionInHeader, bgImgs} = settings
-
+    ToggleEl = false
     if about and aboutInHeader
       aboutEl = <p className="about">{about}</p>
     else if mission and missionInHeader
@@ -41,7 +41,7 @@ module.exports = React.createClass
       PrimaryMenuEl =
         <nav>
           <Menu menu={primaryMenu} title={title} />
-          # {ToggleEl}
+          {ToggleEl}
         </nav>
 
     if bgImgs and coverImg
