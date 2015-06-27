@@ -46,6 +46,7 @@ module.exports = React.createClass
       phoneEl = <div className="tel">Tel: <a href={telLink}><span itemProp="telephone" className="value">{phone}</span></a></div>
 
     <section id="contact">
+      <h3>Contact</h3>
       <div className="inner">
 
         <div className="contact-details vcard">
