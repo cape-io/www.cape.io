@@ -9,7 +9,7 @@ LoginPending = require './view/user/login'
 LoginOk = require './view/user/loginOk'
 LoginFail = require './view/user/login'
 
-Contact = require './view/contactFormsy'
+Contact = require 'cape-react-contact'
 
 Logout = require './view/user/logout'
 Page = require './view/page'

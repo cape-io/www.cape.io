@@ -34,7 +34,8 @@
     "tcomb-validation": "^1.0.3",
     "validator": "3.x",
     "formsy-react": "x",
-    "formsy-react-components": "^0.3.0"
+    "formsy-react-components": "^0.3.0",
+    "cape-react-contact": "git://github.com/cape-io/cape-react-contact"
   },
   "devDependencies": {
     "coffee-reactify": "*",
