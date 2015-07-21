@@ -54,8 +54,8 @@ isValidEmail = (email, setMe, cb) ->
         if res.body[0]
           emailIndex[email] = res.body[0]
           return status(true)
-            # emailStatus: 'warning'
-            # warningMsg: "We could not find #{email} in our database of users."
+        else
+          status('warning', "We could not find #{email} in our database of users.")
   unless cb
     return status('pending')
 module.exports = isValidEmail
