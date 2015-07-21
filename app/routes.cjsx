@@ -17,6 +17,7 @@ Mixer = require './view/mixer/mixer'
 EditProfile = require './view/mixer/editProfile'
 EditWebsites = require './view/mixer/editWebsites'
 EditEvents = require './view/mixer/editEvents'
+WebsiteList = require './view/mixer/websiteList'
 # Home = require './view/home/home'
 # Domains = require './view/domains/domains'
 # Start = require './view/start/start'
@@ -29,7 +30,8 @@ module.exports =
     <DefaultRoute handler={Page}/>
     <Route name="mixer" handler={Mixer}>
       <Route name="editProfile" path="profile/" handler={EditProfile} />
-      <Route name="mySites" path="sites/:siteId?" handler={EditWebsites} />
+      <Route name="mySites" path="sites/" handler={WebsiteList} />
+      <Route name="site" path="sites/:siteId" handler={EditWebsites} />
       <Route name="myEvents" path="events/" handler={EditEvents} />
     </Route>
     <Route name="login" handler={Login}>

@@ -1,8 +1,11 @@
 React = require 'react'
 # {Transition} = require 'react-router'
-{Input} = require 'react-bootstrap'
+Formsy = require 'formsy-react'
+{Input, Textarea} = require 'formsy-react-components'
+EmailForm = require './loginEmail'
 _ = require 'lodash'
 http = require 'superagent'
+ProviderList = require './providerLinks'
 emailIndex = {}
 
 module.exports = React.createClass
@@ -15,11 +18,12 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
 
   getInitialState: ->
-    email: ''
+    email: if typeof app isnt "undefined" then app.me.email else ''
     emailStatus: null
     password: ''
     passwordStatus: null
     warningMsg: ''
+    canSubmit: false
 
   handleMeChange: (usr, changedThing, more) ->
     if usr.isAuthenticated
@@ -39,60 +43,12 @@ module.exports = React.createClass
   componentWillUnmount: ->
     app.me.off 'change', @handleMeChange
 
-  # User has made a change to the email address field.
-  changeEmail: ->
-    email = @refs.email.getValue()
-    # Check our app memory cache for known invalid emails.
-    if emailIndex[email] is false
-      @setState
-        emailStatus: 'error'
-        email: email
-      return
-    # Known valid email address.
-    if emailIndex[email]
-      if app.me.email is email
-        @setState
-          emailStatus: 'success'
-          email: email
-      else
-        app.me.set(emailIndex[email])
-      return
-
-    # Previously unknown value in the email field.
-    if _.contains(email, '@') and domain = email.split('@')[1]
-      if _.contains(domain, '.') and tld = domain.split('.')[1]
-        if tld.length > 1
-          #console.log 'Checking email ', email
-          http.get('/user/email/'+email)
-          .withCredentials()
-          .accept('json').end (err, res) =>
-            if err
-              console.error err, res
-              unless navigator.onLine
-                alert 'Please check your internet connection and try again.'
-              else
-                # @TODO send a notice to hipchat or email or SMS of error.
-            else if res
-              if res.badRequest
-                emailIndex[email] = false
-                @setState
-                  emailStatus: 'warning'
-                  warningMsg: "#{email} is not a valid email. Please check for typing mistakes."
-              else if res.body
-                emailIndex[email] = res.body[0] or false
-                if emailIndex[email]
-                  app.me.set(emailIndex[email])
-                else
-                  @setState
-                    emailStatus: 'warning'
-                    warningMsg: "We could not find #{email} in our database of users."
-    @setState
-      emailStatus: null
-      email: email
-
-  clickEmail: ->
+  onValidEmail: (userResObj) ->
+    app.me.set userResObj
+    console.log app.me.toJSON()
     app.me.requestToken (res) =>
       if res
+        console.log 'token', res
         @context.router.transitionTo('checkEmail')
       else
         @context.router.transitionTo('loginFail')
@@ -119,39 +75,9 @@ module.exports = React.createClass
     #       console.log 'failed login'
     #       @setState passwordStatus: 'error'
 
-  providerLinks: (id) ->
-    {pass_help, pass_link} = @props
-    if id is 'password'
-      passHelpTxt =
-        <div>{pass_help+' '}<a href="#">{pass_link}</a></div>
-      passwordField =
-        <li key={id}>
-          <Input
-            type="password"
-            ref="pass"
-            label="Password:"
-            help={passHelpTxt}
-            onChange={@changePass}
-            bsStyle={passwordStatus}
-          />
-          <Input type="submit" value="Login" />
-        </li>
-      return passwordField
-
-    providerIndex =
-      google: '/user/login/google'
-      twitter: '/user/login/twitter'
-      facebook: '/user/login/facebook'
-      github: '/user/login/github'
-      instagram: '/user/login/instagram'
-    if link = providerIndex[id]
-      msg = "Login with #{id}."
-      return <li key={id} className={id}><a href={link} title={msg}>{_.capitalize(id)}</a></li>
-    return false
-
   #mixins: [Navigation, CurrentPath]
   render: ->
-    {email, emailStatus, passwordStatus, warningMsg} = @state
+    {email, emailStatus, passwordStatus, warningMsg, canSubmit} = @state
     {email_help, expired_account, title, lead} = @props
     lead = lead or 'You are great!'
     providerList = false
@@ -166,45 +92,14 @@ module.exports = React.createClass
         <div>
           {if expired then <p>{expired_account}</p> else false}
         </div>
-      if providers.length
-        # Allow password?
-        # Always allow email. Auto email login when that is the only option.
-        providerList =
-          <div className="login-links">
-            <h3>Login With</h3>
-            <ul>
-              <li className="email"><a href="/user/email-token">Email</a> </li>
-              {
-                _.map providers, @providerLinks
-              }
-            </ul>
-          </div>
+      providerList = <ProviderList providers={providers} />
     else
       userInfo = false
       if emailStatus is 'warning' and warningMsg
         lead = warningMsg
       else
         lead = "Enter your email to start the login process."
+
     <div className="login-form">
-      <p className="lead">
-        {lead or 'You are great!'}
-      </p>
-      <form onSubmit={@handleSubmit}>
-        <Input
-          type="text"
-          value={email}
-          placeholder='Enter your email'
-          label='Your email please:'
-          help={emailHelpTxt}
-          bsStyle={emailStatus}
-          ref='email'
-          hasFeedback= {true}
-          groupClassName='group-class-login'
-          wrapperClassName='wrapper-class-login'
-          labelClassName='label-class-editable'
-          onChange={@changeEmail}
-        />
-        {userInfo}
-        {providerList}
-      </form>
+      <EmailForm onValidEmail={@onValidEmail} email={email} />
     </div>

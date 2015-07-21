@@ -52,10 +52,13 @@ module.exports = Model.extend
   requestToken: (cb) ->
     if @email
       console.log 'Token request.'
-      http.get('/user/requestToken')
+      http.get('/user/email-token')
       .withCredentials()
       .accept('json')
       .end (err, res) =>
+        if err
+          return console.error err
+        console.log res
         if res.body.msgId
           @tokenSent = true
           cb(true)

@@ -12,6 +12,7 @@ Website = t.struct {
   id: t.maybe(t.Str)
   title: t.Str
   email: t.Str
+  logo: t.Str
   sld: t.Str
   vhost: t.maybe(t.Str)
   ssFiles: t.list(FileSource)
@@ -169,7 +170,7 @@ module.exports = React.createClass
 
     sites = user.websites.map (site) ->
       info = pick site, 'id', 'facebook', 'plan', 'vhost', 'sld', 'tld', 'title'
-      info.id = <Link to="mySites" params={siteId: info.id}>{info.id}</Link>
+      info.id = <Link to="site" params={siteId: info.id}>{info.id}</Link>
       if site.ssFiles?.length
         dropbox = find site.ssFiles, (f) ->
           contains(['dbox', 'dropbox'], f.provider)
@@ -198,10 +199,6 @@ module.exports = React.createClass
       fields: websiteFieldOps
 
     <div className="sites">
-      <h3>Websites</h3>
-      <div className="skinny scrollable">
-        <Table data={sites} sortable={true} />
-      </div>
       <form onSubmit={@handleSubmit} autoComplete="off">
         <Form ref="form" type={Website} options={siteOptions} value={siteInfo} />
         <button className="big clickable" type="submit">Submit</button>
