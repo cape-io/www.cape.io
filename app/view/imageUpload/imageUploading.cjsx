@@ -15,9 +15,19 @@ module.exports = React.createClass
 
   render: ->
     {width, progress, fileInfo} = @props
-    {humanSize, fileData} = fileInfo
+    {humanSize, fileData, name} = fileInfo
     width = width or '150'
     progressStr = progress+'%'
+
+    if progress is 101
+      resizeTxt = "[ Resizing... ]"
+      progressEl = <div className="progress-resize">{resizeTxt}</div>
+    else
+      progressEl =
+        <div className="progress-bar" role="progressbar" style={width: progressStr}
+          aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100">
+          {progressStr}
+        </div>
 
     <div className="dz-preview dz-processing dz-image-preview col-md-2">
       <div className="dz-details">
@@ -29,10 +39,7 @@ module.exports = React.createClass
         </div>
       </div>
       <div className="dz-progress progress">
-        <div className="progress-bar" role="progressbar" style={width: progressStr}
-          aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100">
-          {progressStr}
-        </div>
+        {progressEl}
       </div>
       <button role="button" className="dz-remove">Remove File</button>
     </div>

@@ -9,28 +9,18 @@ module.exports = React.createClass
     fileHover: false
     fileUploading: null
     progress: 0
+    imgSrc: @props.imgSrc
 
-  # componentDidMount: ->
-  #   # Every time an images changes its src update the view.
-  #   app.me.files.on 'add', @handleFileUpload
-  #   #app.me.files.on 'change:uploaded', @handleFileUpload
-  #   app.me.on 'change:pic', @handleFileUpload
-  #
-  # componentWillUnmount: ->
-  #   app.me.files.off 'add', @handleFileUpload
-  #   #app.me.files.off 'change:uploaded', @handleFileUpload
-  #   app.me.on 'change:pic', @handleFileUpload
   handleProgress: (progress) ->
     @setState progress: progress
 
-  handleFileUpload: ->
-    console.log 'handleFileUpload'
-    if @isMounted()
-      @setState filesUploading: app.me.files.where(uploaded: false).length
-    else
-      console.log 'not mounted. wtf error.'
+  handleUploaded: (imgSrc) ->
+    console.log 'handleUploaded'
+    @setState imgSrc: imgSrc
+    if @props.onFileUploaded
+      @props.onFileUploaded(file)
 
-  # This is just to set the hover class.
+  # This is just to (un)set the hover class.
   handleFileHover: (e) ->
     if e.preventDefault then e.preventDefault()
     if e.stopPropagation then e.stopPropagation()
@@ -53,7 +43,7 @@ module.exports = React.createClass
     files = e.target.files or e.dataTransfer.files
     maxFiles = 1
     if files.length > maxFiles
-      alert 'You are limited to 25 images. Please delete some images before adding more.'
+      alert 'Please only upload one image at a time.'
       return
 
     # Process the first file.
@@ -61,10 +51,11 @@ module.exports = React.createClass
     processImgFile {file: file}, ['image/jpg', 'image/jpeg'], (err, fileInfo) =>
       if err
         return console.error err
-      @setState fileUploading: fileInfo
-      if onFileUploaded
-        onFileUploaded(file)
-      uploadFile fileInfo.file, app.me.uploadInfo, @handleProgress
+      @setState
+        fileUploading: fileInfo
+        imgSrc: null
+
+      uploadFile fileInfo.file, app.me.uploadInfo, @handleProgress, @handleUploaded
       # fileName = app.me.uploadInfo.prefix.substr(1)+file.name
       # console.log file.type
       # app.me.files.add
@@ -83,30 +74,19 @@ module.exports = React.createClass
     @refs.fileselect.getDOMNode().click()
 
   render: ->
-    {fileHover, fileUploading, progress} = @state
-    {imgSrc} = @props
-
-    #   console.log 'files uploading now. show them.'
-    #   files = []
-    #   app.me.files.where(uploaded: false).forEach (imgUp) ->
-    #     #console.log imgUp.fileName
-    #     files.push ImageUploading
-    #       key: imgUp.fileName
-    #       model: imgUp
-    #   files = div
-    #     className: 'dz-images row',
-    #       files
-    # else
-    #   files = false
+    {fileHover, fileUploading, progress, imgSrc} = @state
 
     className = "dropzone"
     if fileHover
       className += " alert-info hover"
 
     if imgSrc
-      currentImg = <img src={imgSrc} alt="image" />
+      currentImg = <div className="dz-image"><img src={imgSrc} alt="image" /></div>
     else if fileUploading
-      currentImg = <div className="dz-images row"><ImageUploading progress={progress} fileInfo={fileUploading} /></div>
+      currentImg =
+      <div className="dz-images row">
+        <ImageUploading progress={progress} fileInfo={fileUploading} width="300" />
+      </div>
     else
       currentImg = false
 

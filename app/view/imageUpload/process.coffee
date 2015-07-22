@@ -42,9 +42,8 @@ module.exports =
     reader.onload = (e) =>
       img = new Image
       img.onerror = (err) ->
-        alert('Hey, you may only upload valid JPG, PNG and GIF image files.
-          Changing the file extension does not change the file type.
-          Try again.')
+        alert('You may only upload valid JPG, PNG and GIF image files.
+          Changing the filename extension does not change the file type.')
         cb(err)
       img.onload = ->
         console.log img.width, img.height
@@ -57,7 +56,10 @@ module.exports =
       return
     reader.readAsDataURL fileInfo.file
 
-  uploadFile: (file, uploadInfo, onProgress) ->
+  uploadFile: (file, uploadInfo, onProgress, onSuccess) ->
+    {cdn, imgix, max_file_size, max_file_count, expires, signature, prefix, url} = uploadInfo
+    cdn = cdn or 'cape-io.imgix.net'
+    imgix = imgix or '?w=300&h=300&fit=crop&crop=faces'
     xhr = new XMLHttpRequest()
     handleProgress = (e) ->
       progress = parseInt(e.loaded / e.total * 100)
@@ -67,39 +69,32 @@ module.exports =
     xhr.onreadystatechange = (e) =>
       if xhr.readyState is 4
         if xhr.status is 201
-          console.log 'uploaded img'
-          # itemImg = new Image()
-          # itemImg.onload = =>
-          #   console.log 'resized img'
-          #   @save()
-          #   if @metadata.profilePic == true
-          #     me = @collection.parent
-          #     # Delete old profile image.
-          #     if me.picFileName
-          #       picModel = @collection.get(me.picFileName)
-          #       if picModel then picModel.destroy()
-          #     # Save new file info to profile.
-          #     me.pic = itemImg.src
-          #     me.picFileName = @fileName
-          #     me.save()
-          #
-          # itemImg.onerror = (e) ->
-          #   alert('There was an error processing your image.
-          #     The image needs to be a JPG or GIF. You could refresh the page
-          #     and see if it shows up in your list. If it shows a broken image
-          #     delete the file and upload with correct file type.')
-          # itemImg.src = @createSrcUrl()
+          console.log 'Uploaded img to service.'
+          onProgress 101
+          imgSrc = '//'+cdn+prefix+encodeURIComponent(file.name)+imgix
+          # Now we test that the image can be loaded and/or resized by Imgix.
+          itemImg = new Image()
+          itemImg.onload = =>
+            console.log 'Resized img.'
+            if onSuccess
+              onSuccess itemImg.src
+          itemImg.onerror = (e) ->
+            alert('There was an error processing your image.
+              The image needs to be a JPG or GIF. You could refresh the page
+              and see if it shows up in your list. If it shows a broken image
+              delete the file and upload with correct file type.')
+          itemImg.src = imgSrc
         else
           console.log 'Error uploading file.'
 
     formData = new FormData()
-    up = uploadInfo
-    #formData.append('redirect', @state.redirect)
-    formData.append('max_file_size', up.max_file_size)
-    formData.append('max_file_count', up.max_file_count)
-    formData.append('expires', up.expires)
-    formData.append('signature', up.signature)
+
+    #formData.append('redirect', state.redirect)
+    formData.append('max_file_size', max_file_size)
+    formData.append('max_file_count', max_file_count)
+    formData.append('expires', expires)
+    formData.append('signature', signature)
     formData.append('file1', file)
 
-    xhr.open 'POST', up.url, true
+    xhr.open 'POST', url, true
     xhr.send formData
