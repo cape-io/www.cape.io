@@ -1,7 +1,5 @@
 React = require 'react'
 # {Transition} = require 'react-router'
-Formsy = require 'formsy-react'
-{Input, Textarea} = require 'formsy-react-components'
 EmailForm = require './loginEmail'
 _ = require 'lodash'
 http = require 'superagent'

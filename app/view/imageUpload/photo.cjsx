@@ -1,25 +1,26 @@
 React = require 'react/addons'
 _ = require 'lodash'
+Formsy = require 'formsy-react'
 
 ImageUploading = require './imageUploading'
 {processImgFile, uploadFile} = require './process'
 
 module.exports = React.createClass
+
+  mixins: [Formsy.Mixin]
+
   getInitialState: ->
     fileHover: false
     fileUploading: null
     progress: 0
-    imgSrc: @props.imgSrc
 
   handleProgress: (progress) ->
     @setState progress: progress
 
   handleUploaded: (imgSrc) ->
     console.log 'handleUploaded'
-    @setState imgSrc: imgSrc
-    if @props.onFileUploaded
-      @props.onFileUploaded(file)
-
+    @setValue imgSrc
+    @setState fileUploading: null
   # This is just to (un)set the hover class.
   handleFileHover: (e) ->
     if e.preventDefault then e.preventDefault()
@@ -53,9 +54,8 @@ module.exports = React.createClass
         return console.error err
       @setState
         fileUploading: fileInfo
-        imgSrc: null
 
-      uploadFile fileInfo.file, app.me.uploadInfo, @handleProgress, @handleUploaded
+      uploadFile fileInfo, app.me.uploadInfo, @handleProgress, @handleUploaded
       # fileName = app.me.uploadInfo.prefix.substr(1)+file.name
       # console.log file.type
       # app.me.files.add
@@ -74,19 +74,19 @@ module.exports = React.createClass
     @refs.fileselect.getDOMNode().click()
 
   render: ->
-    {fileHover, fileUploading, progress, imgSrc} = @state
-
+    {fileHover, fileUploading, progress} = @state
     className = "dropzone"
     if fileHover
       className += " alert-info hover"
 
-    if imgSrc
-      currentImg = <div className="dz-image"><img src={imgSrc} alt="image" /></div>
-    else if fileUploading
+    if fileUploading
       currentImg =
-      <div className="dz-images row">
-        <ImageUploading progress={progress} fileInfo={fileUploading} width="300" />
-      </div>
+        <div className="dz-images row">
+          <ImageUploading progress={progress} fileInfo={fileUploading} width="300" />
+        </div>
+    else if imgSrc = @getValue()
+      currentImg =
+        <div className="dz-image"><img src={imgSrc} alt="image" /></div>
     else
       currentImg = false
 

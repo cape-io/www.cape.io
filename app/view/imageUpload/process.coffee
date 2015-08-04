@@ -1,4 +1,5 @@
 _ = require 'lodash'
+http = require 'superagent'
 
 humanFileSize = (bytes, si) ->
   thresh = 1024
@@ -56,7 +57,8 @@ module.exports =
       return
     reader.readAsDataURL fileInfo.file
 
-  uploadFile: (file, uploadInfo, onProgress, onSuccess) ->
+  uploadFile: (fileInfo, uploadInfo, onProgress, onSuccess) ->
+    {file, type, humanSize, width, height} = fileInfo
     {cdn, imgix, max_file_size, max_file_count, expires, signature, prefix, url} = uploadInfo
     cdn = cdn or 'cape-io.imgix.net'
     imgix = imgix or '?w=300&h=300&fit=crop&crop=faces'
@@ -70,6 +72,21 @@ module.exports =
       if xhr.readyState is 4
         if xhr.status is 201
           console.log 'Uploaded img to service.'
+          # We need to tell the backend to look for this file and add it to the database.
+          http.post('/api/file')
+            .send(
+              fileId: prefix+file.name
+              size: "#{humanSize.value} #{humanSize.unit}"
+              dimensions:
+                type: type
+                width: width
+                height: height
+            )
+            .accept('json')
+            .end (err, res) =>
+              console.error err if err
+              if res.body
+                console.log res.body
           onProgress 101
           imgSrc = '//'+cdn+prefix+encodeURIComponent(file.name)+imgix
           # Now we test that the image can be loaded and/or resized by Imgix.

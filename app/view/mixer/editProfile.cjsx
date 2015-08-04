@@ -1,14 +1,15 @@
 React = require 'react'
-t = require 'tcomb-form'
+Formsy = require 'formsy-react'
+Input = require '../../formsy-components/input'
+{Textarea} = require 'formsy-react-components'
+Photo = require '../imageUpload/photo'
+
 Menu = require '../menu'
-{isEmail} = require 'validator'
-Form = t.form.Form
-Email = t.subtype t.Str, (s) ->
-  isEmail s, {allow_utf8_local_part: false}
 
 module.exports = React.createClass
   getInitialState: ->
     editField: null
+    disabled: true
 
   handleChange: (newSt) ->
     @setState newSt
@@ -16,59 +17,58 @@ module.exports = React.createClass
   editField: (fieldId) ->
     @setState editField: fieldId
 
-  handleFieldSubmit: (fieldId, value) ->
-    app.me.save fieldId, value
+  enableButton: ->
+    @setState disabled: false
+    return
 
-  handleSubmit: ->
-    value = @refs.form.getValue()
+  disableButton: ->
+    @setState disabled: true
+    return
+
+  # handleFieldSubmit: (fieldId, value) ->
+  #   app.me.save fieldId, value
+
+  handleSubmit: (value, resetForm, invalidateForm) ->
+    # value = @refs.form.getValue()
+    console.log 'submit', value
     if value
       app.me.save value
 
   render: ->
     {user} = @props
-    {fullName} = user
-
-    # profileSchema =
-    #   type: 'object'
-    #   properties:
-    #     fullName:
-    #       type: 'string'
-    #     email:
-    #       type: 'string'
-    #   required: ['fullName', 'email']
-
-    profileFieldOps =
-      fullName:
-        label: 'Full Name'
-        help: 'Your full name as it will be displayed on your profile.'
-      email:
-        label: 'Primary Email'
-        help: 'This is the email we will use to communicate with you.'
-      bio:
-        label: 'Brief Biography'
-        type: 'textarea'
-      statement:
-        label: 'Artist Statement'
-        help: 'The statement you want to accompany your work. *Italic* **Bold**.'
-        type: 'textarea'
-      # image
-
-    Profile = t.struct {
-      fullName: t.Str
-      email: Email
-      bio: t.Str
-      statement: t.Str
-    }
-    options =
-      legend: <h3>Profile Edit</h3>
-      auto: 'labels'#placeholders
-      fields: profileFieldOps
+    {disabled} = @state
+    {fullName, email, bio, statement, photo} = user
 
     if fullName
       titleEl = <h2 className="display-name">{fullName}</h2>
+    else
+      titleEl = <h2>Profile Edit</h2>
+
+    help =
+      name: 'Your full name as it will be displayed on your profile.'
+      email: 'This is the email we will use to communicate with you.'
+      bio: 'Please keep to less than 200 words.'
+      statement: 'The statement you want to accompany your work. *Italic* **Bold**.'
 
     <div className="profile-edit">
       {titleEl}
-      <Form ref="form" type={Profile} options={options} value={user.toJSON()} />
-      <button onClick={@handleSubmit}>Submit</button>
+      <Formsy.Form onValidSubmit={@handleSubmit} onValid={@enableButton} onInvalid={@disableButton}>
+        <Input name="email" validations="isEmail"
+          validationError="This is not a valid email yet." label="Email:" required
+          placeholder="Enter your email" value={email} help={help.email}
+        />
+        <Photo name="photo" value={photo} />
+        <Input name="fullName" validations={maxLength: 75, minLength: 3}
+          validationError="Is this really your name?" label="Your Full Name" required
+          value={fullName} help={help.name}
+        />
+        <Textarea name="bio" label="Brief Biography" validations={maxLength: 25000}
+          validationError="Too much text..." value={bio} help={help.bio}
+        />
+        <Textarea name="statement" label="Artist Statement"
+          validations={maxLength: 50000} validationError="Too much text..."
+          value={statement} help={help.statement}
+        />
+        <button type="submit" disabled={disabled}>Submit</button>
+      </Formsy.Form>
     </div>
