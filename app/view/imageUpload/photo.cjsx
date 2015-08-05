@@ -13,14 +13,22 @@ module.exports = React.createClass
     fileHover: false
     fileUploading: null
     progress: 0
+    errorMsg: null
+    warningMsg: null
 
   handleProgress: (progress) ->
     @setState progress: progress
 
-  handleUploaded: (imgSrc) ->
+  handleUploaded: (imgInfo) ->
     console.log 'handleUploaded'
-    @setValue imgSrc
-    @setState fileUploading: null
+    if imgInfo.id and imgInfo.previewUrl
+      console.log 'imgResized'
+      @setValue _.pick(imgInfo, 'id', 'path', 'previewUrl')
+      @setState
+        fileUploading: null
+        errorMsg: null
+        warningMsg: null
+
   # This is just to (un)set the hover class.
   handleFileHover: (e) ->
     if e.preventDefault then e.preventDefault()
@@ -33,9 +41,15 @@ module.exports = React.createClass
       @setState fileHover: false
     return
 
+  validate: ->
+    @state.errorMsg is null
+    # {qty, id, type, bytes, previewUrl, sourceUrl, path} = @getValue()
+    #     if files.length > maxFiles
+    #       alert 'Please only upload one image at a time.'
+
   # Drop or Select
   handleFileSelect: (e) ->
-    {onFileUploaded} = @props
+    {metadata} = @props
     console.log 'handleFileSelect'
     # Disable defaults. Toggle off 'hover' class.
     @handleFileHover(e)
@@ -44,18 +58,17 @@ module.exports = React.createClass
     files = e.target.files or e.dataTransfer.files
     maxFiles = 1
     if files.length > maxFiles
-      alert 'Please only upload one image at a time.'
-      return
+      warningMsg = 'Please only upload one image at a time.'
 
     # Process the first file.
     file = files[0]
     processImgFile {file: file}, ['image/jpg', 'image/jpeg'], (err, fileInfo) =>
       if err
-        return console.error err
+        return @setState {errorMsg: err, warningMsg: warningMsg}
       @setState
         fileUploading: fileInfo
-
-      uploadFile fileInfo, app.me.uploadInfo, @handleProgress, @handleUploaded
+        warningMsg: warningMsg
+      uploadFile fileInfo, app.me.uploadInfo, metadata, @handleProgress, @handleUploaded
       # fileName = app.me.uploadInfo.prefix.substr(1)+file.name
       # console.log file.type
       # app.me.files.add
@@ -74,29 +87,37 @@ module.exports = React.createClass
     @refs.fileselect.getDOMNode().click()
 
   render: ->
-    {fileHover, fileUploading, progress} = @state
+    {fileHover, fileUploading, progress, errorMsg, warningMsg} = @state
     className = "dropzone"
     if fileHover
       className += " alert-info hover"
-
+    imgInfo = @getValue()
     if fileUploading
       currentImg =
         <div className="dz-images row">
           <ImageUploading progress={progress} fileInfo={fileUploading} width="300" />
         </div>
-    else if imgSrc = @getValue()
+    else if imgInfo?.previewUrl
       currentImg =
-        <div className="dz-image"><img src={imgSrc} alt="image" /></div>
+        <div className="dz-image"><img src={imgInfo.previewUrl} alt="image" /></div>
     else
       currentImg = false
 
-    imgTxt = 'Click on the image or drop a new JPG on top of it to replace it.'
+    if errorMsg
+      txtClassName = 'error'
+      imgTxt = errorMsg
+    else if warningMsg
+      txtClassName = 'warning'
+      imgTxt = warningMsg
+    else
+      txtClassName = 'help'
+      imgTxt = 'Click on the image or drop a new JPG on top of it to replace it.'
 
     <div className={className} ref="filedrag" onDragOver={@handleFileHover}
       onDragLeave={@handleFileHover} onDrop={@handleFileSelect}
       onClick={@activateFileSelect} id="filedrag">
       {currentImg}
-      <p>{imgTxt}</p>
+      <p className={txtClassName}>{imgTxt}</p>
       <input type="file" id="fileselect" ref="fileselect" name="fileselect"
         accept="image/jpg, image/jpeg" onChange={@handleFileSelect}
         style={display:'none'} />

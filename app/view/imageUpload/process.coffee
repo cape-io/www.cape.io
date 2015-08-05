@@ -5,7 +5,7 @@ humanFileSize = (bytes, si) ->
   thresh = 1024
   if bytes < thresh
     return value: bytes, unit: "B"
-  units = ["KiB", "MiB", "GiB"]
+  units = ["KB", "MB", "GB"]
   u = -1
   loop
     bytes /= thresh
@@ -57,9 +57,10 @@ module.exports =
       return
     reader.readAsDataURL fileInfo.file
 
-  uploadFile: (fileInfo, uploadInfo, onProgress, onSuccess) ->
+  uploadFile: (fileInfo, uploadInfo, metadata, onProgress, onSuccess) ->
     {file, type, humanSize, width, height} = fileInfo
     {cdn, imgix, max_file_size, max_file_count, expires, signature, prefix, url} = uploadInfo
+    fieldValue = {}
     cdn = cdn or 'cape-io.imgix.net'
     imgix = imgix or '?w=300&h=300&fit=crop&crop=faces'
     xhr = new XMLHttpRequest()
@@ -77,6 +78,7 @@ module.exports =
             .send(
               fileId: prefix+file.name
               size: "#{humanSize.value} #{humanSize.unit}"
+              metadata: metadata
               dimensions:
                 type: type
                 width: width
@@ -86,15 +88,20 @@ module.exports =
             .end (err, res) =>
               console.error err if err
               if res.body
-                console.log res.body
+                fieldValue = _.merge fieldValue, res.body
+                if onSuccess
+                  onSuccess fieldValue
+                console.log fieldValue
+          # Remove the old image...
           onProgress 101
           imgSrc = '//'+cdn+prefix+encodeURIComponent(file.name)+imgix
           # Now we test that the image can be loaded and/or resized by Imgix.
           itemImg = new Image()
           itemImg.onload = =>
             console.log 'Resized img.'
+            fieldValue.previewUrl = itemImg.src
             if onSuccess
-              onSuccess itemImg.src
+              onSuccess fieldValue
           itemImg.onerror = (e) ->
             alert('There was an error processing your image.
               The image needs to be a JPG or GIF. You could refresh the page

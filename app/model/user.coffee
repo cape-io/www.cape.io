@@ -14,6 +14,7 @@ module.exports = Model.extend
     providers: 'array'
     ids: 'array'
     fbConnected: 'bool'
+    # photo: 'object'
   collections:
     websites: Websites
   extraProperties: 'allow'

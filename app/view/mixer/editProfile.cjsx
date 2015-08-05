@@ -57,7 +57,7 @@ module.exports = React.createClass
           validationError="This is not a valid email yet." label="Email:" required
           placeholder="Enter your email" value={email} help={help.email}
         />
-        <Photo name="photo" value={photo} />
+        <Photo name="photo" value={photo} metadata={imgType: 'profile', title: 'Profile Picture'}/>
         <Input name="fullName" validations={maxLength: 75, minLength: 3}
           validationError="Is this really your name?" label="Your Full Name" required
           value={fullName} help={help.name}
