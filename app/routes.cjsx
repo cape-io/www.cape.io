@@ -19,7 +19,8 @@ EditWebsites = require './view/mixer/editWebsites'
 EditEvents = require './view/mixer/editEvents'
 WebsiteList = require './view/mixer/websiteList'
 
-Photo = require './view/imageUpload/photo'
+Ops = require './view/ops'
+OpDetail = require './view/opDetail'
 # Home = require './view/home/home'
 # Domains = require './view/domains/domains'
 # Start = require './view/start/start'
@@ -43,7 +44,8 @@ module.exports =
       <Route name="LoginFail" path="/login/fail" handler={LoginFail} />
     </Route>
     <Route name="wx" handler={WX} />
-    <Route name="upload" handler={Photo} />
+    <Route name="ops" path="ops" handler={Ops} />
+    <Route name="opDetail" path="ops/:id" handler={OpDetail} />
     <Route name="contact" handler={Contact} />
     <Route name="logout" path="user/logout/" handler={Logout} />
     <Route name="iframe" path="iframe/:pageId/?:contentId?" handler={Page} />
