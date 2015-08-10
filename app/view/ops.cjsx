@@ -2,10 +2,11 @@ React = require 'react'
 {Link} = require 'react-router'
 _ = require 'lodash'
 
+OpPreview = require './opPreview'
+inBrowser = typeof window isnt "undefined"
+
 module.exports = React.createClass
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  }
+
   getInitialState: ->
     isMounted: false
 
@@ -14,20 +15,18 @@ module.exports = React.createClass
       isMounted: true
 
   componentDidMount: ->
+    @fetchOps()
+
+  fetchOps: ->
+    if app.ops.length > 1
+      return false
     app.ops.fetch {success: @handleFetch}
 
   render: ->
     {isMounted} = @state
-
-    if isMounted
+    if (inBrowser and app.ops.length > 1) or isMounted
       items = app.ops.map (model) ->
-        {title, id, deadlineStr, preview} = model
-
-        <li key={id}>
-          <h2><Link to="opDetail" params={id: id}>{title}</Link></h2>
-          <div className="deadline"><span className="label">Application Deadline: </span>{deadlineStr}</div>
-          <div className="preview" dangerouslySetInnerHTML={ __html: preview } />
-        </li>
+        <OpPreview key={model.id} model={model} />
     else
       items = <li>loading.</li>
 

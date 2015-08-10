@@ -1,4 +1,7 @@
 React = require 'react'
+{Link} = require 'react-router'
+
+inBrowser = typeof window isnt "undefined"
 
 module.exports = React.createClass
   contextTypes: {
@@ -9,8 +12,12 @@ module.exports = React.createClass
     model: null
 
   handleFetch: (err, model) ->
-    @setState
-      model: model
+    if model
+      if model.body
+        @setState
+          model: model
+      else
+        model.fetch success: (m) => @setState(model:m)
 
   componentDidMount: ->
     {id} = @context.router.getCurrentParams()
@@ -19,8 +26,9 @@ module.exports = React.createClass
   render: ->
     {id} = @context.router.getCurrentParams()
     {model} = @state
-    if model
-      {deadlineStr, title, body} = model
+    if model or (inBrowser and model = app.ops.get(id))
+      {deadlineStr, title, body, preview} = model
+      if not body then body = preview
     else
       title = 'loading '+id
 
@@ -34,4 +42,5 @@ module.exports = React.createClass
         if body
           <div className="body" dangerouslySetInnerHTML={ __html: body } />
       }
+      <Link to="opportunities">Ops List</Link>
     </div>

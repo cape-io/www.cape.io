@@ -41,10 +41,9 @@ module.exports = React.createClass
     {email} = @props
     disabled = !canSubmit
     lead = "Enter your email to start the login process."
-
     <Formsy.Form onValidSubmit={@submit} onValid={@enableButton} onInvalid={@disableButton}>
       <div>{lead}</div>
       <Input name="email" validations="isEmail" validationError="This is not a valid email yet." label="Email:" required placeholder="Enter your email" value={email} />
-      <Input layout="elementOnly" name="url" className="hidden" validations="isEmptyString" validationError="This field is only for spam bots." label="Leave this URL field empty!" value=""/>
+      <Input name="url" layout="elementOnly" className="hidden" validations="isEmptyString" validationError="This field is only for spam bots." label="Leave this URL field empty!" value=""/>
       <button type="submit" disabled={disabled} onSubmit={@onSubmit}>Submit</button>
     </Formsy.Form>

@@ -16,7 +16,7 @@ module.exports = React.createClass
     router: React.PropTypes.func.isRequired
 
   getInitialState: ->
-    email: if typeof app isnt "undefined" then app.me.email else ''
+    email: ''
     emailStatus: null
     password: ''
     passwordStatus: null
@@ -37,6 +37,8 @@ module.exports = React.createClass
 
   componentDidMount: ->
     app.me.on 'change', @handleMeChange
+    if app.me.email
+      @setState email: app.me.email
 
   componentWillUnmount: ->
     app.me.off 'change', @handleMeChange

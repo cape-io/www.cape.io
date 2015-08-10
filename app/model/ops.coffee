@@ -18,6 +18,14 @@ Op = Model.extend
       deps: ['deadline']
       fn: ->
         moment(@deadline).format(dateFormat)
+    createdStr:
+      deps: ['deadline']
+      fn: ->
+        moment(@created).format(dateFormat)
+    fee:
+      deps: ['title']
+      fn: ->
+        @title.indexOf('$$$') > -1
 
 module.exports = Collection.extend
   model: Op
