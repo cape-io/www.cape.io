@@ -7,7 +7,6 @@ module.exports = React.createClass
   getBody: ->
     {model} = @props
     unless model.body
-      console.log 'fetch body'
       model.fetch()
 
   render: ->

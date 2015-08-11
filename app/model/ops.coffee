@@ -30,3 +30,4 @@ Op = Model.extend
 module.exports = Collection.extend
   model: Op
   url: '/api/ops/'
+  comparator: 'created'
