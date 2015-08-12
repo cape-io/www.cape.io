@@ -1,5 +1,6 @@
-Collection = require 'ampersand-rest-collection'
 Model = require 'ampersand-model'
+Collection = require 'ampersand-rest-collection'
+FilteredSubcollection = require 'ampersand-filtered-subcollection'
 moment = require 'moment'
 dateFormat = "MMM Do YYYY"
 
@@ -27,7 +28,11 @@ Op = Model.extend
       fn: ->
         @title.indexOf('$$$') > -1
 
-module.exports = Collection.extend
+Ops = Collection.extend
   model: Op
   url: '/api/ops/'
-  comparator: 'created'
+  #comparator: 'created'
+
+ops = new Ops()
+
+module.exports = new FilteredSubcollection(ops)

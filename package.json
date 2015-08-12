@@ -35,7 +35,8 @@
     "validator": "3.x",
     "formsy-react": "x",
     "formsy-react-components": "^0.3.0",
-    "cape-react-contact": "git://github.com/cape-io/cape-react-contact"
+    "cape-react-contact": "git://github.com/cape-io/cape-react-contact",
+    "ampersand-filtered-subcollection": "^2.0.4"
   },
   "devDependencies": {
     "coffee-reactify": "*",

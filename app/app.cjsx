@@ -18,7 +18,7 @@ App = (data, render, onError, onAbort) ->
   if inBrowser
     data.me = new User()
     data.me.checkSession()
-    data.ops = new Ops()
+    data.ops = Ops
   console.log 'Init react with data.'
   Render = (Handler, state) ->
     if not inBrowser and not state.routes.length

@@ -6,6 +6,17 @@ OpPreview = require './opPreview'
 inBrowser = typeof window isnt "undefined"
 
 module.exports = React.createClass
+  contextTypes: {
+    router: React.PropTypes.func.isRequired
+  }
+
+  handleFilters: ->
+    query = @context.router.getCurrentQuery()
+    config = {}
+    if query?.sortBy is 'deadline'
+      config.comparator = 'deadline'
+    if config.comparator
+      app.ops.configure(config)
 
   getInitialState: ->
     isMounted: false
@@ -15,12 +26,13 @@ module.exports = React.createClass
       isMounted: true
 
   componentDidMount: ->
+    @handleFilters()
     @fetchOps()
 
   fetchOps: ->
     if app.ops.length > 1
       return false
-    app.ops.fetch {success: @handleFetch}
+    app.ops.collection.fetch {success: @handleFetch}
 
   render: ->
     {isMounted} = @state
@@ -29,7 +41,11 @@ module.exports = React.createClass
         <OpPreview key={model.id} model={model} />
     else
       items = <li>loading.</li>
-
-    <ul className="title-list">
-      {items}
-    </ul>
+    <div>
+      <ul className="filter-list">
+        <li><Link to="opportunities" query={sortBy: 'deadline'}>Ending soon.</Link></li>
+      </ul>
+      <ul className="title-list">
+        {items}
+      </ul>
+    </div>
