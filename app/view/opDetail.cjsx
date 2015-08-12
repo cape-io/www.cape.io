@@ -21,7 +21,7 @@ module.exports = React.createClass
 
   componentDidMount: ->
     {id} = @context.router.getCurrentParams()
-    app.ops.getOrFetch parseInt(id), @handleFetch
+    app.ops.collection.getOrFetch parseInt(id), @handleFetch
 
   render: ->
     {id} = @context.router.getCurrentParams()
