@@ -47,7 +47,7 @@ module.exports = React.createClass
     pageData.theme = settings
     pageTitle = if pageData.title then "#{title} | #{pageData.title}" else title
 
-    if currentRoute?.name is 'iframe'
+    if currentRoute?.name is 'iframe' or currentRoute?.name is 'opportunities'
       bodyEl =
         <Main
           pageData={pageData}
