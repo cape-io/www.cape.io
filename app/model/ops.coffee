@@ -27,6 +27,10 @@ Op = Model.extend
       deps: ['title']
       fn: ->
         @title.indexOf('$$$') > -1
+    searchTxt:
+      deps: ['title', 'preview']
+      fn: ->
+        @title.toLowerCase() + @preview.toLowerCase()
 
 Ops = Collection.extend
   model: Op

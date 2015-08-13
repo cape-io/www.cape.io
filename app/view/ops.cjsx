@@ -7,26 +7,15 @@ OpsFilters = require './opsFilters'
 
 inBrowser = typeof window isnt "undefined"
 
-handleFilters = (query) ->
-  {sortBy, filterOut} = query
-  unless inBrowser
-    return
-  config = {}
-  if sortBy is 'deadline'
-    config.comparator = 'deadline'
-  if filterOut is 'fee'
-    config.where = {fee: false}
-  app.ops.configure(config, true)
-
-
 module.exports = React.createClass
   contextTypes: {
     router: React.PropTypes.func.isRequired
   }
 
-  statics:
-    willTransitionTo: (transition, params, query) ->
-      handleFilters(query)
+  # statics:
+  #   willTransitionTo: (transition, params, query) ->
+  #     handleFilters(query)
+  #     console.log 'transtion to'
 
   getInitialState: ->
     isMounted: false
@@ -34,7 +23,25 @@ module.exports = React.createClass
   componentDidMount: ->
     @fetchOps()
 
-  # componentWillReceiveProps: (nextProps) ->
+  componentWillMount: ->
+    @handleFilters()
+  componentWillReceiveProps: (nextProps) ->
+    @handleFilters()
+
+  handleFilters: ->
+    {sortBy, filterOut, search} = @context.router.getCurrentQuery()
+    unless inBrowser
+      return
+    config = {}
+    if sortBy is 'deadline'
+      config.comparator = 'deadline'
+    if filterOut is 'fee'
+      config.where = {fee: false}
+    if search
+      config.filters = _.compact(search.split(' ')).map (word) ->
+        (model) ->
+          model.searchTxt.indexOf(word) > -1
+    app.ops.configure(config, true)
 
   handleFetch: (collection) ->
     @setState
