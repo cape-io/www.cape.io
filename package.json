@@ -9,7 +9,7 @@
     "sync": "browser-sync start --proxy 'w.l.cape.io' --files 'public/*.js'",
     "dev": "watchify app/app.cjsx --extension='.cjsx' --extension='.coffee' -d -v -o 'exorcist public/app.js.map > public/app.js'",
     "build": "browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' -g uglifyify --debug | exorcist public/app.js.map > public/app.js && zopfli public/app.js",
-    "prod": "env NODE_ENV=\"sproduction\" browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' | uglifyjs > public/app.js && zopfli public/app.js",
+    "prod": "env NODE_ENV=\"production\" browserify ./ -t coffee-reactify --extension='.cjsx' --extension='.coffee' | uglifyjs > public/app.js && zopfli public/app.js",
     "clean": "rm -f ./public/*"
   },
   "author": "Kai Curry <kai@cape.io> (http://www.cape.io/)",
