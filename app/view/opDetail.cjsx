@@ -42,5 +42,5 @@ module.exports = React.createClass
         if body
           <div className="body" dangerouslySetInnerHTML={ __html: body } />
       }
-      <Link to="opportunities">Ops List</Link>
+      <Link to="opportunities">Back to list</Link>
     </div>
