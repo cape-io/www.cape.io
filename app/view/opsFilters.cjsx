@@ -13,7 +13,6 @@ module.exports = React.createClass
       e.preventDefault()
     {value} = @refs.search.getDOMNode()
     q = @context.router.getCurrentQuery()
-    console.log 'sh'
     unless q.search is value
       q.search = value.toLowerCase()
       @replaceWith 'opportunities', {}, q
