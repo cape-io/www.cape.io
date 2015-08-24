@@ -12,7 +12,7 @@ Website = t.struct {
   id: t.maybe(t.Str)
   title: t.Str
   email: t.Str
-  logo: t.Str
+  logo: t.maybe(t.Str)
   sld: t.Str
   vhost: t.maybe(t.Str)
   ssFiles: t.list(FileSource)

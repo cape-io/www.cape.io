@@ -14,6 +14,7 @@ module.exports = React.createClass
     nav = [
       {link:'mixer/profile', title:'Profile'}
       {link:'mixer/sites', title:'Websites'}
+      {to:'siteCreate', title:'Create Website'}
     ]
 
     <div className="group">

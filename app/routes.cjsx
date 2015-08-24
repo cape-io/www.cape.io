@@ -34,6 +34,7 @@ module.exports =
     <Route name="mixer" handler={Mixer}>
       <Route name="editProfile" path="profile/" handler={EditProfile} />
       <Route name="mySites" path="sites/" handler={WebsiteList} />
+      <Route name="siteCreate" path="sites/create" handler={EditWebsites} />
       <Route name="site" path="sites/:siteId" handler={EditWebsites} />
       <Route name="myEvents" path="events/" handler={EditEvents} />
     </Route>

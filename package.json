@@ -36,7 +36,8 @@
     "formsy-react": "x",
     "formsy-react-components": "^0.3.0",
     "cape-react-contact": "git://github.com/cape-io/cape-react-contact",
-    "ampersand-filtered-subcollection": "^2.0.4"
+    "ampersand-filtered-subcollection": "^2.0.4",
+    "react-datepicker": "^0.11.5"
   },
   "devDependencies": {
     "coffee-reactify": "*",
