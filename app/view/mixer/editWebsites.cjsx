@@ -42,6 +42,7 @@ Website = t.struct {
       'acf-style': 'American Composers Forum'
       'bbg-style': 'Baltimore Bartender'
       'ppf-style': 'Prairiepasque'
+      'urbanite-style': 'Urbanite'
     )
     settings: t.struct(
       hasLogin: t.Bool
