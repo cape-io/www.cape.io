@@ -33,15 +33,17 @@ module.exports = React.createClass
     console.log 'submit', value
 
   render: ->
-    {event} = @props
+    DatePicker = require 'react-datepicker'
+    {event, photo, statement} = @props
     {disabled} = @state
 
     help =
       body: 'The description you want to accompany your event. *Italic* **Bold**.'
+
     # If enter a url and it pulls from elsewhere we need to make filled in fields fixed.
     # url, title, category, date, timeEnd, timeStart, allDay, photo, description, price, urlTicket
     <div className="profile-edit">
-      {titleEl}
+      <DatePicker onChange={console.log} />
       <Formsy.Form onValidSubmit={@handleSubmit} onValid={@enableButton} onInvalid={@disableButton}>
         <Input name="url" label="URL"
           validations={minLength: 12, maxLength: 750}
@@ -60,11 +62,11 @@ module.exports = React.createClass
         <Input name="price" label="Price"
           validations="isNumeric" validationError="That doesn't look right."
         />
-        <Photo name="photo" value={photo} metadata={imgType: 'event'} />
         <Textarea name="body" label="Description"
           validations={maxLength: 50000} validationError="Too much text..."
           value={statement} help={help.body}
         />
+        <Photo name="photo" value={photo} metadata={imgType: 'event'} />
         <button type="submit" disabled={disabled}>Submit</button>
       </Formsy.Form>
     </div>

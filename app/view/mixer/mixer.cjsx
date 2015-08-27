@@ -15,6 +15,7 @@ module.exports = React.createClass
       {link:'mixer/profile', title:'Profile'}
       {link:'mixer/sites', title:'Websites'}
       {to:'siteCreate', title:'Create Website'}
+      {to:'eventCreate', title:'Create Event'}
     ]
 
     <div className="group">

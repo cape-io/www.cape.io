@@ -31,6 +31,7 @@ Website = t.struct {
       cape: 'cape'
       ezle3: 'ezle3'
       'single-page': 'Single Page (FB-Page)'
+      urbanite: 'urbanite'
     )
     cssId: t.enums(
       default: 'default'
