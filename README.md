@@ -1,5 +1,7 @@
 # CAPE
 
+[![Join the chat at https://gitter.im/cape-io/www.cape.io](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cape-io/www.cape.io?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Create Anywhere, Publish Everywhere.
 
 The way the contemporary web works is increasingly about linking together disparate and specialized services; not providing a single website with all solutions pre-built or hardwired into the site itself. CAPE accepts and embraces this new ecosystem.
